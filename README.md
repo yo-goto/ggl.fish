@@ -26,11 +26,11 @@ fisher install yo-goto/ggl.fish
 ggl [OPTIONS] SEARCHWORDS
 ```
 
-`ggl` command can accept mutiple strings for searching.  
+`ggl` command can accept mutiple strings (like 'how to use fish shell') for searching.  
 
 Examples:  
 
-```
+```console
 ggl how to use fish shell
 # search by a phrase "how to use fish shell"
 
