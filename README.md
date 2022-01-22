@@ -1,6 +1,6 @@
 # ggl.fish
 
-> Simple Google Search from fish shell
+> Simple Google Search from [fish shell](https://fishshell.com)
 
 This is a simple tool for Google searching from command line made with fish language.   
 You can do things below with this script.  
@@ -14,7 +14,7 @@ You can do things below with this script.
 
 ## Installation
 
-Using fisher:
+Using [fisher](https://github.com/jorgebucaran/fisher):
 
 ```shell
 fisher install yo-goto/ggl.fish
