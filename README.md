@@ -16,13 +16,13 @@ You can do things below with this script.
 
 Using [fisher](https://github.com/jorgebucaran/fisher):
 
-```shell
+```console
 fisher install yo-goto/ggl.fish
 ```
 
 ## Usage
 
-```shell
+```console
 ggl [OPTIONS] SEARCHWORDS
 
 # possible to type multiple strings
@@ -41,7 +41,7 @@ ggl -e 日本語
 If you want to confirm URL, use `-t` or `--test` option.  
 This test option can be combined with any other options.  
 
-```shell
+```console
 $ ggl -t how to use fish shell
 Keyword     :  how to use fish shell
 URL encoding:  how%20to%20use%20fish%20shell
@@ -58,15 +58,6 @@ Utility Options
 - `-h` or `--help`      : Show Help
 - `-t` or `--test`      : Test URL Generation
 - `-v` or `--version`   : Show Version Info
-
-```shell
-$ ggl -t 
-Keyword     : how to use fish
-URL encoding: how%20to%20use%20fish
-Search URL  : https://www.google.com/search?q=how%20to%20use%20fish
-```
-
-The `test` option can be combined with other options below. 
 
 Browser Options
 - `-c` or `--chrome`    : Google Chrome
