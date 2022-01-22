@@ -24,17 +24,24 @@ fisher install yo-goto/ggl.fish
 
 ```console
 ggl [OPTIONS] SEARCHWORDS
+```
 
-# possible to type multiple strings
-# like this: search by a phrase "how to use fish shell"
+`ggl` command can accept mutiple strings for searching.  
+
+Examples:  
+
+```
 ggl how to use fish shell
+# search by a phrase "how to use fish shell"
 
-# if you want to search with exact match, ues -p or --perfect option
 ggl -p how to use fish shell
-# specific language search with -l or --lang option
+# if you want to search with exact match, ues -p or --perfect option
+
 ggl -l=e 日本語
-# if you want to search in English, you can alse use -e or --english option
+# specific language search with -l or --lang option
+
 ggl -e 日本語
+# if you want to search in English, you can alse use -e or --english option
 ```
 
 `ggl.fish` can generate searchable URLs.  
@@ -52,7 +59,7 @@ URL encoding:  cat%20cute%20photo
 Search URL  :  https://www.google.com/search?q=cat%20cute%20photo&lr=lang_en&tbm=isch
 ```
 
-### Options
+## Options
 
 Utility Options
 - `-h` or `--help`      : Show Help
