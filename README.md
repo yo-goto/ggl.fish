@@ -2,7 +2,8 @@
 
 > Simple Google Search from fish shell
 
-This is a simple tool for Google searching from command line made by fish language. You can do things below with this script.
+This is a simple tool for Google searching from command line made by fish language.   
+You can do things below with this script.  
 
 - Select your favorite browser
 - Google Search Options
@@ -36,9 +37,9 @@ ggl -l=e 日本語
 ggl -e 日本語
 ```
 
-`ggl.fish` generate searchable URLs.
-If you want to confirm URL, use `-t` or `--test` option.
-This test option can be combined with any other options.
+`ggl.fish` generate searchable URLs.  
+If you want to confirm URL, use `-t` or `--test` option.  
+This test option can be combined with any other options.  
 
 ```shell
 $ ggl -t how to use fish shell
@@ -79,15 +80,15 @@ Google Search Options
 - `-p` or `--perfect`   : Exact Match
 - `-n` or `--nonperson` : Disable Personalized Search
 - `-l` or `--lang`      : Language
-    - = `e` or `en`     : English
-    - = `j` or `ja`     : Japanese
-    - = `d` or `de`     : German
-    - = `f` or `fr`     : French
-    - = `i` or `it`     : Italian
-    - = `s` or `es`     : Spanish
-    - = `r` or `ru`     : Russian
-    - = `k` or `ko`     : Korean
-    - = `z` or `zh`     : Chinese
+    - `e` or `en`       : English
+    - `j` or `ja`       : Japanese
+    - `d` or `de`       : German
+    - `f` or `fr`       : French
+    - `i` or `it`       : Italian
+    - `s` or `es`       : Spanish
+    - `r` or `ru`       : Russian
+    - `k` or `ko`       : Korean
+    - `z` or `zh`       : Chinese
 
 Site Options
 - `-g` or `--github`    : Github
