@@ -1,6 +1,9 @@
-# ggl.fish
+![img](https://user-images.githubusercontent.com/50942816/150674827-a3f2a0bb-81c4-4289-a01c-f59cac5dffab.png)
+
+# ggl.fish 🏄🏻‍♂️
 
 > *Simple Google Search from [fish shell](https://fishshell.com)*
+
 
 This is a simple tool for Google searching from command line made with fish language.   
 You can do things below with this script.  
@@ -118,10 +121,10 @@ Sites For Japaense Users
 
 ## Develpment
 
-- This code is based on my [gist](https://gist.github.com/yo-goto/7acfa712006488466d73ff42b9d952cc).
+- This code is originally based on my [gist](https://gist.github.com/yo-goto/7acfa712006488466d73ff42b9d952cc).
 - Code explanation is [here](https://zenn.dev/estra/articles/google-search-from-fish-shell) (in Japanese).
 
-## Conributing
+## Contributing
 
 Pull requests are welcom. 
 
