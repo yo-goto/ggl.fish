@@ -3,11 +3,12 @@ function ggl -d "Search for keywords on Google"
         -x 't,h,v' \
         -x 'c,s,f,V' \
         -x 'e,l' \
-        -x 'g,y,s' \
+        -x 'g,y,s,z,q' \
         't/test' 'h/help' 'v/version' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' 'l/lang=?' \
         'c/chrome' 's/safari' 'f/firefox' 'V/vivaldi' \
         'g/github' 'y/youtube' 'S/stack' \
+        'z/zenn' 'q/qiita' \
         -- $argv
     or return
     
@@ -21,30 +22,29 @@ function ggl -d "Search for keywords on Google"
     [ $_flag_github ]; and set -l baseURL "https://github.com/search?q="
     [ $_flag_youtube ]; and set -l baseURL "https://www.youtube.com/results?search_query="
     [ $_flag_stack ]; and set -l baseURL "https://stackoverflow.com/search?q="
+    ## for Japanese users
+    [ $_flag_zenn ]; and set -l baseURL "https://zenn.dev/search?q="
+    [ $_flag_qiita ]; and set -l baseURL "https://qiita.com/search?q="
 
     if set -q _flag_version
-        echo 'ggl.fish: v1.0.0'
+        echo 'ggl.fish: v1.1.0'
         return
     end
 
     # help option
     if set -q _flag_help
         echo 'welcom to ggl.fish'
-        echo 'Utilities:' 
         set_color $c
+        echo 'Utilities:' 
         echo '    -t or --test       URL generation test' 
         echo '    -h or --help       Print this help message'
         echo '    -v or --version    Print command version'
-        set_color normal
         echo 'Browser Option:'
-        set_color $c
         echo '    -c or --chrome     Use Google Chrome' 
         echo '    -s or --safari     Use Safari'
         echo '    -f or --firefox    Use Firefox'
         echo '    -V or --vivaldi    Use Vivaldi'
-        set_color normal
         echo 'Search Options:'
-        set_color $c
         echo '    -i or --image      Image serch'
         echo '    -p or --perfect    Exact match'
         echo '    -n or --nonperson  Non-Personalized search'
@@ -62,12 +62,12 @@ function ggl -d "Search for keywords on Google"
         echo '    Use language option with `=`'
         echo '    Eample (English Search): '
         echo '    $ ggl -l=en how to use fish shell'
-        set_color normal
         echo 'Site Option:'
-        set_color $c
         echo '    -g or --github     Search with Github'
         echo '    -y or --youtube    Search with YouTube'
         echo '    -S or --stack      Search with Stack overflow'
+        echo '    -z or --zenn       Search with Zenn'
+        echo '    -q or --qiita      Search with Qiita'
         set_color normal
         return
     end
@@ -76,6 +76,7 @@ function ggl -d "Search for keywords on Google"
     # open a browser
     if test -n "$encoding"
         
+        ## language
         if set -q _flag_lang
             switch "$_flag_lang"
                 case =e =en
@@ -97,7 +98,7 @@ function ggl -d "Search for keywords on Google"
                 case =z =zh
                     set lang "lr=lang_zh-CH"
                 case '*'
-                    echo "Invalid language flag"
+                    echo "Invalid language flag. See help with -h option."
             end
         end
         
@@ -134,7 +135,7 @@ function ggl -d "Search for keywords on Google"
         end
         echo "Search Completed:" "\"$argv\""
     else 
-        echo "Execute this command with arguments"
+        echo "Execute this command with arguments."
     end
 
 end
