@@ -1,17 +1,20 @@
 # ggl.fish
 
-> Simple Google Search from [fish shell](https://fishshell.com)
+> *Simple Google Search from [fish shell](https://fishshell.com)*
 
 This is a simple tool for Google searching from command line made with fish language.   
 You can do things below with this script.  
 
-- Use your favorite browser
+- Choose your favorite browser
 - Google Search Options
     - Exact Match
-    - Language Selection
     - Image Search
-    - Diable Personalized Search by Google
-- Search with specific sites(github, youtube, stack overflow)
+    - Language Setting
+    - Disable Personalized Search
+- Search with specific sites:
+    - Github
+    - Youtube
+    - Stack overflow
     - For Japanese Users: Zenn, Qiita
 
 ## Installation
@@ -47,14 +50,15 @@ ggl -p how to use fish shell
 
 ggl -l=en English search
 ggl -l=ja 日本語検索
-# specific language search with -l or --lang option
+# specific language search with -l or --lang option 
+# language option is helpful to search with non native language
 
 ggl -e English search
 # search in English, you can alse use -e or --english option
 ```
 
-`ggl.fish` generates searchable URLs.  
-To confirm generated URL, use `-t` or `--test` option.  
+`ggl.fish` internally generates searchable URLs.  
+To confirm a generated URL, use `-t` or `--test` option.  
 This test option can be combined with any other options.  
 
 ```console
@@ -72,8 +76,8 @@ Search URL  :  https://www.google.com/search?q=cat%20cute%20photo&lr=lang_en&tbm
 
 Utility Options
 - `-h` or `--help`      : Show Help
-- `-t` or `--test`      : Test URL Generation
 - `-v` or `--version`   : Show Version Info
+- `-t` or `--test`      : Test URL Generation
 
 Browser Options
 - `-c` or `--chrome`    : Google Chrome
@@ -87,15 +91,20 @@ Google Search Options
 - `-p` or `--perfect`   : Exact Match
 - `-n` or `--nonperson` : Disable Personalized Search
 - `-l` or `--lang`      : Language
-    - `e` or `en`       : English
-    - `j` or `ja`       : Japanese
-    - `d` or `de`       : German
-    - `f` or `fr`       : French
-    - `i` or `it`       : Italian
-    - `s` or `es`       : Spanish
-    - `r` or `ru`       : Russian
-    - `k` or `ko`       : Korean
-    - `z` or `zh`       : Chinese
+
+After language option, pass language flag with `=`.
+
+Valid Flag | Language
+--|--
+`e` or `en` | English
+`j` or `ja` | Japanese
+`d` or `de` | German
+`f` or `fr` | French
+`i` or `it` | Italian
+`s` or `es` | Spanish
+`r` or `ru` | Russian
+`k` or `ko` | Korean
+`z` or `zh` | Chinese
 
 Site Options
 - `-g` or `--github`    : Github
@@ -106,4 +115,13 @@ Sites For Japaense Users
 - `-z` or `--zenn`      : Zenn
 - `-q` or `--qiita`     : Qiita
 
+
+## Develpment
+
+- This code is based on my [gist](https://gist.github.com/yo-goto/7acfa712006488466d73ff42b9d952cc).
+- Code explanation is [here](https://zenn.dev/estra/articles/google-search-from-fish-shell) (in Japanese).
+
+## Conributing
+
+Pull requests are welcom. 
 

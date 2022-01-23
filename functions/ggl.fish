@@ -1,10 +1,10 @@
 function ggl -d "Search for keywords on Google"
     argparse \
-        -x 't,h,v' \
+        -x 'v,h,t' \
         -x 'c,s,f,V' \
         -x 'e,l' \
         -x 'g,y,s,z,q' \
-        't/test' 'h/help' 'v/version' \
+        'v/version' 'h/help' 't/test'  \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' 'l/lang=?' \
         'c/chrome' 's/safari' 'f/firefox' 'V/vivaldi' \
         'g/github' 'y/youtube' 'S/stack' \
@@ -12,6 +12,7 @@ function ggl -d "Search for keywords on Google"
         -- $argv
     or return
     
+    set -l gglversion "v1.1.2"
     set -l c yellow # text coloring
     set -l keyword (string join " " $argv)
     set -l encoding (string escape --style=url $keyword)
@@ -27,13 +28,13 @@ function ggl -d "Search for keywords on Google"
     [ $_flag_qiita ]; and set -l baseURL "https://qiita.com/search?q="
 
     if set -q _flag_version
-        echo 'ggl.fish: v1.1.1'
+        echo 'ggl.fish:' $gglversion
         return
     end
 
     # help option
     if set -q _flag_help
-        echo 'welcom to ggl.fish'
+        echo 'Welcom to ggl.fish help'
         set_color $c
         echo 'Utilities:' 
         echo '    -t or --test       URL generation test' 
@@ -66,6 +67,7 @@ function ggl -d "Search for keywords on Google"
         echo '    -g or --github     Search with Github'
         echo '    -y or --youtube    Search with YouTube'
         echo '    -S or --stack      Search with Stack overflow'
+        echo 'For Japanese Users:'
         echo '    -z or --zenn       Search with Zenn'
         echo '    -q or --qiita      Search with Qiita'
         set_color normal
@@ -108,8 +110,8 @@ function ggl -d "Search for keywords on Google"
         [ $_flag_nonperson ]; and set _flag_nonperson "pws=0"
         ### perfect match with double quotes "" 
         [ $_flag_perfect ]; and set _flag_perfect "%22"
-
         and set encoding (string join "" $_flag_perfect $encoding $_flag_perfect)
+
         set -l searchURL (string join "&" (string join "" $baseURL $encoding) $lang $_flag_image $_flag_nonperson) 
 
         ## testing for URL generation
@@ -130,7 +132,7 @@ function ggl -d "Search for keywords on Google"
         else if set -q _flag_firefox
             open -a Firefox "$searchURL"
         else
-            ### Open default browser
+            ### Open URL with default browser
             open "$searchURL"
         end
         echo "Search Completed:" "\"$argv\""
