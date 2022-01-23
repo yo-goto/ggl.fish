@@ -1,8 +1,8 @@
 <div align="center">
     <img 
         alt="ggl fish logo" 
-        max-width="400"
-        src="https://user-images.githubusercontent.com/50942816/150674827-a3f2a0bb-81c4-4289-a01c-f59cac5dffab.png" 
+        width="100%"
+        src="https://user-images.githubusercontent.com/50942816/150681899-38ed9c2b-2867-4011-8d55-204cecfec44f.png" 
     />
 </div>
 
