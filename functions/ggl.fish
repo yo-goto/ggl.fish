@@ -27,7 +27,7 @@ function ggl -d "Search for keywords on Google"
     [ $_flag_qiita ]; and set -l baseURL "https://qiita.com/search?q="
 
     if set -q _flag_version
-        echo 'ggl.fish: v1.1.0'
+        echo 'ggl.fish: v1.1.1'
         return
     end
 

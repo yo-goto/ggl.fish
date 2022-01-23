@@ -22,6 +22,12 @@ Using [fisher](https://github.com/jorgebucaran/fisher):
 fisher install yo-goto/ggl.fish
 ```
 
+Update
+
+```console
+fisher update yo-goto/ggl.fish
+```
+
 ## Usage
 
 ```console
