@@ -10,7 +10,9 @@ You can do things below with this script.
     - Exact Match
     - Language Selection
     - Image Search
+    - Diable Personalized Search by Google
 - Search with specific sites(github, youtube, stack overflow)
+    - For Japanese Users: Zenn, Qiita
 
 ## Installation
 
@@ -35,17 +37,18 @@ ggl how to use fish shell
 # search by a phrase "how to use fish shell"
 
 ggl -p how to use fish shell
-# if you want to search with exact match, ues -p or --perfect option
+# search with exact match, ues -p or --perfect option
 
-ggl -l=e 日本語
+ggl -l=en English search
+ggl -l=ja 日本語検索
 # specific language search with -l or --lang option
 
-ggl -e 日本語
-# if you want to search in English, you can alse use -e or --english option
+ggl -e English search
+# search in English, you can alse use -e or --english option
 ```
 
 `ggl.fish` generates searchable URLs.  
-If you want to confirm URL, use `-t` or `--test` option.  
+To confirm generated URL, use `-t` or `--test` option.  
 This test option can be combined with any other options.  
 
 ```console
@@ -91,6 +94,10 @@ Google Search Options
 Site Options
 - `-g` or `--github`    : Github
 - `-y` or `--youtube`   : YouTube
-- `-z` or `--stack`     : Stack overflow
+- `-S` or `--stack`     : Stack overflow
+
+Sites For Japaense Users
+- `-z` or `--zenn`      : Zenn
+- `-q` or `--qiita`     : Qiita
 
 
