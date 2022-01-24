@@ -1,23 +1,25 @@
 function ggl -d "Search for keywords on Google"
     argparse \
-        -x 'v,h,t' \
-        -x 'c,s,f,V' \
+        -x 'v,h,t,o' \
+        -x 'C,S,F,V,B,b' \
         -x 'e,l' \
         -x 'g,y,s,z,q' \
-        'v/version' 'h/help' 't/test'  \
+        'v/version' 'h/help' 't/test' 'o/output' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' 'l/lang=?' \
-        'c/chrome' 's/safari' 'f/firefox' 'V/vivaldi' \
-        'g/github' 'y/youtube' 'S/stack' \
+        'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' 'b/browser=?' \
+        'g/github' 'y/youtube' 's/stack' \
         'z/zenn' 'q/qiita' \
         -- $argv
     or return
     
-    set -l gglversion "v1.1.2"
+    set -l gglversion "v1.2.0"
     set -l c yellow # text coloring
     set -l keyword (string join " " $argv)
     set -l encoding (string escape --style=url $keyword)
     set -l baseURL "https://www.google.com/search?q="
     set -l lang
+    set -l os
+    set -l browser
 
     # site option
     [ $_flag_github ]; and set -l baseURL "https://github.com/search?q="
@@ -34,17 +36,22 @@ function ggl -d "Search for keywords on Google"
 
     # help option
     if set -q _flag_help
-        echo 'Welcom to ggl.fish help'
+        echo 'Welcom to ggl.fish help.'
+        echo 'This is a simple tool for Google searching from the command line.'
         set_color $c
         echo 'Utilities:' 
-        echo '    -t or --test       URL generation test' 
-        echo '    -h or --help       Print this help message'
-        echo '    -v or --version    Print command version'
-        echo 'Browser Option:'
-        echo '    -c or --chrome     Use Google Chrome' 
-        echo '    -s or --safari     Use Safari'
-        echo '    -f or --firefox    Use Firefox'
-        echo '    -V or --vivaldi    Use Vivaldi'
+        echo '    -h or --help       Show Help'
+        echo '    -v or --version    Show Version Info'
+        echo '    -t or --test       Test URL Generation' 
+        echo '    -o or --output     Print generated URL'
+        echo 'Browser Option (uppercase letter):'
+        echo '    If not specified, ggl opens URL with default browser'
+        echo '    -C or --Chrome     Use Google Chrome' 
+        echo '    -S or --Safari     Use Safari'
+        echo '    -F or --Firefox    Use Firefox'
+        echo '    -V or --Vivaldi    Use Vivaldi'
+        echo '    -B or --Brave      Use Brave'
+        echo '    -b or --browser    Use other browser'
         echo 'Search Options:'
         echo '    -i or --image      Image serch'
         echo '    -p or --perfect    Exact match'
@@ -112,6 +119,7 @@ function ggl -d "Search for keywords on Google"
         [ $_flag_perfect ]; and set _flag_perfect "%22"
         and set encoding (string join "" $_flag_perfect $encoding $_flag_perfect)
 
+        ## final output
         set -l searchURL (string join "&" (string join "" $baseURL $encoding) $lang $_flag_image $_flag_nonperson) 
 
         ## testing for URL generation
@@ -122,20 +130,41 @@ function ggl -d "Search for keywords on Google"
             return
         end
 
-        ## browser selction
-        if set -q _flag_vivaldi
-            open -a Vivaldi "$searchURL"
-        else if set -q _flag_chrome
-            open -a "Google Chrome" "$searchURL"
-        else if set -q _flag_safari
-            open -a Safari "$searchURL"
-        else if set -q _flag_firefox
-            open -a Firefox "$searchURL"
-        else
-            ### Open URL with default browser
-            open "$searchURL"
+        ## print a generated URL
+        if set -q _flag_output
+            echo "$searchURL"
+            return
         end
-        echo "Search Completed:" "\"$argv\""
+
+        # detect OS: macOS or other
+        if test (uname -s) = "Darwin"
+            set os 'macOS'
+        else 
+            set os 'unknown'
+        end
+
+        # browser 
+        if [ $_flag_Vivaldi ]; set browser "Vivaldi"
+        else if [ $_flag_Chrome ]; set browser "Google Chrome"
+        else if [ $_flag_Safari ]; set browser "Safari"
+        else if [ $_flag_Firefox ]; set browser "Firefox"
+        else if [ $_flag_Brave ]; set browser "Brave" 
+        else if [ $_flag_browser ]; and set browser (string trim -lc '=' $_flag_browser)
+        end        
+
+        switch "$os"
+            case "macOS"
+                if test -n "$browser"
+                    open -a "$browser" "$searchURL"
+                else 
+                    open "$searchURL"
+                end 
+                echo "Search Completed:" "\"$argv\""
+            case "unkonwn"
+                ## use xdg-open
+                xdg-open "$searchURL"
+        end
+
     else 
         echo "Execute this command with arguments."
     end

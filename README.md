@@ -8,22 +8,26 @@
 
 # ggl.fish 🏄🏻‍♂️
 
-> *Simple Google Search from [fish shell](https://fishshell.com)*
+> *Simple Google Search from the command line for [fish shell](https://fishshell.com)*
 
-This is a simple tool for Google searching from command line made with fish language.   
+This is a simple tool for Google searching from the command line made with fish language.   
 You can do things below with this script.  
 
+- URL encoding for multibyte character (CJK)
 - Choose your favorite browser
-- Google Search Options
+- Google Search Options:
     - Exact Match
     - Image Search
-    - Language Setting
+    - Specific Language Search
     - Disable Personalized Search
+    - Autosuggest these options
 - Search with specific sites:
     - Github
     - Youtube
     - Stack overflow
     - For Japanese Users: Zenn, Qiita
+
+This command is developed mainly for macOS. For Linux or any other OS, `ggl` internally excutes `xdg-open` command instead of macOS's `open` command.
 
 ## Installation
 
@@ -80,18 +84,36 @@ URL encoding:  cat%20cute%20photo
 Search URL  :  https://www.google.com/search?q=cat%20cute%20photo&lr=lang_en&tbm=isch
 ```
 
+To pass a generated URL to text proceccing, use `-o` or `--output` option. It just prints the URL.
+
+```console
+$ ggl -o how to use fish shell
+https://www.google.com/search?q=how%20to%20use%20fish%20shell
+$ string split '/' (ggl -o how to use fish shell)
+https:
+
+www.google.com
+search?q=how%20to%20use%20fish%20shell
+```
+
 ## Options
 
 Utility Options
 - `-h` or `--help`      : Show Help
 - `-v` or `--version`   : Show Version Info
 - `-t` or `--test`      : Test URL Generation
+- `-o` or `--output`    : Print generated URL
 
-Browser Options
-- `-c` or `--chrome`    : Google Chrome
-- `-s` or `--safari`    : Safari
-- `-f` or `--firefox`   : Firefox
-- `-V` or `--vivaldi`   : Vivaldi
+Browser Options (uppercase letter)
+If not specified, ggl opens URL with default browser
+- `-C` or `--Chrome`    : Google Chrome
+- `-S` or `--Safari`    : Safari
+- `-F` or `--Firefox`   : Firefox
+- `-V` or `--Vivaldi`   : Vivaldi
+- `-B` or `--Brave`     : Brave
+- `-b` or `--browser`   : Other Browser
+
+After `-b` option, type browser name with `=` (like `-b=Opera`).
 
 Google Search Options
 - `-e` or `--english`   : English Search
@@ -100,7 +122,7 @@ Google Search Options
 - `-n` or `--nonperson` : Disable Personalized Search
 - `-l` or `--lang`      : Language
 
-After language option, pass language flag with `=`.
+After language option, pass language flag with `=` (like `-l=en`).
 
 Valid Flag | Language
 --|--
@@ -124,7 +146,7 @@ Sites For Japaense Users
 - `-q` or `--qiita`     : Qiita
 
 
-## Develpment
+## Development
 
 - This code is originally based on my [gist](https://gist.github.com/yo-goto/7acfa712006488466d73ff42b9d952cc).
 - Code explanation is [here](https://zenn.dev/estra/articles/google-search-from-fish-shell) (in Japanese).

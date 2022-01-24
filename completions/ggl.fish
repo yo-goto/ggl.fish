@@ -3,6 +3,7 @@ complete -c ggl -s i -f -d 'Image Search'
 complete -c ggl -s p -f -d 'Exact Match'
 complete -c ggl -s n -f -d 'Non-personalized Search'
 complete -c ggl -s e -f -d 'English Search'
+complete -c ggl -s b -f -d 'Use Specific Browser'
 
 function __complete_ggl_lang
     printf '%s\t%s\n' '=en' 'English'
