@@ -11,7 +11,7 @@
 > *Simple Google Search from the command line for [fish shell](https://fishshell.com)*
 
 This is a simple tool for Google searching from the command line made with fish language.   
-You can do things below with this script.  
+You can do things below with this command.  
 
 - URL encoding for multibyte character (CJK)
 - Choose your favorite browser
@@ -114,16 +114,16 @@ If not specified, ggl opens URL with default browser.
 - `-B` or `--Brave`     : Brave
 - `-b` or `--browser`   : Other Browser
 
-After `-b` option, type browser name with `=` (ex: `-b=Opera`).
+After `-b` option, type browser name (ex: `-b=Opera`).
 
 Google Search Options
 - `-e` or `--english`   : English Search
 - `-i` or `--image`     : Image Search
 - `-p` or `--perfect`   : Exact Match
 - `-n` or `--nonperson` : Disable Personalized Search
-- `-l` or `--lang`      : Language
+- `-l` or `--lang`      : Specific Language Search
 
-After language option, pass language flag with `=` (ex: `-l=en`).
+After language option `-l`, type language flag (ex: `-l=en`).
 
 Valid Flag | Language
 --|--
