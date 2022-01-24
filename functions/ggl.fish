@@ -7,12 +7,12 @@ function ggl -d "Search for keywords on Google"
         'v/version' 'h/help' 't/test' 'o/output' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' 'l/lang=?' \
         'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' 'b/browser=?' \
-        'g/github' 'y/youtube' 's/stack' \
+        'g/github' 'y/youtube' 's/stackoverflow' \
         'z/zenn' 'q/qiita' \
         -- $argv
     or return
     
-    set -l gglversion "v1.2.0"
+    set -l gglversion "v1.2.1"
     set -l c yellow # text coloring
     set -l keyword (string join " " $argv)
     set -l encoding (string escape --style=url $keyword)
@@ -24,7 +24,7 @@ function ggl -d "Search for keywords on Google"
     # site option
     [ $_flag_github ]; and set -l baseURL "https://github.com/search?q="
     [ $_flag_youtube ]; and set -l baseURL "https://www.youtube.com/results?search_query="
-    [ $_flag_stack ]; and set -l baseURL "https://stackoverflow.com/search?q="
+    [ $_flag_stackoverflow ]; and set -l baseURL "https://stackoverflow.com/search?q="
     ## for Japanese users
     [ $_flag_zenn ]; and set -l baseURL "https://zenn.dev/search?q="
     [ $_flag_qiita ]; and set -l baseURL "https://qiita.com/search?q="
@@ -39,44 +39,54 @@ function ggl -d "Search for keywords on Google"
         echo 'Welcom to ggl.fish help.'
         echo 'This is a simple tool for Google searching from the command line.'
         set_color $c
-        echo 'Utilities:' 
-        echo '    -h or --help       Show Help'
-        echo '    -v or --version    Show Version Info'
-        echo '    -t or --test       Test URL Generation' 
-        echo '    -o or --output     Print generated URL'
-        echo 'Browser Option (uppercase letter):'
-        echo '    If not specified, ggl opens URL with default browser'
-        echo '    -C or --Chrome     Use Google Chrome' 
-        echo '    -S or --Safari     Use Safari'
-        echo '    -F or --Firefox    Use Firefox'
-        echo '    -V or --Vivaldi    Use Vivaldi'
-        echo '    -B or --Brave      Use Brave'
-        echo '    -b or --browser    Use other browser'
-        echo 'Search Options:'
-        echo '    -i or --image      Image serch'
-        echo '    -p or --perfect    Exact match'
-        echo '    -n or --nonperson  Non-Personalized search'
-        echo '    -e or --english    English Search'
-        echo '    -l or --lang       Language Option'
-        echo '          = e or en    English'
-        echo '          = j or ja    Japanese'
-        echo '          = d or de    German'
-        echo '          = f or fr    French'
-        echo '          = i or it    Italian'
-        echo '          = s or es    Spanish'
-        echo '          = r or ru    Russian'
-        echo '          = k or ko    Korean'
-        echo '          = z or zh    Chinese'
-        echo '    Use language option with `=`'
-        echo '    Eample (English Search): '
-        echo '    $ ggl -l=en how to use fish shell'
-        echo 'Site Option:'
-        echo '    -g or --github     Search with Github'
-        echo '    -y or --youtube    Search with YouTube'
-        echo '    -S or --stack      Search with Stack overflow'
-        echo 'For Japanese Users:'
-        echo '    -z or --zenn       Search with Zenn'
-        echo '    -q or --qiita      Search with Qiita'
+        echo ''
+        echo '  Utility Options:' 
+        echo '      -h or --help          Show Help'
+        echo '      -v or --version       Show Version Info'
+        echo '      -t or --test          Test URL Generation' 
+        echo '      -o or --output        Print generated URL'
+        echo
+        echo '  Browser Options (Uppercase letter):'
+        echo '      -C or --Chrome        Use Google Chrome' 
+        echo '      -S or --Safari        Use Safari'
+        echo '      -F or --Firefox       Use Firefox'
+        echo '      -V or --Vivaldi       Use Vivaldi'
+        echo '      -B or --Brave         Use Brave'
+        echo '      -b or --browser       Use other browser'
+        echo
+        echo '      If not specified, ggl opens a URL with default browser'
+        echo
+        echo '  Search Options:'
+        echo '      -i or --image         Image serch'
+        echo '      -p or --perfect       Exact match'
+        echo '      -n or --nonperson     Non-Personalized search'
+        echo '      -e or --english       English Search'
+        echo '      -l or --lang          Language Option'
+        echo '            = e or en       English'
+        echo '            = j or ja       Japanese'
+        echo '            = d or de       German'
+        echo '            = f or fr       French'
+        echo '            = i or it       Italian'
+        echo '            = s or es       Spanish'
+        echo '            = r or ru       Russian'
+        echo '            = k or ko       Korean'
+        echo '            = z or zh       Chinese'
+        echo
+        echo '      Use language option with `=`'
+        echo '      Example(English Search):'
+        echo '            $ ggl -l=en how to use fish shell'
+        echo '                          or               '
+        echo '            $ ggl -e how to use fish shell'
+        echo
+        echo '  Site Options:'
+        echo '      -g or --github        Search with Github'
+        echo '      -y or --youtube       Search with YouTube'
+        echo '      -s or --stackoverflow Search with Stack overflow'
+        echo ''
+        echo '  For Japanese Users:'
+        echo '      -z or --zenn          Search with Zenn'
+        echo '      -q or --qiita         Search with Qiita'
+        echo
         set_color normal
         return
     end

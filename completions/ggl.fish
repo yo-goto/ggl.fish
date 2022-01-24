@@ -5,6 +5,12 @@ complete -c ggl -s n -f -d 'Non-personalized Search'
 complete -c ggl -s e -f -d 'English Search'
 complete -c ggl -s b -f -d 'Use Specific Browser'
 
+complete -c ggl -l github -f
+complete -c ggl -l youtube -f
+complete -c ggl -l stackoverflow -f
+complete -c ggl -l zenn -f
+complete -c ggl -l qiita -f
+
 function __complete_ggl_lang
     printf '%s\t%s\n' '=en' 'English'
     printf '%s\t%s\n' '=ja' 'Japanese'

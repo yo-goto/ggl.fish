@@ -100,28 +100,28 @@ search?q=how%20to%20use%20fish%20shell
 ## Options
 
 Utility Options
-- `-h` or `--help`      : Show Help
-- `-v` or `--version`   : Show Version Info
-- `-t` or `--test`      : Test URL Generation
-- `-o` or `--output`    : Print generated URL
+- `-h` or `--help`          : Show Help
+- `-v` or `--version`       : Show Version Info
+- `-t` or `--test`          : Test URL Generation
+- `-o` or `--output`        : Print generated URL
 
 Browser Options (uppercase letter)  
 If not specified, ggl opens URL with default browser.  
-- `-C` or `--Chrome`    : Google Chrome
-- `-S` or `--Safari`    : Safari
-- `-F` or `--Firefox`   : Firefox
-- `-V` or `--Vivaldi`   : Vivaldi
-- `-B` or `--Brave`     : Brave
-- `-b` or `--browser`   : Other Browser
+- `-C` or `--Chrome`        : Google Chrome
+- `-S` or `--Safari`        : Safari
+- `-F` or `--Firefox`       : Firefox
+- `-V` or `--Vivaldi`       : Vivaldi
+- `-B` or `--Brave`         : Brave
+- `-b` or `--browser`       : Other Browser
 
 After `-b` option, type browser name (ex: `-b=Opera`).
 
 Google Search Options
-- `-e` or `--english`   : English Search
-- `-i` or `--image`     : Image Search
-- `-p` or `--perfect`   : Exact Match
-- `-n` or `--nonperson` : Disable Personalized Search
-- `-l` or `--lang`      : Specific Language Search
+- `-e` or `--english`        : English Search
+- `-i` or `--image`          : Image Search
+- `-p` or `--perfect`        : Exact Match
+- `-n` or `--nonperson`      : Disable Personalized Search
+- `-l` or `--lang`           : Specific Language Search
 
 After language option `-l`, type language flag (ex: `-l=en`).
 
@@ -138,13 +138,13 @@ Valid Flag | Language
 `z` or `zh` | Chinese
 
 Site Options
-- `-g` or `--github`    : Github
-- `-y` or `--youtube`   : YouTube
-- `-S` or `--stack`     : Stack overflow
+- `-g` or `--github`         : Github
+- `-y` or `--youtube`        : YouTube
+- `-s` or `--stackoverflow`  : Stack overflow
 
 Sites For Japaense Users
-- `-z` or `--zenn`      : Zenn
-- `-q` or `--qiita`     : Qiita
+- `-z` or `--zenn`           : Zenn
+- `-q` or `--qiita`          : Qiita
 
 
 ## Development
