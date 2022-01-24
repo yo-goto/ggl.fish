@@ -27,7 +27,8 @@ You can do things below with this script.
     - Stack overflow
     - For Japanese Users: Zenn, Qiita
 
-This command is developed mainly for macOS. For Linux or any other OS, `ggl` internally excutes `xdg-open` command instead of macOS's `open` command.
+This command is developed mainly for macOS.   
+For Linux or any other OS, `ggl` internally excutes `xdg-open` command instead of macOS's `open` command.  
 
 ## Installation
 
@@ -104,8 +105,8 @@ Utility Options
 - `-t` or `--test`      : Test URL Generation
 - `-o` or `--output`    : Print generated URL
 
-Browser Options (uppercase letter)
-If not specified, ggl opens URL with default browser
+Browser Options (uppercase letter)  
+If not specified, ggl opens URL with default browser.  
 - `-C` or `--Chrome`    : Google Chrome
 - `-S` or `--Safari`    : Safari
 - `-F` or `--Firefox`   : Firefox
@@ -113,7 +114,7 @@ If not specified, ggl opens URL with default browser
 - `-B` or `--Brave`     : Brave
 - `-b` or `--browser`   : Other Browser
 
-After `-b` option, type browser name with `=` (like `-b=Opera`).
+After `-b` option, type browser name with `=` (ex: `-b=Opera`).
 
 Google Search Options
 - `-e` or `--english`   : English Search
@@ -122,7 +123,7 @@ Google Search Options
 - `-n` or `--nonperson` : Disable Personalized Search
 - `-l` or `--lang`      : Language
 
-After language option, pass language flag with `=` (like `-l=en`).
+After language option, pass language flag with `=` (ex: `-l=en`).
 
 Valid Flag | Language
 --|--
@@ -150,6 +151,7 @@ Sites For Japaense Users
 
 - This code is originally based on my [gist](https://gist.github.com/yo-goto/7acfa712006488466d73ff42b9d952cc).
 - Code explanation is [here](https://zenn.dev/estra/articles/google-search-from-fish-shell) (in Japanese).
+- Logo font: [Fish font](https://booth.pm/ja/items/2302848)
 
 ## Contributing
 
