@@ -145,7 +145,7 @@ Google Search Options
 - `-r` or `--range`          : Time Range for Searching
 - `-x` or `--exclude`        : Exclude words from search
 
-After language option `-l`, type language flag (ex: `-l=en`).
+After language option `-l`, specify language flag (ex: `-l=en`).
 
 Valid Flag | Language
 --|--
@@ -166,7 +166,7 @@ Range | Time | Example
 h | Past Hour  | `h6` (within the last 6 hours)
 d | Past Day   | `d5` (within the last 5 days)
 w | Past Week  | `w4` (within the last 4 weeks)
-m | Past Month | `m3  (within the last 3 months)
+m | Past Month | `m3` (within the last 3 months)
 y | Past Year  | `y2` (within the last 2 years)
 
 
