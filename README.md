@@ -10,7 +10,8 @@
 
 > *Simple Google Search from the command line for [fish shell](https://fishshell.com)*
 
-This is a simple tool for Google searching from the command line made with fish language. Easy to manipulate Google URL parameters.   
+This is a simple tool for Google searching from the command line made with fish language.  
+Easy to manipulate Google URL parameters.   
 You can do things below with this command.  
 
 - URL encoding for multibyte character (CJK)
@@ -34,7 +35,7 @@ For Linux or any other OS, `ggl` internally excutes `xdg-open` instead of macOS'
 
 ## Requirements
 - fish shell 3.3.0+
-- For Linux distribution: [xdg-utils](https://www.freedesktop.org/wiki/Software/xdg-utils/)
+- For Linux distributions: [xdg-utils](https://www.freedesktop.org/wiki/Software/xdg-utils/)
 
 ## Installation
 
@@ -95,13 +96,13 @@ $ ggl fish shell -x=pokemon --test
  Excluded   :  pokemon
  Encoded    :  fish+shell+-pokemon
  Search URL :  https://www.google.com/search?q=fish+shell+-pokemon 
-$ ggl fisher plugin -x=Oh-My-fish -r=y1 -e --test
- Keyword    :  fisher plugin
- Excluded   :  Oh-My-fish
- Encoded    :  fisher+plugin+-Oh-My-fish
+$ ggl fish plugin -x=fisher -r=y1 -e --test
+ Keyword    :  fish plugin
+ Excluded   :  fisher
+ Encoded    :  fish+plugin+-fisher
  Language   :  English
  Time Range :  y1
- Search URL :  https://www.google.com/search?q=fisher+plugin+-Oh-My-fish&lr=lang_en&tbs=qdr:y1 
+ Search URL :  https://www.google.com/search?q=fish+plugin+-fisher&lr=lang_en&tbs=qdr:y1
 ```
 
 To pass a generated URL to text proceccing, use `-o` or `--output` option. It just prints the URL.
