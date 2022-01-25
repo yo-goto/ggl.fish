@@ -107,7 +107,7 @@ $ ggl fish shell -x=beginner -x=bash --test
  Excluded   :  beginner bash
  Encoded    :  fish+shell+-beginner+-bash
  Search URL :  https://www.google.com/search?q=fish+shell+-beginner+-bash 
-❯ ggl fish shell -x=初心者 -x=ポケモン --test
+$ ggl fish shell -x=初心者 -x=ポケモン --test
  Keyword    :  fish shell
  Excluded   :  初心者 ポケモン
  Encoded    :  fish+shell+-%E5%88%9D%E5%BF%83%E8%80%85+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3
