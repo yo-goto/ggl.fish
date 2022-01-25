@@ -86,6 +86,10 @@ $ ggl -t how to use fish shell
  Keyword    :  how to use fish shell
  Encoded    :  how+to+use+fish+shell
  Search URL :  https://www.google.com/search?q=how+to+use+fish+shell
+$ ggl fish 使い方 --test
+ Keyword    :  fish 使い方
+ Encoded    :  fish+%E4%BD%BF%E3%81%84%E6%96%B9
+ Search URL :  https://www.google.com/search?q=fish+%E4%BD%BF%E3%81%84%E6%96%B9 
 $ ggl -tei cat cute photo
  Keyword    :  cat cute photo
  Encoded    :  cat+cute+photo
@@ -105,7 +109,7 @@ $ ggl fish plugin -x=fisher -r=y1 -e --test
  Search URL :  https://www.google.com/search?q=fish+plugin+-fisher&lr=lang_en&tbs=qdr:y1
 ```
 
-To pass a generated URL to text proceccing, use `-o` or `--output` option. It just prints the URL.
+To pass a generated URL to any text proceccing, use `-o` or `--output` option. It just prints the URL.
 
 ```console
 $ ggl -o how to use fish shell
@@ -163,11 +167,11 @@ After `-r` or `--range` option, spcify time range (ex: `-r=y2`).
 
 Range | Time | Example
 --|--|--
-h | Past Hour  | `h6` (within the last 6 hours)
-d | Past Day   | `d5` (within the last 5 days)
-w | Past Week  | `w4` (within the last 4 weeks)
-m | Past Month | `m3` (within the last 3 months)
-y | Past Year  | `y2` (within the last 2 years)
+`h` | Past Hour  | `h6` (within the last 6 hours)
+`d` | Past Day   | `d5` (within the last 5 days)
+`w` | Past Week  | `w4` (within the last 4 weeks)
+`m` | Past Month | `m3` (within the last 3 months)
+`y` | Past Year  | `y2` (within the last 2 years)
 
 
 Site Options
