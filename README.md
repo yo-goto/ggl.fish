@@ -11,7 +11,7 @@
 > *Simple Google Search from the command line for [fish shell](https://fishshell.com)*
 
 This is a simple tool for Google searching from the command line made with fish language.  
-Easy to manipulate Google URL parameters.   
+Easy to manipulate Google query parameters.   
 You can do things below with this command.  
 
 - URL encoding for multibyte character (CJK)
@@ -21,8 +21,8 @@ You can do things below with this command.
     - Image Search
     - Specific Language Search
     - Disable Personalized Search
-    - Restrict search results within specified time
-    - Exclude words from your search
+    - Restrict search results within specified time range
+    - Exclude multiple words from your search
     - Autosuggest these options
 - Search with specific sites:
     - Github
@@ -81,6 +81,8 @@ ggl -e English search
 To confirm a generated URL, use `-t` or `--test` option.  
 This test option can be combined with any other options.  
 
+Test Examples:
+
 ```console
 $ ggl -t how to use fish shell
  Keyword    :  how to use fish shell
@@ -100,6 +102,16 @@ $ ggl fish shell -x=pokemon --test
  Excluded   :  pokemon
  Encoded    :  fish+shell+-pokemon
  Search URL :  https://www.google.com/search?q=fish+shell+-pokemon 
+$ ggl fish shell -x=beginner -x=bash --test
+ Keyword    :  fish shell
+ Excluded   :  beginner bash
+ Encoded    :  fish+shell+-beginner+-bash
+ Search URL :  https://www.google.com/search?q=fish+shell+-beginner+-bash 
+❯ ggl fish shell -x=初心者 -x=ポケモン --test
+ Keyword    :  fish shell
+ Excluded   :  初心者 ポケモン
+ Encoded    :  fish+shell+-%E5%88%9D%E5%BF%83%E8%80%85+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3
+ Search URL :  https://www.google.com/search?q=fish+shell+-%E5%88%9D%E5%BF%83%E8%80%85+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3 
 $ ggl fish plugin -x=fisher -r=y1 -e --test
  Keyword    :  fish plugin
  Excluded   :  fisher

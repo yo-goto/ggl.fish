@@ -6,14 +6,14 @@ function ggl -d "Search for keywords on Google"
         -x 'g,y,s,z,q' \
         'v/version' 'h/help' 't/test' 'o/output' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' \
-        'l/lang=?' 'r/range=?' 'x/exclude=?' \
+        'l/lang=' 'r/range=' 'x/exclude=+' \
         'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' 'b/browser=?' \
         'g/github' 'y/youtube' 's/stackoverflow' \
         'z/zenn' 'q/qiita' \
         -- $argv
     or return
     
-    set -l gglversion "v1.3.1"
+    set -l gglversion "v1.4.0"
     set -l c yellow # text coloring
     set -l keyword (string join " " $argv)
     set -l encoding (string escape --style=url $keyword)
@@ -148,13 +148,21 @@ function ggl -d "Search for keywords on Google"
         [ $_flag_image ]; and set _flag_image "tbm=isch"
         [ $_flag_nonperson ]; and set _flag_nonperson "pws=0"
         [ $_flag_range ]; and set range (string join ':' "tbs=qdr" (string trim -c '=' $_flag_range))
-        [ $_flag_exclude ]; and set exclude (string trim -c '=' $_flag_exclude)
+        
+        set -l exlist
+        if set -q _flag_exclude
+            for s in (seq 1 (count $_flag_exclude))
+                set -a exlist (string trim -c '=' $_flag_exclude[$s])
+            end
+            set exclude (string join '+-' (string escape --style=url $exlist))
+        end 
+        
         [ $_flag_perfect ]; and set _flag_perfect "%22" # exact match with escaped double quotes
         and set encoding (string join "" $_flag_perfect $encoding $_flag_perfect)
 
         # complete URL encoding
         set encoding (string replace -a %20 + $encoding)
-        [ $_flag_exclude ]; and set encoding (string join '+-' $encoding $exclude)
+        set -q _flag_exclude; and set encoding (string join '+-' $encoding $exclude)
 
         ## final output URL
         set searchURL (string join "&" (string join "" $baseURL $encoding) $_flag_lang $_flag_image $_flag_nonperson $range) 
@@ -162,8 +170,8 @@ function ggl -d "Search for keywords on Google"
         ## testing for URL generation
         if [ $_flag_test ]
             echo (set_color $c) "Keyword    :" (set_color normal) "$keyword"
-            [ $_flag_exclude ]; and \
-            echo (set_color $c) "Excluded   :" (set_color normal) "$exclude"
+            [ $exclude ]; and \
+            echo (set_color $c) "Excluded   :" (set_color normal) "$exlist"
             echo (set_color $c) "Encoded    :" (set_color normal) "$encoding"
             [ $_flag_lang ]; and \
             echo (set_color $c) "Language   :" (set_color normal) "$lang"
@@ -200,13 +208,16 @@ function ggl -d "Search for keywords on Google"
                 end 
                 echo "Search for \"$argv\"" ([ $site ] && echo "in $site" ) "completed."
             case '*'
-                ## use xdg-open
+                ## use xdg-open for linux distributions
                 xdg-open "$searchURL"
                 or echo "Please Install xdg-utils."
         end
 
     else 
-        echo "Execute this command with arguments."
+        [ $_flag_lang ] || [ $_flag_range ]
+        and echo "Language and Time Range options require = and a valid flag."
+        and echo "See help using -h or --help option."
+        echo "Execute this command with keywords."
     end
 
 end
