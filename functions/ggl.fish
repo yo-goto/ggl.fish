@@ -3,18 +3,18 @@ function ggl -d "Search for keywords on Google"
         -x 'v,h,t,o' \
         -x 'e,l' \
         -x 'C,S,F,V,B,b' \
-        -x 'g,y,s,z,q' \
+        -x 'g,y,s,f,z,q' \
         'v/version' 'h/help' 't/test' 'o/output' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' \
         'l/lang=' 'r/range=' 'x/exclude=+' \
         'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' \
         'b/browser=' \
-        'g/github' 'y/youtube' 's/stackoverflow' \
+        'g/github' 'y/youtube' 's/stackoverflow' 'f/fishdoc' \
         'z/zenn' 'q/qiita' \
         -- $argv
     or return
     
-    set -l gglversion "v1.4.1"
+    set -l gglversion "v1.4.2"
     set -l c yellow # text coloring
     set -l keyword (string join " " $argv)
     set -l encoding (string escape --style=url $keyword)
@@ -27,12 +27,13 @@ function ggl -d "Search for keywords on Google"
     set -l site
 
     # site option
-    [ $_flag_github ]; and set -l baseURL "https://github.com/search?q="; and set site "Github"
-    [ $_flag_youtube ]; and set -l baseURL "https://www.youtube.com/results?search_query="; and set site "YouTube"
-    [ $_flag_stackoverflow ]; and set -l baseURL "https://stackoverflow.com/search?q="; and set site "Stack Overflow"
+    [ $_flag_github ]; and set baseURL "https://github.com/search?q="; and set site "Github"
+    [ $_flag_youtube ]; and set baseURL "https://www.youtube.com/results?search_query="; and set site "YouTube"
+    [ $_flag_stackoverflow ]; and set baseURL "https://stackoverflow.com/search?q="; and set site "Stack Overflow"
+    [ $_flag_fishdoc ]; and set baseURL "https://fishshell.com/docs/current/search.html?q="; and set site "fish-shell docs"
     ## for Japanese users
-    [ $_flag_zenn ]; and set -l baseURL "https://zenn.dev/search?q="; and set site "Zenn"
-    [ $_flag_qiita ]; and set -l baseURL "https://qiita.com/search?q="; and set site "Qiita"
+    [ $_flag_zenn ]; and set baseURL "https://zenn.dev/search?q="; and set site "Zenn"
+    [ $_flag_qiita ]; and set baseURL "https://qiita.com/search?q="; and set site "Qiita"
 
     if [ $_flag_version ]
         echo 'ggl.fish:' $gglversion
@@ -104,6 +105,7 @@ function ggl -d "Search for keywords on Google"
         echo '      -g or --github        Search with Github'
         echo '      -y or --youtube       Search with YouTube'
         echo '      -s or --stackoverflow Search with Stack overflow'
+        echo '      -f or --fishdoc       Search with fish shell docs'
         echo
         echo '  For Japanese Users:'
         echo '      -z or --zenn          Search with Zenn'
@@ -226,6 +228,7 @@ function ggl -d "Search for keywords on Google"
         and echo "Language and Time Range options require = and a valid flag."
         and echo "See help using -h or --help option."
         echo "Execute this command with keywords."
+        return 1
     end
 
 end

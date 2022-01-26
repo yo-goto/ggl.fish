@@ -28,6 +28,7 @@ You can do things below with this command.
     - Github
     - Youtube
     - Stack overflow
+    - fish shell docs
     - For Japanese Users: Zenn, Qiita
 
 This command is developed mainly for macOS.   
