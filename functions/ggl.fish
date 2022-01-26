@@ -1,19 +1,20 @@
 function ggl -d "Search for keywords on Google"
     argparse \
         -x 'v,h,t,o' \
-        -x 'C,S,F,V,B,b' \
         -x 'e,l' \
+        -x 'C,S,F,V,B,b' \
         -x 'g,y,s,z,q' \
         'v/version' 'h/help' 't/test' 'o/output' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' \
         'l/lang=' 'r/range=' 'x/exclude=+' \
-        'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' 'b/browser=?' \
+        'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' \
+        'b/browser=' \
         'g/github' 'y/youtube' 's/stackoverflow' \
         'z/zenn' 'q/qiita' \
         -- $argv
     or return
     
-    set -l gglversion "v1.4.0"
+    set -l gglversion "v1.4.1"
     set -l c yellow # text coloring
     set -l keyword (string join " " $argv)
     set -l encoding (string escape --style=url $keyword)
@@ -68,6 +69,8 @@ function ggl -d "Search for keywords on Google"
         echo '          Use this option with ='
         echo '          Example (exclude the word "bash" from search):'
         echo '              $ ggl fish shell -x=bash'
+        echo '          Possible to use -x option more than once'
+        echo '              $ ggl exclude mutiple words -x=A -x=B'
         echo 
         echo '      -l or --lang          Language Option'
         echo '          = e or en         English'
@@ -91,9 +94,11 @@ function ggl -d "Search for keywords on Google"
         echo '          = w               Past Week'
         echo '          = m               Past Month'
         echo '          = y               Past Year'
-        echo '          Use range option with =, and speficy time range(ex `-r=h3`)'
+        echo '          Use range option with =, and speficy time range (ex `-r=h3`)'
         echo '          Examples (to restrict search result within the last 2 yeare):'
         echo '              $ ggl -r=y2 Results within the last 2 years'
+        echo '          Without number (like `-r=y`), the time range becomes the same as `-r=y1` '
+        echo '              $ ggl -r=m Results within the last month'
         echo
         echo '  Site Options:'
         echo '      -g or --github        Search with Github'
@@ -147,7 +152,7 @@ function ggl -d "Search for keywords on Google"
         [ $_flag_english ]; and set _flag_lang "lr=lang_en"; and set lang "English"
         [ $_flag_image ]; and set _flag_image "tbm=isch"
         [ $_flag_nonperson ]; and set _flag_nonperson "pws=0"
-        [ $_flag_range ]; and set range (string join ':' "tbs=qdr" (string trim -c '=' $_flag_range))
+        [ $_flag_range ]; and set range (string trim -c '=' $_flag_range); and set _flag_range (string join ':' "tbs=qdr" $range)
         
         set -l exlist
         if set -q _flag_exclude
@@ -165,7 +170,7 @@ function ggl -d "Search for keywords on Google"
         set -q _flag_exclude; and set encoding (string join '+-' $encoding $exclude)
 
         ## final output URL
-        set searchURL (string join "&" (string join "" $baseURL $encoding) $_flag_lang $_flag_image $_flag_nonperson $range) 
+        set searchURL (string join "&" (string join "" $baseURL $encoding) $_flag_lang $_flag_image $_flag_nonperson $_flag_range) 
 
         ## testing for URL generation
         if [ $_flag_test ]
@@ -176,7 +181,7 @@ function ggl -d "Search for keywords on Google"
             [ $_flag_lang ]; and \
             echo (set_color $c) "Language   :" (set_color normal) "$lang"
             [ $_flag_range ]; and \
-            echo (set_color $c) "Time Range :" (set_color normal) (string trim -c "tbs=qdr:" "$range")
+            echo (set_color $c) "Time Range :" (set_color normal) "$range"
             [ $site ]; and \
             echo (set_color $c) "Site       :" (set_color normal) "$site"
             echo (set_color $c) "Search URL :" (set_color normal) "$searchURL"
@@ -199,17 +204,20 @@ function ggl -d "Search for keywords on Google"
         end        
 
         # os detection: macOS or other
+        set -l comment (echo "Search for" "\"$argv\"" ( [ $site ] && echo "in $site" ) "completed.")
         switch (uname)
             case Darwin
                 if test -n "$browser"
                     open -a "$browser" "$searchURL"
+                    and echo $comment
                 else 
                     open "$searchURL"
+                    and echo $comment
                 end 
-                echo "Search for \"$argv\"" ([ $site ] && echo "in $site" ) "completed."
             case '*'
                 ## use xdg-open for linux distributions
                 xdg-open "$searchURL"
+                and echo $comment
                 or echo "Please Install xdg-utils."
         end
 

@@ -1,19 +1,20 @@
 complete ggl --no-files
-complete -c ggl -s h -f -d 'Show Help'
-complete -c ggl -s t -l 'test' -f -d 'URL Testing'
-complete -c ggl -s o -f -d 'Output URL'
-complete -c ggl -s i -f -d 'Image Search'
-complete -c ggl -s p -f -d 'Exact Match'
-complete -c ggl -s n -f -d 'Non-personalized Search'
-complete -c ggl -s e -f -d 'English Search'
-complete -c ggl -s b -f -d 'Use Specific Browser'
-complete -c ggl -s x -f -d 'Exclude word'
+complete -c ggl -s h -l help -f -d 'Show Help'
+complete -c ggl -s t -l test -f -d 'URL Testing'
+complete -c ggl -s o -l output -f -d 'Output URL'
+complete -c ggl -s i -l image -f -d 'Image Search'
+complete -c ggl -s p -l perfect -f -d 'Exact Match'
+complete -c ggl -s n -l nonperson -f -d 'Non-personalized Search'
+complete -c ggl -s e -l english -f -d 'English Search'
 
-complete -c ggl -l github -f
-complete -c ggl -l youtube -f
-complete -c ggl -l stackoverflow -f
-complete -c ggl -l zenn -f
-complete -c ggl -l qiita -f
+complete -c ggl -s x -l exclude -x -d 'Exclude word'
+complete -c ggl -s b -l browser -x -d 'Use Specific Browser'
+
+complete -c ggl -s g -l github -f -d 'Search in Github'
+complete -c ggl -s y -l youtube -f -d 'Search in YouTube'
+complete -c ggl -s s -l stackoverflow -f -d 'Search in StackOverflow'
+complete -c ggl -s z -l zenn -f -d 'Search in Zenn'
+complete -c ggl -s q -l qiita -f -d 'Search in Qiita'
 
 function __complete_ggl_range
     printf '%s\t%s\n' '=h' 'Past Hour'

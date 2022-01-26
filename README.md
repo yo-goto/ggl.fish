@@ -88,30 +88,26 @@ $ ggl -t how to use fish shell
  Keyword    :  how to use fish shell
  Encoded    :  how+to+use+fish+shell
  Search URL :  https://www.google.com/search?q=how+to+use+fish+shell
-$ ggl fish 使い方 --test
- Keyword    :  fish 使い方
- Encoded    :  fish+%E4%BD%BF%E3%81%84%E6%96%B9
- Search URL :  https://www.google.com/search?q=fish+%E4%BD%BF%E3%81%84%E6%96%B9 
 $ ggl -tei cat cute photo
  Keyword    :  cat cute photo
  Encoded    :  cat+cute+photo
  Language   :  English
  Search URL :  https://www.google.com/search?q=cat+cute+photo&lr=lang_en&tbm=isch
-$ ggl fish shell -x=pokemon --test
+$ ggl how to fish -x=shell --test
+ Keyword    :  how to fish
+ Excluded   :  shell
+ Encoded    :  how+to+fish+-shell
+ Search URL :  https://www.google.com/search?q=how+to+fish+-shell
+$ ggl fish shell -x=advanced -x=bash --test
  Keyword    :  fish shell
- Excluded   :  pokemon
- Encoded    :  fish+shell+-pokemon
- Search URL :  https://www.google.com/search?q=fish+shell+-pokemon 
-$ ggl fish shell -x=beginner -x=bash --test
- Keyword    :  fish shell
- Excluded   :  beginner bash
- Encoded    :  fish+shell+-beginner+-bash
- Search URL :  https://www.google.com/search?q=fish+shell+-beginner+-bash 
-$ ggl fish shell -x=初心者 -x=ポケモン --test
- Keyword    :  fish shell
- Excluded   :  初心者 ポケモン
- Encoded    :  fish+shell+-%E5%88%9D%E5%BF%83%E8%80%85+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3
- Search URL :  https://www.google.com/search?q=fish+shell+-%E5%88%9D%E5%BF%83%E8%80%85+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3 
+ Excluded   :  advanced bash
+ Encoded    :  fish+shell+-advanced+-bash
+ Search URL :  https://www.google.com/search?q=fish+shell+-advanced+-bash
+$ ggl fishシェル -x=シェルダー -x=ポケモン --test
+ Keyword    :  fishシェル
+ Excluded   :  シェルダー ポケモン
+ Encoded    :  fish%E3%82%B7%E3%82%A7%E3%83%AB+-%E3%82%B7%E3%82%A7%E3%83%AB%E3%83%80%E3%83%BC+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3
+ Search URL :  https://www.google.com/search?q=fish%E3%82%B7%E3%82%A7%E3%83%AB+-%E3%82%B7%E3%82%A7%E3%83%AB%E3%83%80%E3%83%BC+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3
 $ ggl fish plugin -x=fisher -r=y1 -e --test
  Keyword    :  fish plugin
  Excluded   :  fisher
@@ -121,7 +117,7 @@ $ ggl fish plugin -x=fisher -r=y1 -e --test
  Search URL :  https://www.google.com/search?q=fish+plugin+-fisher&lr=lang_en&tbs=qdr:y1
 ```
 
-To pass a generated URL to any text proceccing, use `-o` or `--output` option. It just prints the URL.
+To pass a generated URL to any text proceccing, use `-o` or `--output` option. It just prints the URL without opening a browser.
 
 ```console
 $ ggl -o how to use fish shell
@@ -176,6 +172,7 @@ Valid Flag | Language
 `z` or `zh` | Chinese
 
 After `-r` or `--range` option, spcify time range (ex: `-r=y2`).
+If no numbers are specified (like `-r=y`), the time range becomes the same as `-r=y1`.
 
 Range | Time | Example
 --|--|--
