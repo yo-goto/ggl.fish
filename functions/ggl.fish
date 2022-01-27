@@ -1,20 +1,21 @@
 function ggl -d "Search for keywords on Google"
     argparse \
-        -x 'v,h,t,o' \
+        -x 'v,h,t,o,d' \
         -x 'e,l' \
         -x 'C,S,F,V,B,b' \
-        -x 'g,y,s,f,z,q' \
-        'v/version' 'h/help' 't/test' 'o/output' \
-        'i/image' 'p/perfect' 'n/nonperson' 'e/english' \
+        -x 'u,g,y,s,f,z,q' \
+        'v/version' 'h/help' 't/test' 'o/output' 'd/debug' \
+        'i/image' 'p/perfect' 'n/nonperson' 'e/english' 'a/additional=+' \
         'l/lang=' 'r/range=' 'x/exclude=+' \
         'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' \
         'b/browser=' \
+        'u/url=' \
         'g/github' 'y/youtube' 's/stackoverflow' 'f/fishdoc' \
         'z/zenn' 'q/qiita' \
         -- $argv
     or return
     
-    set -l gglversion "v1.4.2"
+    set -l gglversion "v1.5.0"
     set -l c yellow # text coloring
     set -l keyword (string join " " $argv)
     set -l encoding (string escape --style=url $keyword)
@@ -27,6 +28,7 @@ function ggl -d "Search for keywords on Google"
     set -l site
 
     # site option
+    [ $_flag_url ]; and set baseURL (string trim -lc '=' $_flag_url); and set site "specified URL"
     [ $_flag_github ]; and set baseURL "https://github.com/search?q="; and set site "Github"
     [ $_flag_youtube ]; and set baseURL "https://www.youtube.com/results?search_query="; and set site "YouTube"
     [ $_flag_stackoverflow ]; and set baseURL "https://stackoverflow.com/search?q="; and set site "Stack Overflow"
@@ -45,11 +47,12 @@ function ggl -d "Search for keywords on Google"
         echo 'This is a simple tool for Google searching from the command line.'
         set_color $c
         echo
-        echo '  Utility Options:' 
+        echo '  Utility Options (mutually exclusive):' 
         echo '      -h or --help          Show Help'
         echo '      -v or --version       Show Version Info'
         echo '      -t or --test          Test URL Generation' 
         echo '      -o or --output        Print generated URL'
+        echo '      -d or --debug         Print some tests'
         echo
         echo '  Browser Options (Uppercase letter):'
         echo '      -C or --Chrome        Use Google Chrome' 
@@ -100,18 +103,36 @@ function ggl -d "Search for keywords on Google"
         echo '              $ ggl -r=y2 Results within the last 2 years'
         echo '          Without number (like `-r=y`), the time range becomes the same as `-r=y1` '
         echo '              $ ggl -r=m Results within the last month'
+        echo 
+        echo '      -a or --additional         Addtional Query Parameter'
         echo
-        echo '  Site Options:'
+        echo '  Site Options (mutually exclusive):'
+        echo '      -u or --url           Search with specified URL'
         echo '      -g or --github        Search with Github'
         echo '      -y or --youtube       Search with YouTube'
         echo '      -s or --stackoverflow Search with Stack overflow'
         echo '      -f or --fishdoc       Search with fish shell docs'
         echo
-        echo '  For Japanese Users:'
+        echo '      For Japanese Users:'
         echo '      -z or --zenn          Search with Zenn'
         echo '      -q or --qiita         Search with Qiita'
         echo
         set_color normal
+        return
+    end
+
+    if [ $_flag_debug ]
+        set -l ts
+        set ts[1] "ggl -t how to use fish shell"
+        set ts[2] "ggl -tei cat cute photo"
+        set ts[3] "ggl how to fish -x=shell --test"
+        set ts[4] "ggl fish shell -x=advanced -x=bash --test"
+        set ts[5] "ggl fishシェル -x=シェルダー -x=ポケモン -l=ja --test"
+        set ts[6] "ggl fish plugin -x=fisher -r=y1 -e --test"
+        set ts[7] "ggl --test fish swimming -a=tbm=vid -a=filter=1"
+        for i in (seq 1 (count $ts))
+            echo '$' $ts[$i]; and eval "$ts[$i]"
+        end
         return
     end
 
@@ -154,12 +175,12 @@ function ggl -d "Search for keywords on Google"
         [ $_flag_english ]; and set _flag_lang "lr=lang_en"; and set lang "English"
         [ $_flag_image ]; and set _flag_image "tbm=isch"
         [ $_flag_nonperson ]; and set _flag_nonperson "pws=0"
-        [ $_flag_range ]; and set range (string trim -c '=' $_flag_range); and set _flag_range (string join ':' "tbs=qdr" $range)
+        [ $_flag_range ]; and set range (string trim -lc '=' $_flag_range); and set _flag_range (string join ':' "tbs=qdr" $range)
         
         set -l exlist
         if set -q _flag_exclude
             for s in (seq 1 (count $_flag_exclude))
-                set -a exlist (string trim -c '=' $_flag_exclude[$s])
+                set -a exlist (string trim -lc '=' $_flag_exclude[$s])
             end
             set exclude (string join '+-' (string escape --style=url $exlist))
         end 
@@ -173,6 +194,11 @@ function ggl -d "Search for keywords on Google"
 
         ## final output URL
         set searchURL (string join "&" (string join "" $baseURL $encoding) $_flag_lang $_flag_image $_flag_nonperson $_flag_range) 
+        if set -q _flag_additional
+            for i in (seq 1 (count $_flag_additional))
+                set searchURL (string join "&" $searchURL (string trim -lc '=' $_flag_additional[$i]))
+            end
+        end
 
         ## testing for URL generation
         if [ $_flag_test ]

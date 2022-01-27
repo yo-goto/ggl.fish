@@ -11,7 +11,7 @@
 > *Simple Google Search from the command line for [fish shell](https://fishshell.com)*
 
 This is a simple tool for Google searching from the command line made with fish language.  
-Easy to manipulate Google query parameters.   
+Easy to manipulate Google query parameters with command options.   
 You can do things below with this command.  
 
 - URL encoding for multibyte character (CJK)
@@ -23,12 +23,14 @@ You can do things below with this command.
     - Disable Personalized Search
     - Restrict search results within specified time range
     - Exclude multiple words from your search
+    - Suffix addtinal search parameters
     - Autosuggest these options
-- Search with specific sites:
+- Simple search with specific sites:
     - Github
     - Youtube
     - Stack overflow
     - fish shell docs
+    - Specified URL (if query is possible)
     - For Japanese Users: Zenn, Qiita
 
 This command is developed mainly for macOS.   
@@ -82,7 +84,7 @@ ggl -e English search
 To confirm a generated URL, use `-t` or `--test` option.  
 This test option can be combined with any other options.  
 
-Test Examples:
+Test Examples:  
 
 ```console
 $ ggl -t how to use fish shell
@@ -104,11 +106,12 @@ $ ggl fish shell -x=advanced -x=bash --test
  Excluded   :  advanced bash
  Encoded    :  fish+shell+-advanced+-bash
  Search URL :  https://www.google.com/search?q=fish+shell+-advanced+-bash
-$ ggl fishシェル -x=シェルダー -x=ポケモン --test
+$ ggl fishシェル -x=シェルダー -x=ポケモン -l=ja --test
  Keyword    :  fishシェル
  Excluded   :  シェルダー ポケモン
  Encoded    :  fish%E3%82%B7%E3%82%A7%E3%83%AB+-%E3%82%B7%E3%82%A7%E3%83%AB%E3%83%80%E3%83%BC+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3
- Search URL :  https://www.google.com/search?q=fish%E3%82%B7%E3%82%A7%E3%83%AB+-%E3%82%B7%E3%82%A7%E3%83%AB%E3%83%80%E3%83%BC+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3
+ Language   :  Japanese
+ Search URL :  https://www.google.com/search?q=fish%E3%82%B7%E3%82%A7%E3%83%AB+-%E3%82%B7%E3%82%A7%E3%83%AB%E3%83%80%E3%83%BC+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3&lr=lang_ja
 $ ggl fish plugin -x=fisher -r=y1 -e --test
  Keyword    :  fish plugin
  Excluded   :  fisher
@@ -116,7 +119,14 @@ $ ggl fish plugin -x=fisher -r=y1 -e --test
  Language   :  English
  Time Range :  y1
  Search URL :  https://www.google.com/search?q=fish+plugin+-fisher&lr=lang_en&tbs=qdr:y1
+$ ggl --test fish swimming -a=tbm=vid -a=filter=1
+ Keyword    :  fish swimming
+ Encoded    :  fish+swimming
+ Search URL :  https://www.google.com/search?q=fish+swimming&tbm=vid&filter=1
 ```
+
+These test results can be seen with `-d` or `--debug` option without opeening a browser. 
+The debug option internally runs `ggl --test` for some test cases.
 
 To pass a generated URL to any text proceccing, use `-o` or `--output` option. It just prints the URL without opening a browser.
 
@@ -137,6 +147,7 @@ Utility Options
 - `-v` or `--version`       : Show Version Info
 - `-t` or `--test`          : Test URL Generation
 - `-o` or `--output`        : Print generated URL
+- `-d` or `--debug`         : Print some tests
 
 Browser Options (uppercase letter)  
 If not specified, ggl opens URL with default browser.  
@@ -157,6 +168,7 @@ Google Search Options
 - `-l` or `--lang`           : Specific Language Search
 - `-r` or `--range`          : Time Range for Searching
 - `-x` or `--exclude`        : Exclude words from search
+- `-a` or `--additional`     : Suffix addtional search parameters to URL
 
 After language option `-l`, specify language flag (ex: `-l=en`).
 
@@ -188,6 +200,16 @@ Site Options
 - `-g` or `--github`         : Github
 - `-y` or `--youtube`        : YouTube
 - `-s` or `--stackoverflow`  : Stack overflow
+- `-f` or `--fishdoc`        : fish shell docs
+- `-u` or `--url`            : Specified URL with `=` 
+
+```console
+$ ggl -t javascript -u=https://developer.mozilla.org/en-US/search?q=
+ Keyword    :  javascript
+ Encoded    :  javascript
+ Site       :  specified URL
+ Search URL :  https://developer.mozilla.org/en-US/search?q=javascript
+```
 
 Sites For Japaense Users
 - `-z` or `--zenn`           : Zenn
