@@ -1,10 +1,10 @@
 function ggl -d "Search for keywords on Google"
     argparse \
-        -x 'v,h,t,o,d' \
+        -x 'v,h,t,o,d,m' \
         -x 'e,l' \
         -x 'C,S,F,V,B,b' \
         -x 'u,g,y,s,f,z,q' \
-        'v/version' 'h/help' 't/test' 'o/output' 'd/debug' \
+        'v/version' 'h/help' 't/test' 'o/output' 'd/debug' 'm/mode' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' 'a/additional=+' \
         'l/lang=' 'r/range=' 'x/exclude=+' \
         'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' \
@@ -134,6 +134,32 @@ function ggl -d "Search for keywords on Google"
             echo '$' $ts[$i]; and eval "$ts[$i]"
         end
         return
+    end
+
+    if [ $_flag_mode ]
+        echo '>>>Interactive mode'
+        while true
+            read -l -P 'Enter query keywords: ' query
+            read -l -P 'Need any options? [y/n]: ' need_option
+            switch $need_option
+                case Y y
+                    read -l -P 'Choose Options [Image] : ' opt
+                case N n
+            end
+            read -l -P 'ggl? [y/n]: ' question
+            switch $question
+                case Y y
+                    ggl $question
+                    return 0
+                case '' N n
+                    read -l -P 'Exit? [y/n]: ' e
+                    switch $e
+                        case Y y
+                            return
+                        case '' N n
+                    end
+            end
+        end
     end
 
     # main
