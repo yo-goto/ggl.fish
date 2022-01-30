@@ -15,7 +15,7 @@ function ggl -d "Search for keywords on Google"
         -- $argv
     or return
     
-    set --local gglversion "v1.5.1"
+    set --local gglversion "v1.5.2"
     set --local c yellow # text coloring
     set --local keyword (string join " " $argv)
     set --local baseURL "https://www.google.com/search?q="
