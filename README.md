@@ -10,9 +10,9 @@
 
 > *Simple Google Search from the command line for [fish shell](https://fishshell.com)*
 
-This is a simple tool for Google searching from the command line made with fish language.  
+This is a simple fish plugin for Google searching from the command line.  
 Easy to manipulate Google query parameters with command options.   
-You can do things below with this command.  
+You can do things below with this plugin.  
 
 - URL encoding for multibyte character (CJK)
 - Choose your favorite browser
@@ -37,7 +37,7 @@ This command is developed mainly for macOS.
 For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's `open` command.  
 
 ## Requirements
-- fish shell 3.3.0+
+- fish shell 3.2.0+
 - For Linux distributions: [xdg-utils](https://www.freedesktop.org/wiki/Software/xdg-utils/)
 
 ## Installation
