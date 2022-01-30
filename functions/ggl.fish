@@ -15,7 +15,7 @@ function ggl -d "Search for keywords on Google"
         -- $argv
     or return
     
-    set -l gglversion "v1.5.0"
+    set -l gglversion "v1.5.1"
     set -l c yellow # text coloring
     set -l keyword (string join " " $argv)
     set -l encoding (string escape --style=url $keyword)
@@ -127,7 +127,7 @@ function ggl -d "Search for keywords on Google"
         set ts[2] "ggl -tei cat cute photo"
         set ts[3] "ggl how to fish -x=shell --test"
         set ts[4] "ggl fish shell -x=advanced -x=bash --test"
-        set ts[5] "ggl fishシェル -x=シェルダー -x=ポケモン -l=ja --test"
+        set ts[5] "ggl fishシェル -x=シェルダー -l=ja --test"
         set ts[6] "ggl fish plugin -x=fisher -r=y1 -e --test"
         set ts[7] "ggl --test fish swimming -a=tbm=vid -a=filter=1"
         for i in (seq 1 (count $ts))

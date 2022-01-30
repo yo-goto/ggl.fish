@@ -34,7 +34,7 @@ You can do things below with this command.
     - For Japanese Users: Zenn, Qiita
 
 This command is developed mainly for macOS.   
-For Linux or any other OS, `ggl` internally excutes `xdg-open` instead of macOS's `open` command.  
+For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's `open` command.  
 
 ## Requirements
 - fish shell 3.3.0+
@@ -106,12 +106,12 @@ $ ggl fish shell -x=advanced -x=bash --test
  Excluded   :  advanced bash
  Encoded    :  fish+shell+-advanced+-bash
  Search URL :  https://www.google.com/search?q=fish+shell+-advanced+-bash
-$ ggl fishシェル -x=シェルダー -x=ポケモン -l=ja --test
+$ ggl fishシェル -x=シェルダー -l=ja --test
  Keyword    :  fishシェル
- Excluded   :  シェルダー ポケモン
- Encoded    :  fish%E3%82%B7%E3%82%A7%E3%83%AB+-%E3%82%B7%E3%82%A7%E3%83%AB%E3%83%80%E3%83%BC+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3
+ Excluded   :  シェルダー
+ Encoded    :  fish%E3%82%B7%E3%82%A7%E3%83%AB+-%E3%82%B7%E3%82%A7%E3%83%AB%E3%83%80%E3%83%BC
  Language   :  Japanese
- Search URL :  https://www.google.com/search?q=fish%E3%82%B7%E3%82%A7%E3%83%AB+-%E3%82%B7%E3%82%A7%E3%83%AB%E3%83%80%E3%83%BC+-%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3&lr=lang_ja
+ Search URL :  https://www.google.com/search?q=fish%E3%82%B7%E3%82%A7%E3%83%AB+-%E3%82%B7%E3%82%A7%E3%83%AB%E3%83%80%E3%83%BC&lr=lang_ja
 $ ggl fish plugin -x=fisher -r=y1 -e --test
  Keyword    :  fish plugin
  Excluded   :  fisher
@@ -125,10 +125,10 @@ $ ggl --test fish swimming -a=tbm=vid -a=filter=1
  Search URL :  https://www.google.com/search?q=fish+swimming&tbm=vid&filter=1
 ```
 
-These test results can be seen with `-d` or `--debug` option without opeening a browser. 
+These test results can be seen with `-d` or `--debug` option without opening a browser. 
 The debug option internally runs `ggl --test` for some test cases.
 
-To pass a generated URL to any text proceccing, use `-o` or `--output` option. It just prints the URL without opening a browser.
+To pass a generated URL to any text proceccing, use `-o` or `--output` option. It just prints the URL.
 
 ```console
 $ ggl -o how to use fish shell
