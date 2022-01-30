@@ -15,17 +15,11 @@ function ggl -d "Search for keywords on Google"
         -- $argv
     or return
     
-    set -l gglversion "v1.5.1"
-    set -l c yellow # text coloring
-    set -l keyword (string join " " $argv)
-    set -l encoding (string escape --style=url $keyword)
-    set -l baseURL "https://www.google.com/search?q="
-    set -l searchURL
-    set -l lang
-    set -l range
-    set -l exclude
-    set -l browser
-    set -l site
+    set --local gglversion "v1.5.2"
+    set --local c yellow # text coloring
+    set --local keyword (string join " " $argv)
+    set --local baseURL "https://www.google.com/search?q="
+    set --local site
 
     # site option
     [ $_flag_url ]; and set baseURL (string trim -lc '=' $_flag_url); and set site "specified URL"
@@ -163,7 +157,15 @@ function ggl -d "Search for keywords on Google"
     end
 
     # main
-    if test -n "$encoding"
+    if test -n "$keyword"
+
+        set --local encoding (string escape --style=url $keyword)
+        set --local searchURL
+        set --local lang
+        set --local range
+        set --local exclude
+        set --local exlist
+        set --local browser
         
         ## google search options: parameter handling
         [ $_flag_lang ]; and switch "$_flag_lang"
@@ -203,7 +205,6 @@ function ggl -d "Search for keywords on Google"
         [ $_flag_nonperson ]; and set _flag_nonperson "pws=0"
         [ $_flag_range ]; and set range (string trim -lc '=' $_flag_range); and set _flag_range (string join ':' "tbs=qdr" $range)
         
-        set -l exlist
         if set -q _flag_exclude
             for s in (seq 1 (count $_flag_exclude))
                 set -a exlist (string trim -lc '=' $_flag_exclude[$s])
