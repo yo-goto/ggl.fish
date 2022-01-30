@@ -138,6 +138,7 @@ function ggl -d "Search for keywords on Google"
         set --local lang
         set --local range
         set --local exclude
+        set --local exlist
         set --local browser
         
         ## google search options: parameter handling
@@ -178,7 +179,6 @@ function ggl -d "Search for keywords on Google"
         [ $_flag_nonperson ]; and set _flag_nonperson "pws=0"
         [ $_flag_range ]; and set range (string trim -lc '=' $_flag_range); and set _flag_range (string join ':' "tbs=qdr" $range)
         
-        set -l exlist
         if set -q _flag_exclude
             for s in (seq 1 (count $_flag_exclude))
                 set -a exlist (string trim -lc '=' $_flag_exclude[$s])
