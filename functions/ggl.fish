@@ -15,38 +15,38 @@ function ggl -d "Search for keywords on Google"
         -- $argv
     or return
     
-    set --local gglversion "v1.6.0"
+    set --local gglversion "v1.6.1"
     set --local c yellow # text coloring
     set --local keyword (string join " " $argv)
     set --local baseURL "https://www.google.com/search?q="
     set --local site
 
     # site option
-    [ $_flag_url ]; and set baseURL (string trim -lc '=' $_flag_url); and set site "specified URL"
-    [ $_flag_github ]; and set baseURL "https://github.com/search?q="; and set site "Github"
-    [ $_flag_youtube ]; and set baseURL "https://www.youtube.com/results?search_query="; and set site "YouTube"
-    [ $_flag_stackoverflow ]; and set baseURL "https://stackoverflow.com/search?q="; and set site "Stack Overflow"
-    [ $_flag_fishdoc ]; and set baseURL "https://fishshell.com/docs/current/search.html?q="; and set site "fish-shell docs"
+    set -q _flag_url; and set baseURL (string trim -lc '=' $_flag_url); and set site "specified URL"
+    set -q _flag_github; and set baseURL "https://github.com/search?q="; and set site "Github"
+    set -q _flag_youtube; and set baseURL "https://www.youtube.com/results?search_query="; and set site "YouTube"
+    set -q _flag_stackoverflow; and set baseURL "https://stackoverflow.com/search?q="; and set site "Stack Overflow"
+    set -q _flag_fishdoc; and set baseURL "https://fishshell.com/docs/current/search.html?q="; and set site "fish-shell docs"
     ## for Japanese users
-    [ $_flag_zenn ]; and set baseURL "https://zenn.dev/search?q="; and set site "Zenn"
-    [ $_flag_qiita ]; and set baseURL "https://qiita.com/search?q="; and set site "Qiita"
+    set -q _flag_zenn; and set baseURL "https://zenn.dev/search?q="; and set site "Zenn"
+    set -q _flag_qiita; and set baseURL "https://qiita.com/search?q="; and set site "Qiita"
 
-    if [ $_flag_version ]
+    if set -q _flag_version
         echo 'ggl.fish:' $gglversion
         return
     end
 
-    if [ $_flag_help ]
+    if set -q _flag_help
         _ggl_help
         return
     end
 
-    if [ $_flag_debug ]
+    if set -q _flag_debug
         _ggl_debug
         return
     end
 
-    if [ $_flag_mode ]
+    if set -q _flag_mode
         _ggl_interactive
         return
     end
@@ -63,7 +63,7 @@ function ggl -d "Search for keywords on Google"
         set --local browser
         
         ## google search options: parameter handling
-        [ $_flag_lang ]; and switch "$_flag_lang"
+        set -q _flag_lang; and switch "$_flag_lang"
             case =e =en =english =English
                 set _flag_lang "lr=lang_en"
                 set lang "English"
@@ -92,14 +92,15 @@ function ggl -d "Search for keywords on Google"
                 set _flag_lang "lr=lang_zh-CH"
                 set lang "Chinese"
             case '*'
+                set _flag_lang ''
                 echo 'Flag: ' $_flag_lang
                 echo "Invalid language flag. See help with -h option."
         end
 
-        [ $_flag_english ]; and set _flag_lang "lr=lang_en"; and set lang "English"
-        [ $_flag_image ]; and set _flag_image "tbm=isch"
-        [ $_flag_nonperson ]; and set _flag_nonperson "pws=0"
-        [ $_flag_range ]; and set range (string trim -lc '=' $_flag_range); and set _flag_range (string join ':' "tbs=qdr" $range)
+        set -q _flag_english; and set _flag_lang "lr=lang_en"; and set lang "English"
+        set -q _flag_image; and set _flag_image "tbm=isch"
+        set -q _flag_nonperson; and set _flag_nonperson "pws=0"
+        set -q _flag_range; and set range (string trim -lc '=' $_flag_range); and set _flag_range (string join ':' "tbs=qdr" $range)
         
         if set -q _flag_exclude
             for s in (seq 1 (count $_flag_exclude))
@@ -108,7 +109,7 @@ function ggl -d "Search for keywords on Google"
             set exclude (string join '+-' (string escape --style=url $exlist))
         end 
         
-        [ $_flag_perfect ]; and set _flag_perfect "%22" # exact match with escaped double quotes
+        set -q _flag_perfect; and set _flag_perfect "%22" # exact match with escaped double quotes
         and set encoding (string join "" $_flag_perfect $encoding $_flag_perfect)
 
         # complete URL encoding
@@ -124,14 +125,19 @@ function ggl -d "Search for keywords on Google"
         end
 
         ## testing for URL generation
-        if [ $_flag_test ]
+        if set -q _flag_test
             echo (set_color $c) "Keyword    :" (set_color normal) "$keyword"
             [ $exclude ]; and \
             echo (set_color $c) "Excluded   :" (set_color normal) "$exlist"
             echo (set_color $c) "Encoded    :" (set_color normal) "$encoding"
-            [ $_flag_lang ]; and \
-            echo (set_color $c) "Language   :" (set_color normal) "$lang"
-            [ $_flag_range ]; and \
+            if set -q _flag_lang
+                if test -n "$_flag_lang"
+                    echo (set_color $c) "Language   :" (set_color normal) "$lang"
+                else
+                    echo (set_color $c) "Language   :" (set_color normal) "Invalid"
+                end
+            end
+            set -q _flag_range; and \
             echo (set_color $c) "Time Range :" (set_color normal) "$range"
             [ $site ]; and \
             echo (set_color $c) "Site       :" (set_color normal) "$site"
@@ -146,12 +152,12 @@ function ggl -d "Search for keywords on Google"
         end
 
         # browser options
-        if [ $_flag_Vivaldi ]; set browser "Vivaldi"
-        else if [ $_flag_Chrome ]; set browser "Google Chrome"
-        else if [ $_flag_Safari ]; set browser "Safari"
-        else if [ $_flag_Firefox ]; set browser "Firefox"
-        else if [ $_flag_Brave ]; set browser "Brave" 
-        else if [ $_flag_browser ]; and set browser (string trim -lc '=' $_flag_browser)
+        if set -q _flag_Vivaldi; set browser "Vivaldi"
+        else if set -q _flag_Chrome; set browser "Google Chrome"
+        else if set -q _flag_Safari; set browser "Safari"
+        else if set -q _flag_Firefox; set browser "Firefox"
+        else if set -q _flag_Brave; set browser "Brave" 
+        else if set -q _flag_browser; and set browser (string trim -lc '=' $_flag_browser)
         end        
 
         # os detection: macOS or other
@@ -173,7 +179,7 @@ function ggl -d "Search for keywords on Google"
         end
 
     else 
-        [ $_flag_lang ] || [ $_flag_range ]
+        set -q _flag_lang || set -q _flag_range
         and echo "Language and Time Range options require = and a valid flag."
         and echo "See help using -h or --help option."
         echo "Execute this command with keywords."
@@ -189,6 +195,11 @@ function _ggl_interactive
 
     set --local c yellow
     set --local c_accent blue
+
+    set --local cc (set_color $c)
+    set --local ca (set_color $c_accent)
+    set --local cn (set_color normal)
+
     set --local mode
 
     set_color $c    
@@ -413,7 +424,7 @@ function _ggl_help
     set --local c yellow
 
     echo 'Welcom to ggl.fish help.'
-    echo 'This is a simple tool for Google searching from the command line.'
+    echo 'This is a simple fish plugin for Google searching from the command line.'
     set_color $c
     echo
     echo '  Utility Options (mutually exclusive):' 
