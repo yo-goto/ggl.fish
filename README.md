@@ -236,6 +236,11 @@ Pull requests are welcom.
 
 ## Change Log
 
+- v1.6.1
+    - Improvement
+        - made option handling more stable
+        - made `open` command more stable
+        - modified debug & help options
 - v1.6.0
     - New Feature
         - Interactive Mode 
