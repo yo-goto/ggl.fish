@@ -10,6 +10,8 @@
 
 > *Simple Google Search from the command line for [fish shell](https://fishshell.com)*
 
+<img src="https://user-images.githubusercontent.com/50942816/151814043-45766fe8-84e1-4eb8-acf1-1fb543335d73.gif" width="100%" height="auto">
+
 This is a simple fish plugin for Google searching from the command line.  
 Easy to manipulate Google query parameters with command options.   
 You can do things below with this plugin.  
