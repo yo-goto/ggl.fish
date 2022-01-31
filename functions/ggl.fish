@@ -165,10 +165,10 @@ function ggl -d "Search for keywords on Google"
         switch (uname)
             case Darwin
                 if test -n "$browser"
-                    open -a "$browser" "$searchURL"
+                    command open -a "$browser" "$searchURL"
                     and not set -q _flag_quiet; and echo $comment
                 else 
-                    open "$searchURL"
+                    command open "$searchURL"
                     and not set -q _flag_quiet; and echo $comment
                 end 
             case '*'
@@ -192,15 +192,13 @@ end
 # helper functions
 ## for interactive mode
 function _ggl_interactive
+    set --local mode
 
     set --local c yellow
     set --local c_accent blue
-
     set --local cc (set_color $c)
     set --local ca (set_color $c_accent)
     set --local cn (set_color normal)
-
-    set --local mode
 
     set_color $c    
     echo '>> Interactive Mode' (set_color normal)
@@ -406,7 +404,8 @@ end
 
 
 function _ggl_debug
-    set -l ts
+    set --local ts
+
     set ts[1] "ggl -t how to use fish shell"
     set ts[2] "ggl -tei cat cute photo"
     set ts[3] "ggl how to fish -x=shell --test"
