@@ -14,6 +14,9 @@ This is a simple fish plugin for Google searching from the command line.
 Easy to manipulate Google query parameters with command options.   
 You can do things below with this plugin.  
 
+- Interactive Search Mode (Shiny new thing from v1.6.0)
+    - Sequential Search Mode
+    - Option Selective Search Mode
 - URL encoding for multibyte character (CJK)
 - Choose your favorite browser
 - Google Search Options:
@@ -78,6 +81,10 @@ ggl -l=ja 日本語検索
 
 ggl -e English search
 # search in English, you can alse use -e or --english option
+
+ggl --mode
+>> Interactive Mode
+Select Mode [s/sequential | o/optional | e/exit]:
 ```
 
 `ggl.fish` internally generates searchable URLs.  
@@ -145,9 +152,11 @@ search?q=how+to+use+fish+shell
 Utility Options
 - `-h` or `--help`          : Show Help
 - `-v` or `--version`       : Show Version Info
+- `-m` or `--mode`          : Interactive Search Mode
 - `-t` or `--test`          : Test URL Generation
 - `-o` or `--output`        : Print generated URL
 - `-d` or `--debug`         : Print some tests
+- `--quiet`                : Open URL without printing anything
 
 Browser Options (uppercase letter)  
 If not specified, ggl opens URL with default browser.  
@@ -224,4 +233,14 @@ Sites For Japaense Users
 ## Contributing
 
 Pull requests are welcom. 
+
+## Change Log
+
+- v1.6.0
+    - New Feature
+        - Interactive Mode 
+        - quiet option
+    - Improvement
+        - Code Refactoring: Split main function into some helper function
+
 

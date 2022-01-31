@@ -2,6 +2,9 @@ complete ggl --no-files
 complete -c ggl -s h -l help -f -d 'Show Help'
 complete -c ggl -s t -l test -f -d 'URL Testing'
 complete -c ggl -s o -l output -f -d 'Output URL'
+complete -c ggl -s m -l mode -f -d 'Interactive Search Mode'
+complete -c ggl -l quiet -f -d 'Not show complete message'
+
 complete -c ggl -s i -l image -f -d 'Image Search'
 complete -c ggl -s p -l perfect -f -d 'Exact Match'
 complete -c ggl -s n -l nonperson -f -d 'Non-personalized Search'
