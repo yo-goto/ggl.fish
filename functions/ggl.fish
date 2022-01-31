@@ -146,7 +146,7 @@ function ggl -d "Search for keywords on Google"
         end
 
         ## just print a generated URL
-        if [ $_flag_output ]
+        if set -q _flag_output
             echo "$searchURL"
             return
         end
@@ -405,14 +405,14 @@ end
 
 function _ggl_debug
     set --local ts
-
-    set ts[1] "ggl -t how to use fish shell"
-    set ts[2] "ggl -tei cat cute photo"
-    set ts[3] "ggl how to fish -x=shell --test"
-    set ts[4] "ggl fish shell -x=advanced -x=bash --test"
-    set ts[5] "ggl fishシェル -x=シェルダー -l=ja --test"
-    set ts[6] "ggl fish plugin -x=fisher -r=y1 -e --test"
-    set ts[7] "ggl --test fish swimming -a=tbm=vid -a=filter=1"
+    ## test cases 
+    set -a ts "ggl -t how to use fish shell"
+    set -a ts "ggl -tei cat cute photo"
+    set -a ts "ggl how to fish -x=shell --test"
+    set -a ts "ggl fish shell -x=advanced -x=bash --test"
+    set -a ts "ggl fishシェル -x=シェルダー -l=ja --test"
+    set -a ts "ggl fish plugin -x=fisher -r=y1 -e --test"
+    set -a ts "ggl --test fish swimming -a=tbm=vid -a=filter=1"
     for i in (seq 1 (count $ts))
         echo '$' $ts[$i]; and eval "$ts[$i]"
     end
@@ -425,7 +425,6 @@ function _ggl_help
     echo 'Welcom to ggl.fish help.'
     echo 'This is a simple fish plugin for Google searching from the command line.'
     set_color $c
-    echo
     echo '  Utility Options (mutually exclusive):' 
     echo '      -h or --help          Show Help'
     echo '      -v or --version       Show Version Info'
@@ -433,8 +432,7 @@ function _ggl_help
     echo '      -t or --test          Test URL Generation' 
     echo '      -o or --output        Print generated URL'
     echo '      -d or --debug         Print some tests'
-    echo '      --quiet              Do search without complete message'
-    echo
+    echo '      --quiet               Do search without complete message'
     echo '  Browser Options (Uppercase letter):'
     echo '      -C or --Chrome        Use Google Chrome' 
     echo '      -S or --Safari        Use Safari'
@@ -442,12 +440,14 @@ function _ggl_help
     echo '      -V or --Vivaldi       Use Vivaldi'
     echo '      -B or --Brave         Use Brave'
     echo '      -b or --browser       Use other browser'
-    echo
     echo '      If no options are specified, ggl opens a URL with default browser'
-    echo
     echo '  Search Options:'
     echo '      -i or --image         Image serch'
     echo '      -p or --perfect       Exact match'
+    echo '          Examples'
+    echo '              $ ggl fish shell -p'
+    echo '                      or'
+    echo '              $ ggl \'"fish shell"\' command'
     echo '      -n or --nonperson     Non-Personalized search'
     echo '      -e or --english       English Search'
     echo '      -x or --exclude       Exclude word from search'
@@ -456,7 +456,6 @@ function _ggl_help
     echo '              $ ggl fish shell -x=bash'
     echo '          Possible to use -x option more than once'
     echo '              $ ggl exclude mutiple words -x=A -x=B'
-    echo 
     echo '      -l or --lang          Language Option'
     echo '          = e or en         English'
     echo '          = j or ja         Japanese'
@@ -472,7 +471,6 @@ function _ggl_help
     echo '              $ ggl -l=en how to use fish shell'
     echo '                            or               '
     echo '              $ ggl -e how to use fish shell'
-    echo 
     echo '      -r or --range         Time Range for Searching'
     echo '          = h               Past Hour'
     echo '          = d               Past Day'
@@ -484,16 +482,13 @@ function _ggl_help
     echo '              $ ggl -r=y2 Results within the last 2 years'
     echo '          Without number (like `-r=y`), the time range becomes the same as `-r=y1` '
     echo '              $ ggl -r=m Results within the last month'
-    echo 
     echo '      -a or --additional         Addtional Query Parameter'
-    echo
     echo '  Site Options (mutually exclusive):'
     echo '      -u or --url           Search with specified URL'
     echo '      -g or --github        Search with Github'
     echo '      -y or --youtube       Search with YouTube'
     echo '      -s or --stackoverflow Search with Stack overflow'
     echo '      -f or --fishdoc       Search with fish shell docs'
-    echo
     echo '      For Japanese Users:'
     echo '      -z or --zenn          Search with Zenn'
     echo '      -q or --qiita         Search with Qiita'
