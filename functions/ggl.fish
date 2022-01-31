@@ -1,10 +1,10 @@
 function ggl -d "Search for keywords on Google"
     argparse \
-        -x 'v,h,t,o,d' \
+        -x 'v,h,t,o,d,m,quiet' \
         -x 'e,l' \
         -x 'C,S,F,V,B,b' \
         -x 'u,g,y,s,f,z,q' \
-        'v/version' 'h/help' 't/test' 'o/output' 'd/debug' \
+        'v/version' 'h/help' 't/test' 'o/output' 'd/debug' 'm/mode' 'quiet' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' 'a/additional=+' \
         'l/lang=' 'r/range=' 'x/exclude=+' \
         'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' \
@@ -15,7 +15,7 @@ function ggl -d "Search for keywords on Google"
         -- $argv
     or return
     
-    set --local gglversion "v1.5.2"
+    set --local gglversion "v1.6.0"
     set --local c yellow # text coloring
     set --local keyword (string join " " $argv)
     set --local baseURL "https://www.google.com/search?q="
@@ -37,96 +37,17 @@ function ggl -d "Search for keywords on Google"
     end
 
     if [ $_flag_help ]
-        echo 'Welcom to ggl.fish help.'
-        echo 'This is a simple tool for Google searching from the command line.'
-        set_color $c
-        echo
-        echo '  Utility Options (mutually exclusive):' 
-        echo '      -h or --help          Show Help'
-        echo '      -v or --version       Show Version Info'
-        echo '      -t or --test          Test URL Generation' 
-        echo '      -o or --output        Print generated URL'
-        echo '      -d or --debug         Print some tests'
-        echo
-        echo '  Browser Options (Uppercase letter):'
-        echo '      -C or --Chrome        Use Google Chrome' 
-        echo '      -S or --Safari        Use Safari'
-        echo '      -F or --Firefox       Use Firefox'
-        echo '      -V or --Vivaldi       Use Vivaldi'
-        echo '      -B or --Brave         Use Brave'
-        echo '      -b or --browser       Use other browser'
-        echo
-        echo '      If no options are specified, ggl opens a URL with default browser'
-        echo
-        echo '  Search Options:'
-        echo '      -i or --image         Image serch'
-        echo '      -p or --perfect       Exact match'
-        echo '      -n or --nonperson     Non-Personalized search'
-        echo '      -e or --english       English Search'
-        echo '      -x or --exclude       Exclude word from search'
-        echo '          Use this option with ='
-        echo '          Example (exclude the word "bash" from search):'
-        echo '              $ ggl fish shell -x=bash'
-        echo '          Possible to use -x option more than once'
-        echo '              $ ggl exclude mutiple words -x=A -x=B'
-        echo 
-        echo '      -l or --lang          Language Option'
-        echo '          = e or en         English'
-        echo '          = j or ja         Japanese'
-        echo '          = d or de         German'
-        echo '          = f or fr         French'
-        echo '          = i or it         Italian'
-        echo '          = s or es         Spanish'
-        echo '          = r or ru         Russian'
-        echo '          = k or ko         Korean'
-        echo '          = z or zh         Chinese'
-        echo '          Use language option with ='
-        echo '          Example (English Search):'
-        echo '              $ ggl -l=en how to use fish shell'
-        echo '                            or               '
-        echo '              $ ggl -e how to use fish shell'
-        echo 
-        echo '      -r or --range         Time Range for Searching'
-        echo '          = h               Past Hour'
-        echo '          = d               Past Day'
-        echo '          = w               Past Week'
-        echo '          = m               Past Month'
-        echo '          = y               Past Year'
-        echo '          Use range option with =, and speficy time range (ex `-r=h3`)'
-        echo '          Examples (to restrict search result within the last 2 yeare):'
-        echo '              $ ggl -r=y2 Results within the last 2 years'
-        echo '          Without number (like `-r=y`), the time range becomes the same as `-r=y1` '
-        echo '              $ ggl -r=m Results within the last month'
-        echo 
-        echo '      -a or --additional         Addtional Query Parameter'
-        echo
-        echo '  Site Options (mutually exclusive):'
-        echo '      -u or --url           Search with specified URL'
-        echo '      -g or --github        Search with Github'
-        echo '      -y or --youtube       Search with YouTube'
-        echo '      -s or --stackoverflow Search with Stack overflow'
-        echo '      -f or --fishdoc       Search with fish shell docs'
-        echo
-        echo '      For Japanese Users:'
-        echo '      -z or --zenn          Search with Zenn'
-        echo '      -q or --qiita         Search with Qiita'
-        echo
-        set_color normal
+        _ggl_help
         return
     end
 
     if [ $_flag_debug ]
-        set -l ts
-        set ts[1] "ggl -t how to use fish shell"
-        set ts[2] "ggl -tei cat cute photo"
-        set ts[3] "ggl how to fish -x=shell --test"
-        set ts[4] "ggl fish shell -x=advanced -x=bash --test"
-        set ts[5] "ggl fishシェル -x=シェルダー -l=ja --test"
-        set ts[6] "ggl fish plugin -x=fisher -r=y1 -e --test"
-        set ts[7] "ggl --test fish swimming -a=tbm=vid -a=filter=1"
-        for i in (seq 1 (count $ts))
-            echo '$' $ts[$i]; and eval "$ts[$i]"
-        end
+        _ggl_debug
+        return
+    end
+
+    if [ $_flag_mode ]
+        _ggl_interactive
         return
     end
 
@@ -143,34 +64,35 @@ function ggl -d "Search for keywords on Google"
         
         ## google search options: parameter handling
         [ $_flag_lang ]; and switch "$_flag_lang"
-            case =e =en
+            case =e =en =english =English
                 set _flag_lang "lr=lang_en"
                 set lang "English"
-            case =j =ja
+            case =j =ja =japanese =Japanese
                 set _flag_lang "lr=lang_ja"
                 set lang "Japanese"
-            case =d =de
+            case =d =de =german =German
                 set _flag_lang "lr=lang_de"
                 set lang "German"
-            case =f =fr
+            case =f =fr =french =French
                 set _flag_lang "lr=lang_fr"
                 set lang "French"
-            case =i =it
+            case =i =it =italian =Italian
                 set _flag_lang "lr=lang_it"
                 set lang "Italian"
-            case =s =es
+            case =s =es =spanish =Spanish
                 set _flag_lang "lr=lang_es"
                 set lang "Spanish"
-            case =r =ru
+            case =r =ru =russian =Russian
                 set _flag_lang "lr=lang_ru"
                 set lang "Russian"
-            case =k =ko
+            case =k =ko =korean =Korean
                 set _flag_lang "lr=lang_ko"
                 set lang "Korean"
-            case =z =zh
+            case =z =zh =chinese =Chinese
                 set _flag_lang "lr=lang_zh-CH"
                 set lang "Chinese"
             case '*'
+                echo 'Flag: ' $_flag_lang
                 echo "Invalid language flag. See help with -h option."
         end
 
@@ -238,15 +160,15 @@ function ggl -d "Search for keywords on Google"
             case Darwin
                 if test -n "$browser"
                     open -a "$browser" "$searchURL"
-                    and echo $comment
+                    and not set -q _flag_quiet; and echo $comment
                 else 
                     open "$searchURL"
-                    and echo $comment
+                    and not set -q _flag_quiet; and echo $comment
                 end 
             case '*'
                 ## use xdg-open for linux distributions
                 xdg-open "$searchURL"
-                and echo $comment
+                and not set -q _flag_quiet; and echo $comment
                 or echo "Please Install xdg-utils."
         end
 
@@ -259,3 +181,313 @@ function ggl -d "Search for keywords on Google"
     end
 
 end
+
+
+# helper functions
+## for interactive mode
+function _ggl_interactive
+
+    set --local c yellow
+    set --local c_accent blue
+    set --local mode
+
+    set_color $c    
+    echo '>> Interactive Mode' (set_color normal)
+    while true
+        switch "$mode"
+            case sequential 
+                set mode "optional"
+            case optional
+                set mode "sequential"
+            case '*'
+                read -P 'Select Mode [s/sequential | o/optional | e/exit]: ' mode
+        end
+
+        switch "$mode"
+            case s S sequential
+                set mode "sequential"
+                set_color $c
+                echo '>>>> Sequential Search Mode' (set_color normal)
+                echo 'To stop this mode with Ctrl+C '
+                echo 'Or type "EXIT" to exit or "CHANGE" to change mode'
+                while true
+                    read -l -P 'Type searching keywords: ' newkeyword
+                    if test "$newkeyword" = "EXIT"
+                        return
+                    else if test "$newkeyword" = "CHANGE"
+                        set flag_loop_exit "true"
+                    else 
+                        ggl "$newkeyword" --quiet
+                    end
+                    test "$flag_loop_exit" = "true"; and set flag_loop_exit "false"; and break
+                end
+            case o O optional
+                set mode "optional"
+                set_color $c
+                echo '>>>> Option Selective Search Mode' (set_color normal)
+
+                set --local options
+                
+                set --local flag_image          '1:Image   | ' 
+                set --local flag_exact          '2:Exact   | '
+                set --local flag_nonpersonal    '3:Non-personal        | '
+                set --local flag_exclude        '4:Exclude | '
+                set --local flag_lang           '5:Lang    | '
+                set --local flag_time           '6:Time    | '
+                set --local flag_browser        '7:Browser | '
+                set --local flag_site           '8:Site    | '
+
+                set --local opt_image
+                set --local opt_exact
+                set --local opt_nonpersonal
+                set --local opt_exclude
+                set --local opt_lang
+                set --local opt_time
+                set --local opt_browser
+                set --local opt_site
+
+                set --local flag_loop_exit 'false'
+
+                while true
+                    read -l -P 'Type searching keywords: ' newkeyword
+                    while true 
+                        read -l -P 'ggl? [y/yes | t/test | o/option | a/again | c/change-mode | e/exit]: ' question
+                        switch "$question"
+                            case Y y yes
+                                [ $options[1] ]; and set -l last (string join "" " -" (string join " -" $options))
+                                eval ggl $newkeyword $last
+                                # return 0
+                            case t T test
+                                [ $options[1] ]; and set -l last (string join "" " -" (string join " -" $options))
+                                eval ggl --test $newkeyword $last
+                            case o O option
+                                echo 'Choose Options (type number)'
+                                while true
+                                    set_color $c_accent
+                                    echo '  |' '0:Go Next | 9:Reset   |'
+                                    set_color $c
+                                    echo '  |' $flag_image$flag_exact$flag_nonpersonal
+                                    echo '  |' $flag_exclude$flag_lang$flag_time
+                                    echo '  |' $flag_browser$flag_site
+                                    set_color normal
+                                    read -l -P "Choose Option Number: " opt
+                                    switch "$opt"
+                                        case 0
+                                            ## comment-out for debug
+                                            # echo $opt_image $opt_exact $opt_nonpersonal $opt_exclude $opt_lang $opt_time $opt_browser $opt_site
+                                            # echo 'Options: ' $options
+                                            break
+                                        case 1
+                                            set flag_image ''
+                                            set opt_image '[Image: True]'
+                                            set -a options 'i'
+                                        case 2
+                                            set flag_exact ''
+                                            set opt_exact '[Exact: True]'
+                                            set -a options 'p'
+                                        case 3
+                                            set flag_nonpersonal ''
+                                            set opt_nonpersonal '[Non-personal: True]'
+                                            set -a options 'n'
+                                        case 4
+                                            set flag_exclude ''
+                                            read -P "Excluded words: " opt_exclude
+                                            set -a options (string join '' "x=" $opt_exclude)
+                                        case 5
+                                            set flag_lang ''
+                                            read -P "Language: " opt_lang
+                                            set -a options (string join '' 'l=' $opt_lang)
+                                        case 6
+                                            set flag_time ''
+                                            read -P "Time Range: " opt_time
+                                            set -a options (string join '' 'r=' $opt_time)
+                                        case 7
+                                            set flag_browser ''
+                                            echo "Browser list: "
+                                            echo '[C/Chrome | S/Safari | F/Firefox | V/Vivaldi | B/Brave | O/Other]'
+                                            while true
+                                                read -P "which browser? To exit type e or exit: " opt_browser
+                                                switch "$opt_browser"
+                                                    case c C Chrome
+                                                        set -a options 'C'
+                                                        break
+                                                    case s S Safari
+                                                        set -a options 'S'
+                                                        break
+                                                    case f F Firefox
+                                                        set -a options 'F'
+                                                        break
+                                                    case v V Vivaldi
+                                                        set -a options 'V'
+                                                        break
+                                                    case b B Brave 
+                                                        set -a options 'B'
+                                                        break
+                                                    case o O Other
+                                                        read -l -P "Type browser name" browsername
+                                                        set -a options (string join '' 'b=' $browsername)
+                                                        break
+                                                    case e E exit
+                                                        set flag_browser '7:Browser | '
+                                                        break
+                                                    case '*'
+                                                        echo 'Type valid option character'
+                                                end
+                                            end
+                                        case 8
+                                            set flag_site ''
+                                            while true
+                                                read -P "Site [g/github | y/youtube | s/stackoverflow | e/exit]: " opt_site
+                                                switch "$opt_site"
+                                                    case g
+                                                        set -a options 'g'
+                                                        break
+                                                    case y
+                                                        set -a options 'y'
+                                                        break
+                                                    case s stackoverflow
+                                                        set -a options 's'
+                                                        break
+                                                    case e exit 
+                                                        set flag_site '8:Site | '
+                                                        break
+                                                    case '*'
+                                                        echo 'Type valid option character'
+                                                end
+                                            end 
+                                        case 9
+                                            set -l options ""
+                                            set flag_image          '1:Image   | ' 
+                                            set flag_exact          '2:Exact   | '
+                                            set flag_nonpersonal    '3:Non-personal        | '
+                                            set flag_exclude        '4:Exclude | '
+                                            set flag_lang           '5:Lang    | '
+                                            set flag_time           '6:Time    | '
+                                            set flag_browser        '7:Browser | '
+                                            set flag_site           '8:Site    | '
+                                            
+                                            set opt_image 
+                                            set opt_exact 
+                                            set opt_nonpersonal 
+                                            set opt_exclude 
+                                            set opt_lang 
+                                            set opt_time 
+                                            set opt_browser 
+                                            set opt_site
+                                    end
+                                end
+                            case c C change-mode
+                                set flag_loop_exit "true"
+                                break
+                            case e E exit
+                                return
+                            case a A again
+                                read -P 'Type searching keywords: ' newkeyword
+                        end
+                    end
+                    test "$flag_loop_exit" = "true"; and set flag_loop_exit "false"; and break
+                end
+            case e E exit
+                return
+        end
+    end
+end
+
+
+function _ggl_debug
+    set -l ts
+    set ts[1] "ggl -t how to use fish shell"
+    set ts[2] "ggl -tei cat cute photo"
+    set ts[3] "ggl how to fish -x=shell --test"
+    set ts[4] "ggl fish shell -x=advanced -x=bash --test"
+    set ts[5] "ggl fishシェル -x=シェルダー -l=ja --test"
+    set ts[6] "ggl fish plugin -x=fisher -r=y1 -e --test"
+    set ts[7] "ggl --test fish swimming -a=tbm=vid -a=filter=1"
+    for i in (seq 1 (count $ts))
+        echo '$' $ts[$i]; and eval "$ts[$i]"
+    end
+end
+
+
+function _ggl_help
+    set --local c yellow
+
+    echo 'Welcom to ggl.fish help.'
+    echo 'This is a simple tool for Google searching from the command line.'
+    set_color $c
+    echo
+    echo '  Utility Options (mutually exclusive):' 
+    echo '      -h or --help          Show Help'
+    echo '      -v or --version       Show Version Info'
+    echo '      -m or --mode          Interactive Search Mode'
+    echo '      -t or --test          Test URL Generation' 
+    echo '      -o or --output        Print generated URL'
+    echo '      -d or --debug         Print some tests'
+    echo '      --quiet              Do search without complete message'
+    echo
+    echo '  Browser Options (Uppercase letter):'
+    echo '      -C or --Chrome        Use Google Chrome' 
+    echo '      -S or --Safari        Use Safari'
+    echo '      -F or --Firefox       Use Firefox'
+    echo '      -V or --Vivaldi       Use Vivaldi'
+    echo '      -B or --Brave         Use Brave'
+    echo '      -b or --browser       Use other browser'
+    echo
+    echo '      If no options are specified, ggl opens a URL with default browser'
+    echo
+    echo '  Search Options:'
+    echo '      -i or --image         Image serch'
+    echo '      -p or --perfect       Exact match'
+    echo '      -n or --nonperson     Non-Personalized search'
+    echo '      -e or --english       English Search'
+    echo '      -x or --exclude       Exclude word from search'
+    echo '          Use this option with ='
+    echo '          Example (exclude the word "bash" from search):'
+    echo '              $ ggl fish shell -x=bash'
+    echo '          Possible to use -x option more than once'
+    echo '              $ ggl exclude mutiple words -x=A -x=B'
+    echo 
+    echo '      -l or --lang          Language Option'
+    echo '          = e or en         English'
+    echo '          = j or ja         Japanese'
+    echo '          = d or de         German'
+    echo '          = f or fr         French'
+    echo '          = i or it         Italian'
+    echo '          = s or es         Spanish'
+    echo '          = r or ru         Russian'
+    echo '          = k or ko         Korean'
+    echo '          = z or zh         Chinese'
+    echo '          Use language option with ='
+    echo '          Example (English Search):'
+    echo '              $ ggl -l=en how to use fish shell'
+    echo '                            or               '
+    echo '              $ ggl -e how to use fish shell'
+    echo 
+    echo '      -r or --range         Time Range for Searching'
+    echo '          = h               Past Hour'
+    echo '          = d               Past Day'
+    echo '          = w               Past Week'
+    echo '          = m               Past Month'
+    echo '          = y               Past Year'
+    echo '          Use range option with =, and speficy time range (ex `-r=h3`)'
+    echo '          Examples (to restrict search result within the last 2 yeare):'
+    echo '              $ ggl -r=y2 Results within the last 2 years'
+    echo '          Without number (like `-r=y`), the time range becomes the same as `-r=y1` '
+    echo '              $ ggl -r=m Results within the last month'
+    echo 
+    echo '      -a or --additional         Addtional Query Parameter'
+    echo
+    echo '  Site Options (mutually exclusive):'
+    echo '      -u or --url           Search with specified URL'
+    echo '      -g or --github        Search with Github'
+    echo '      -y or --youtube       Search with YouTube'
+    echo '      -s or --stackoverflow Search with Stack overflow'
+    echo '      -f or --fishdoc       Search with fish shell docs'
+    echo
+    echo '      For Japanese Users:'
+    echo '      -z or --zenn          Search with Zenn'
+    echo '      -q or --qiita         Search with Qiita'
+    echo
+    set_color normal
+end
+
