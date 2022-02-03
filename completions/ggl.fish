@@ -1,4 +1,3 @@
-complete ggl --no-files
 complete -c ggl -s h -l help -f -d 'Show Help'
 complete -c ggl -s t -l test -f -d 'URL Testing'
 complete -c ggl -s o -l output -f -d 'Output URL'
@@ -20,7 +19,7 @@ complete -c ggl -s f -l fishdoc -f -d 'Search in fish-shell docs'
 complete -c ggl -s z -l zenn -f -d 'Search in Zenn'
 complete -c ggl -s q -l qiita -f -d 'Search in Qiita'
 complete -c ggl -s u -l url -f -d 'Search in specified ULR'
-complete -c ggl -l local -f -d 'Open local host'
+complete -c ggl -l local -d 'Open local host'
 
 function __complete_ggl_range
     printf '%s\t%s\n' '=h' 'Past Hour'
