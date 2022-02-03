@@ -3,33 +3,23 @@ function ggl -d "Search for keywords on Google"
         -x 'v,h,t,o,d,m,quiet' \
         -x 'e,l' \
         -x 'C,S,F,V,B,b' \
-        -x 'u,g,y,s,f,z,q' \
+        -x 'u,local,g,y,s,f,z,q' \
         'v/version' 'h/help' 't/test' 'o/output' 'd/debug' 'm/mode' 'quiet' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' 'a/additional=+' \
         'l/lang=' 'r/range=' 'x/exclude=+' \
         'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' \
         'b/browser=' \
-        'u/url=' \
+        'u/url=' 'local=?' \
         'g/github' 'y/youtube' 's/stackoverflow' 'f/fishdoc' \
         'z/zenn' 'q/qiita' \
         -- $argv
     or return
     
-    set --local gglversion "v1.6.1"
+    set --local gglversion "v1.6.2"
     set --local c yellow # text coloring
     set --local keyword (string join " " $argv)
     set --local baseURL "https://www.google.com/search?q="
-    set --local site
-
-    # site option
-    set -q _flag_url; and set baseURL (string trim -lc '=' $_flag_url); and set site "specified URL"
-    set -q _flag_github; and set baseURL "https://github.com/search?q="; and set site "Github"
-    set -q _flag_youtube; and set baseURL "https://www.youtube.com/results?search_query="; and set site "YouTube"
-    set -q _flag_stackoverflow; and set baseURL "https://stackoverflow.com/search?q="; and set site "Stack Overflow"
-    set -q _flag_fishdoc; and set baseURL "https://fishshell.com/docs/current/search.html?q="; and set site "fish-shell docs"
-    ## for Japanese users
-    set -q _flag_zenn; and set baseURL "https://zenn.dev/search?q="; and set site "Zenn"
-    set -q _flag_qiita; and set baseURL "https://qiita.com/search?q="; and set site "Qiita"
+    set --local site "Google"
 
     if set -q _flag_version
         echo 'ggl.fish:' $gglversion
@@ -52,7 +42,7 @@ function ggl -d "Search for keywords on Google"
     end
 
     # main
-    if test -n "$keyword"
+    if test -n "$keyword" || set -q _flag_local
 
         set --local encoding (string escape --style=url $keyword)
         set --local searchURL
@@ -61,6 +51,26 @@ function ggl -d "Search for keywords on Google"
         set --local exclude
         set --local exlist
         set --local browser
+
+        # site options
+        set -q _flag_github; and set baseURL "https://github.com/search?q="; and set site "Github"
+        set -q _flag_youtube; and set baseURL "https://www.youtube.com/results?search_query="; and set site "YouTube"
+        set -q _flag_stackoverflow; and set baseURL "https://stackoverflow.com/search?q="; and set site "Stack Overflow"
+        set -q _flag_fishdoc; and set baseURL "https://fishshell.com/docs/current/search.html?q="; and set site "fish-shell docs"
+        ## for Japanese users
+        set -q _flag_zenn; and set baseURL "https://zenn.dev/search?q="; and set site "Zenn"
+        set -q _flag_qiita; and set baseURL "https://qiita.com/search?q="; and set site "Qiita"
+        ## other URL options 
+        set -q _flag_url; and set baseURL (string trim -lc '=' $_flag_url); and set site "specified URL"
+        set -q _flag_local; and \
+        if test -n "$_flag_local"
+            set --local port (string trim -lc '=' $_flag_local)
+            set baseURL (string join "" "http://localhost:" $port "/")
+            set site (string join "" 'localhost:' $port)
+        else 
+            set baseURL "http://localhost:3000/"
+            set site 'localhost:3000'
+        end
         
         ## google search options: parameter handling
         set -q _flag_lang; and switch "$_flag_lang"
@@ -124,6 +134,21 @@ function ggl -d "Search for keywords on Google"
             end
         end
 
+        ## just print a generated URL
+        if set -q _flag_output
+            echo "$searchURL"
+            return
+        end
+
+        # browser options
+        if set -q _flag_Vivaldi; set browser "Vivaldi"
+        else if set -q _flag_Chrome; set browser "Google Chrome"
+        else if set -q _flag_Safari; set browser "Safari"
+        else if set -q _flag_Firefox; set browser "Firefox"
+        else if set -q _flag_Brave; set browser "Brave" 
+        else if set -q _flag_browser; and set browser (string trim -lc '=' $_flag_browser)
+        end        
+
         ## testing for URL generation
         if set -q _flag_test
             echo (set_color $c) "Keyword    :" (set_color normal) "$keyword"
@@ -141,27 +166,15 @@ function ggl -d "Search for keywords on Google"
             echo (set_color $c) "Time Range :" (set_color normal) "$range"
             [ $site ]; and \
             echo (set_color $c) "Site       :" (set_color normal) "$site"
+            test -n "$browser"; and \
+            echo (set_color $c) "Browser    :" (set_color normal) "$browser"
             echo (set_color $c) "Search URL :" (set_color normal) "$searchURL"
             return
         end
 
-        ## just print a generated URL
-        if set -q _flag_output
-            echo "$searchURL"
-            return
-        end
-
-        # browser options
-        if set -q _flag_Vivaldi; set browser "Vivaldi"
-        else if set -q _flag_Chrome; set browser "Google Chrome"
-        else if set -q _flag_Safari; set browser "Safari"
-        else if set -q _flag_Firefox; set browser "Firefox"
-        else if set -q _flag_Brave; set browser "Brave" 
-        else if set -q _flag_browser; and set browser (string trim -lc '=' $_flag_browser)
-        end        
-
         # os detection: macOS or other
-        set -l comment (echo "Search for" "\"$argv\"" ( [ $site ] && echo "in $site" ) "completed.")
+        set -l comment (echo "Search for" "\"$argv\"" ( [ $site ] && echo "on $site" ) "completed.")
+        set -q _flag_local; and set comment (echo "Opened" $searchURL)
         switch (uname)
             case Darwin
                 if test -n "$browser"
@@ -425,14 +438,16 @@ function _ggl_help
     echo 'Welcom to ggl.fish help.'
     echo 'This is a simple fish plugin for Google searching from the command line.'
     set_color $c
-    echo '  Utility Options (mutually exclusive):' 
+    echo '  Help Options:'
     echo '      -h or --help          Show Help'
     echo '      -v or --version       Show Version Info'
-    echo '      -m or --mode          Interactive Search Mode'
+    echo '  Utility Options (mutually exclusive):' 
     echo '      -t or --test          Test URL Generation' 
     echo '      -o or --output        Print generated URL'
     echo '      -d or --debug         Print some tests'
     echo '      --quiet               Do search without complete message'
+    echo '  Special Option:'
+    echo '      -m or --mode          Interactive Search Mode'
     echo '  Browser Options (Uppercase letter):'
     echo '      -C or --Chrome        Use Google Chrome' 
     echo '      -S or --Safari        Use Safari'
@@ -484,7 +499,6 @@ function _ggl_help
     echo '              $ ggl -r=m Results within the last month'
     echo '      -a or --additional         Addtional Query Parameter'
     echo '  Site Options (mutually exclusive):'
-    echo '      -u or --url           Search with specified URL'
     echo '      -g or --github        Search with Github'
     echo '      -y or --youtube       Search with YouTube'
     echo '      -s or --stackoverflow Search with Stack overflow'
@@ -492,7 +506,11 @@ function _ggl_help
     echo '      For Japanese Users:'
     echo '      -z or --zenn          Search with Zenn'
     echo '      -q or --qiita         Search with Qiita'
-    echo
+    echo '      Other URL Options:'
+    echo '      -u or --url           Search with specified URL'
+    echo '      --local               Open local host:3000'
+    echo '      If port number specified, ggl opens http://localhost:PortNumber'
+    echo '          $ ggl --local=8000'
     set_color normal
 end
 

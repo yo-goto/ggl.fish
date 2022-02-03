@@ -14,11 +14,8 @@
 
 This is a simple fish plugin for Google searching from the command line.  
 Easy to manipulate Google query parameters with command options.   
-You can do things below with this plugin.  
+You can do the things below with this plugin.  
 
-- Interactive Search Mode (Shiny new thing from v1.6.0)
-    - Sequential Search Mode
-    - Option Selective Search Mode
 - URL encoding for multibyte character (CJK)
 - Choose your favorite browser
 - Google Search Options:
@@ -30,15 +27,18 @@ You can do things below with this plugin.
     - Exclude multiple words from your search
     - Suffix addtinal search parameters
     - Autosuggest these options
-- Simple search with specific sites:
+- Simple search on specific sites:
     - Github
     - Youtube
     - Stack overflow
     - fish shell docs
     - Specified URL (if query is possible)
     - For Japanese Users: Zenn, Qiita
+- Interactive Search Mode (Shiny new thing from v1.6.0)
+    - Sequential Search Mode
+    - Option Selective Search Mode
 
-This command is developed mainly for macOS.   
+This plugin is developed mainly for macOS.   
 For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's `open` command.  
 
 ## Requirements
@@ -83,10 +83,6 @@ ggl -l=ja 日本語検索
 
 ggl -e English search
 # search in English, you can alse use -e or --english option
-
-ggl --mode
->> Interactive Mode
-Select Mode [s/sequential | o/optional | e/exit]:
 ```
 
 `ggl.fish` internally generates searchable URLs.  
@@ -105,11 +101,11 @@ $ ggl -tei cat cute photo
  Encoded    :  cat+cute+photo
  Language   :  English
  Search URL :  https://www.google.com/search?q=cat+cute+photo&lr=lang_en&tbm=isch
-$ ggl how to fish -x=shell --test
- Keyword    :  how to fish
- Excluded   :  shell
- Encoded    :  how+to+fish+-shell
- Search URL :  https://www.google.com/search?q=how+to+fish+-shell
+$ ggl fish plugin -g --test
+ Keyword    :  fish plugin
+ Encoded    :  fish+plugin
+ Site       :  Github
+ Search URL :  https://github.com/search?q=fish+plugin
 $ ggl fish shell -x=advanced -x=bash --test
  Keyword    :  fish shell
  Excluded   :  advanced bash
@@ -151,15 +147,19 @@ search?q=how+to+use+fish+shell
 
 ## Options
 
-Utility Options
+Help Options
 - `-h` or `--help`          : Show Help
 - `-v` or `--version`       : Show Version Info
-- `-m` or `--mode`          : Interactive Search Mode
+
+Utility Options
 - `-t` or `--test`          : Test URL Generation
 - `-o` or `--output`        : Print generated URL
 - `-d` or `--debug`         : Print some tests
 - `--quiet`                : Open URL without printing anything
 
+Special Option
+- `-m` or `--mode`          : Interactive Search Mode
+  
 Browser Options (uppercase letter)  
 If not specified, ggl opens URL with default browser.  
 - `-C` or `--Chrome`        : Google Chrome
@@ -212,7 +212,14 @@ Site Options
 - `-y` or `--youtube`        : YouTube
 - `-s` or `--stackoverflow`  : Stack overflow
 - `-f` or `--fishdoc`        : fish shell docs
+
+Sites For Japaense Users
+- `-z` or `--zenn`           : Zenn
+- `-q` or `--qiita`          : Qiita
+
+Other URL options
 - `-u` or `--url`            : Specified URL with `=` 
+- `--local`                  : Open local host with specified port number (by default, ggl opens `localhost:3000`)
 
 ```console
 $ ggl -t javascript -u=https://developer.mozilla.org/en-US/search?q=
@@ -220,11 +227,28 @@ $ ggl -t javascript -u=https://developer.mozilla.org/en-US/search?q=
  Encoded    :  javascript
  Site       :  specified URL
  Search URL :  https://developer.mozilla.org/en-US/search?q=javascript
+$ ggl -t --local
+ Keyword    :
+ Encoded    :
+ Site       :  localhost:3000
+ Search URL :  http://localhost:3000
+$ ggl test/page --local=6000 --test
+ Keyword    :  test/page
+ Encoded    :  test/page
+ Site       :  localhost:6000
+ Search URL :  http://localhost:6000/test/page
 ```
 
-Sites For Japaense Users
-- `-z` or `--zenn`           : Zenn
-- `-q` or `--qiita`          : Qiita
+## Interactive Mode
+
+To enter the interactive search mode, use `-m` or `--mode` option flag.
+Two types of mode are avilable.
+
+```console
+$ ggl --mode
+>> Interactive Mode
+Select Mode [s/sequential | o/optional | e/exit]:
+```
 
 ## Development
 
@@ -238,6 +262,12 @@ Pull requests are welcom.
 
 ## Change Log
 
+- v1.6.2
+    - New Feature
+        - added local host option (ggl opens `localhost:3000` with `--local` flag)
+    - Improvement
+        - cleaned the code
+        - modified test and debug option
 - v1.6.1
     - Improvement
         - made option handling more stable

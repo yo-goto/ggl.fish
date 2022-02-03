@@ -13,13 +13,14 @@ complete -c ggl -s e -l english -f -d 'English Search'
 complete -c ggl -s x -l exclude -x -d 'Exclude word'
 complete -c ggl -s b -l browser -x -d 'Use Specific Browser'
 
-complete -c ggl -s u -l url -f -d 'Search in specified ULR'
 complete -c ggl -s g -l github -f -d 'Search in Github'
 complete -c ggl -s y -l youtube -f -d 'Search in YouTube'
 complete -c ggl -s s -l stackoverflow -f -d 'Search in StackOverflow'
 complete -c ggl -s f -l fishdoc -f -d 'Search in fish-shell docs'
 complete -c ggl -s z -l zenn -f -d 'Search in Zenn'
 complete -c ggl -s q -l qiita -f -d 'Search in Qiita'
+complete -c ggl -s u -l url -f -d 'Search in specified ULR'
+complete -c ggl -l local -f -d 'Open local host'
 
 function __complete_ggl_range
     printf '%s\t%s\n' '=h' 'Past Hour'
