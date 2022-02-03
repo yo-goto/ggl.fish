@@ -164,7 +164,7 @@ function ggl -d "Search for keywords on Google"
             end
             set -q _flag_range; and \
             echo (set_color $c) "Time Range :" (set_color normal) "$range"
-            [ $site ]; and \
+            not test "$site" = "Google"; and \
             echo (set_color $c) "Site       :" (set_color normal) "$site"
             test -n "$browser"; and \
             echo (set_color $c) "Browser    :" (set_color normal) "$browser"
@@ -421,7 +421,7 @@ function _ggl_debug
     ## test cases 
     set -a ts "ggl -t how to use fish shell"
     set -a ts "ggl -tei cat cute photo"
-    set -a ts "ggl how to fish -x=shell --test"
+    set -a ts "ggl fish plugin -g --test"
     set -a ts "ggl fish shell -x=advanced -x=bash --test"
     set -a ts "ggl fishシェル -x=シェルダー -l=ja --test"
     set -a ts "ggl fish plugin -x=fisher -r=y1 -e --test"
