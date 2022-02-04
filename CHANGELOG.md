@@ -1,0 +1,25 @@
+
+- v1.6.3
+    - Improvement
+        - modefied `--local` option (now, you can also use `-L` flag)
+        - changed the design of Interactive mode (more useful)
+        - updated help option
+    - Other
+        - updated logo & README
+- v1.6.2
+    - New Feature
+        - added local host option (ggl opens `localhost:3000` with `--local` flag)
+    - Improvement
+        - cleaned the code
+        - modified test and debug option
+- v1.6.1
+    - Improvement
+        - made option handling more stable
+        - made `open` command more stable
+        - modified debug & help options
+- v1.6.0
+    - New Feature
+        - Interactive Mode 
+        - quiet option
+    - Improvement
+        - Code Refactoring: Split main function into some helper function

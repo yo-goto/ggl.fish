@@ -2,7 +2,7 @@
     <img 
         alt="ggl fish logo" 
         width="100%"
-        src="https://user-images.githubusercontent.com/50942816/150681899-38ed9c2b-2867-4011-8d55-204cecfec44f.png" 
+        src="https://user-images.githubusercontent.com/50942816/152551047-464d7181-7c50-4a72-abc4-aea7e1aaff9d.png" 
     />
 </div>
 
@@ -13,12 +13,12 @@
 <img src="https://user-images.githubusercontent.com/50942816/151814043-45766fe8-84e1-4eb8-acf1-1fb543335d73.gif" width="100%" height="auto">
 
 This is a simple fish plugin for Google searching from the command line.  
-Easy to manipulate Google query parameters with command options.   
+**Easy to manipulate Google query parameters with command options**.   
 You can do the things below with this plugin.  
 
 - URL encoding for multibyte character (CJK)
 - Choose your favorite browser
-- Google Search Options:
+- **Google Search Options** (minimal but enough):
     - Exact Match
     - Image Search
     - Specific Language Search
@@ -34,9 +34,9 @@ You can do the things below with this plugin.
     - fish shell docs
     - Specified URL (if query is possible)
     - For Japanese Users: Zenn, Qiita
-- Interactive Search Mode (Shiny new thing from v1.6.0)
+- **Interactive Search Mode** (Shiny new thing from v1.6.0)
+    - Option Selective Search Mode (Base mode)
     - Sequential Search Mode
-    - Option Selective Search Mode
 
 This plugin is developed mainly for macOS.   
 For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's `open` command.  
@@ -148,38 +148,38 @@ search?q=how+to+use+fish+shell
 ## Options
 
 Help Options
-- `-h` or `--help`          : Show Help
-- `-v` or `--version`       : Show Version Info
+- `-h`, `--help`           : Show Help
+- `-v`, `--version`        : Show Version Info
 
 Utility Options
-- `-t` or `--test`          : Test URL Generation
-- `-o` or `--output`        : Print generated URL
-- `-d` or `--debug`         : Print some tests
+- `-t`, `--test`           : Test URL Generation
+- `-o`, `--output`         : Print generated URL
+- `-d`, `--debug`          : Print some tests
 - `--quiet`                : Open URL without printing anything
 
 Special Option
-- `-m` or `--mode`          : Interactive Search Mode
+- `-m`, `--mode`           : Interactive Search Mode
   
 Browser Options (uppercase letter)  
 If not specified, ggl opens URL with default browser.  
-- `-C` or `--Chrome`        : Google Chrome
-- `-S` or `--Safari`        : Safari
-- `-F` or `--Firefox`       : Firefox
-- `-V` or `--Vivaldi`       : Vivaldi
-- `-B` or `--Brave`         : Brave
-- `-b` or `--browser`       : Other Browser
+- `-C`, `--Chrome`         : Google Chrome
+- `-S`, `--Safari`         : Safari
+- `-F`, `--Firefox`        : Firefox
+- `-V`, `--Vivaldi`        : Vivaldi
+- `-B`, `--Brave`          : Brave
+- `-b`, `--browser`        : Other Browser
 
 After `-b` option, type browser name (ex: `-b=Opera`).
 
 Google Search Options
-- `-e` or `--english`        : English Search
-- `-i` or `--image`          : Image Search
-- `-p` or `--perfect`        : Exact Match
-- `-n` or `--nonperson`      : Disable Personalized Search
-- `-l` or `--lang`           : Specific Language Search
-- `-r` or `--range`          : Time Range for Searching
-- `-x` or `--exclude`        : Exclude words from search
-- `-a` or `--additional`     : Suffix addtional search parameters to URL
+- `-e`, `--english`        : English Search
+- `-i`, `--image`          : Image Search
+- `-p`, `--perfect`        : Exact Match
+- `-n`, `--nonperson`      : Disable Personalized Search
+- `-l`, `--lang`           : Specific Language Search
+- `-r`, `--range`          : Time Range for Searching
+- `-x`, `--exclude`        : Exclude words from search
+- `-a`, `--additional`     : Suffix addtional search parameters to URL
 
 After language option `-l`, specify language flag (ex: `-l=en`).
 
@@ -208,18 +208,18 @@ Range | Time | Example
 
 
 Site Options
-- `-g` or `--github`         : Github
-- `-y` or `--youtube`        : YouTube
-- `-s` or `--stackoverflow`  : Stack overflow
-- `-f` or `--fishdoc`        : fish shell docs
+- `-g`, `--github`         : Github
+- `-y`, `--youtube`        : YouTube
+- `-s`, `--stackoverflow`  : Stack overflow
+- `-f`, `--fishdoc`        : fish shell docs
 
 Sites For Japaense Users
-- `-z` or `--zenn`           : Zenn
-- `-q` or `--qiita`          : Qiita
+- `-z`, `--zenn`           : Zenn
+- `-q`, `--qiita`          : Qiita
 
 Other URL options
-- `-u` or `--url`            : Specified URL with `=` 
-- `--local`                  : Open local host with specified port number (by default, ggl opens `localhost:3000`)
+- `-u`, `--url`            : Specified URL with `=` 
+- `-L`, `--local`                  : Open local host with specified port number (by default, ggl opens `localhost:3000`)
 
 ```console
 $ ggl -t javascript -u=https://developer.mozilla.org/en-US/search?q=
@@ -242,13 +242,26 @@ $ ggl test/page --local=6000 --test
 ## Interactive Mode
 
 To enter the interactive search mode, use `-m` or `--mode` option flag.
-Two types of mode are avilable.
+In this mode, you can interactively set search options, and you can search for the things with the same option you set once.
 
 ```console
 $ ggl --mode
->> Interactive Mode
-Select Mode [s/sequential | o/optional | e/exit]:
+> Interactive Mode
+>> Base Mode
+<< [y/yes | k/keyword | t/test | s/seq-mode | o/option | c/check-option | e/exit] >>
+ggl? :
 ```
+
+## Motivation
+
+For any developers and learners like me, searching and then gaining knowledge about the technology we are learning as soon as possible is such an important skill. Whenever we get something ambiguous, unknown things or usage of any commands in our mind while touching the terminal and shell, we should be able to search for keywords seamlessly and quickly from the command line. (Of course, `help` and `man` commands are also important.)
+
+I found other tools to search from the command line, but there is no ideal tool fit for my use case.
+For instance, those who are not native to English need a feature to search by both their mother tongue and English (with `-e` flag). Also, I prefer to use a modern browser such as Chrome and Vivaldi for reading articles. No need to use my terminal as a browser.
+
+Just a helpful wrapper of the `open` command is enough for me.
+
+I wanted a minimal and easy-to-use searching tool with useful search options for my use case and fish shell, so I've developed this plugin for my study and practical use. This is my motivation.
 
 ## Development
 
@@ -256,28 +269,16 @@ Select Mode [s/sequential | o/optional | e/exit]:
 - Code explanation is [here](https://zenn.dev/estra/articles/google-search-from-fish-shell) (in Japanese).
 - Logo font: [Fish font](https://booth.pm/ja/items/2302848)
 
+## Credit & Reference
+
+- I got my base idea and inspired by this article - [WhiteNote](https://s10i.me/whitenote/post/40)
+- The article about Google URL parameters is this - [fragment.database.](http://www13.plala.or.jp/bigdata/google.html)
+
 ## Contributing
 
 Pull requests are welcom. 
 
 ## Change Log
 
-- v1.6.2
-    - New Feature
-        - added local host option (ggl opens `localhost:3000` with `--local` flag)
-    - Improvement
-        - cleaned the code
-        - modified test and debug option
-- v1.6.1
-    - Improvement
-        - made option handling more stable
-        - made `open` command more stable
-        - modified debug & help options
-- v1.6.0
-    - New Feature
-        - Interactive Mode 
-        - quiet option
-    - Improvement
-        - Code Refactoring: Split main function into some helper function
-
+- [CHANGELOG.md](/CHANGELOG.md)
 
