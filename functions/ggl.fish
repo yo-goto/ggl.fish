@@ -3,19 +3,19 @@ function ggl -d "Search for keywords on Google"
         -x 'v,h,t,o,d,m,quiet' \
         -x 'e,l' \
         -x 'C,S,F,V,B,b' \
-        -x 'u,local,g,y,s,f,z,q' \
+        -x 'u,L,g,y,s,f,z,q' \
         'v/version' 'h/help' 't/test' 'o/output' 'd/debug' 'm/mode' 'quiet' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' 'a/additional=+' \
         'l/lang=' 'r/range=' 'x/exclude=+' \
         'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' \
         'b/browser=' \
-        'u/url=' 'local=?' \
+        'u/url=' 'L/local=?' \
         'g/github' 'y/youtube' 's/stackoverflow' 'f/fishdoc' \
         'z/zenn' 'q/qiita' \
         -- $argv
     or return
     
-    set --local gglversion "v1.6.2"
+    set --local gglversion "v1.6.3"
     set --local c yellow # text coloring
     set --local keyword (string join " " $argv)
     set --local baseURL "https://www.google.com/search?q="
@@ -205,213 +205,256 @@ end
 # helper functions
 ## for interactive mode
 function _ggl_interactive
-    set --local mode
 
     set --local c yellow
-    set --local c_accent blue
+    set --local c_accent cyan
+    set --local c_other magenta
     set --local cc (set_color $c)
     set --local ca (set_color $c_accent)
     set --local cn (set_color normal)
 
-    set_color $c    
-    echo '>> Interactive Mode' (set_color normal)
+    set --local options
+    set --local option_flag
+    set --local flag_loop_exit 'false'
+    set --local mode
+    
+    set --local flag_image          '1:Image   | ' 
+    set --local flag_exact          '2:Exact   | '
+    set --local flag_nonpersonal    '3:Non-personal        | '
+    set --local flag_exclude        '4:Exclude | '
+    set --local flag_lang           '5:Lang    | '
+    set --local flag_time           '6:Time    | '
+    set --local flag_browser        '7:Browser | '
+    set --local flag_site           '8:Site    | '
+
+    set --local opt_image
+    set --local opt_exact
+    set --local opt_nonpersonal
+    set --local opt_exclude
+    set --local opt_lang
+    set --local opt_time
+    set --local opt_browser
+    set --local opt_site
+
+    set --local site
+
+    set_color $c
+    echo '> Interactive Mode' (set_color normal)
     while true
-        switch "$mode"
-            case sequential 
-                set mode "optional"
-            case optional
-                set mode "sequential"
-            case '*'
-                read -P 'Select Mode [s/sequential | o/optional | e/exit]: ' mode
-        end
-
-        switch "$mode"
-            case s S sequential
-                set mode "sequential"
-                set_color $c
-                echo '>>>> Sequential Search Mode' (set_color normal)
-                echo 'To stop this mode with Ctrl+C '
-                echo 'Or type "EXIT" to exit or "CHANGE" to change mode'
-                while true
-                    read -l -P 'Type searching keywords: ' newkeyword
-                    if test "$newkeyword" = "EXIT"
-                        return
-                    else if test "$newkeyword" = "CHANGE"
-                        set flag_loop_exit "true"
-                    else 
-                        ggl "$newkeyword" --quiet
-                    end
-                    test "$flag_loop_exit" = "true"; and set flag_loop_exit "false"; and break
-                end
-            case o O optional
-                set mode "optional"
-                set_color $c
-                echo '>>>> Option Selective Search Mode' (set_color normal)
-
-                set --local options
-                
-                set --local flag_image          '1:Image   | ' 
-                set --local flag_exact          '2:Exact   | '
-                set --local flag_nonpersonal    '3:Non-personal        | '
-                set --local flag_exclude        '4:Exclude | '
-                set --local flag_lang           '5:Lang    | '
-                set --local flag_time           '6:Time    | '
-                set --local flag_browser        '7:Browser | '
-                set --local flag_site           '8:Site    | '
-
-                set --local opt_image
-                set --local opt_exact
-                set --local opt_nonpersonal
-                set --local opt_exclude
-                set --local opt_lang
-                set --local opt_time
-                set --local opt_browser
-                set --local opt_site
-
-                set --local flag_loop_exit 'false'
-
-                while true
-                    read -l -P 'Type searching keywords: ' newkeyword
-                    while true 
-                        read -l -P 'ggl? [y/yes | t/test | o/option | a/again | c/change-mode | e/exit]: ' question
-                        switch "$question"
-                            case Y y yes
-                                [ $options[1] ]; and set -l last (string join "" " -" (string join " -" $options))
-                                eval ggl $newkeyword $last
-                                # return 0
-                            case t T test
-                                [ $options[1] ]; and set -l last (string join "" " -" (string join " -" $options))
-                                eval ggl --test $newkeyword $last
-                            case o O option
-                                echo 'Choose Options (type number)'
-                                while true
-                                    set_color $c_accent
-                                    echo '  |' '0:Go Next | 9:Reset   |'
-                                    set_color $c
-                                    echo '  |' $flag_image$flag_exact$flag_nonpersonal
-                                    echo '  |' $flag_exclude$flag_lang$flag_time
-                                    echo '  |' $flag_browser$flag_site
-                                    set_color normal
-                                    read -l -P "Choose Option Number: " opt
-                                    switch "$opt"
-                                        case 0
-                                            ## comment-out for debug
-                                            # echo $opt_image $opt_exact $opt_nonpersonal $opt_exclude $opt_lang $opt_time $opt_browser $opt_site
-                                            # echo 'Options: ' $options
-                                            break
-                                        case 1
-                                            set flag_image ''
-                                            set opt_image '[Image: True]'
-                                            set -a options 'i'
-                                        case 2
-                                            set flag_exact ''
-                                            set opt_exact '[Exact: True]'
-                                            set -a options 'p'
-                                        case 3
-                                            set flag_nonpersonal ''
-                                            set opt_nonpersonal '[Non-personal: True]'
-                                            set -a options 'n'
-                                        case 4
-                                            set flag_exclude ''
-                                            read -P "Excluded words: " opt_exclude
-                                            set -a options (string join '' "x=" $opt_exclude)
-                                        case 5
-                                            set flag_lang ''
-                                            read -P "Language: " opt_lang
-                                            set -a options (string join '' 'l=' $opt_lang)
-                                        case 6
-                                            set flag_time ''
-                                            read -P "Time Range: " opt_time
-                                            set -a options (string join '' 'r=' $opt_time)
-                                        case 7
-                                            set flag_browser ''
-                                            echo "Browser list: "
-                                            echo '[C/Chrome | S/Safari | F/Firefox | V/Vivaldi | B/Brave | O/Other]'
-                                            while true
-                                                read -P "which browser? To exit type e or exit: " opt_browser
-                                                switch "$opt_browser"
-                                                    case c C Chrome
-                                                        set -a options 'C'
-                                                        break
-                                                    case s S Safari
-                                                        set -a options 'S'
-                                                        break
-                                                    case f F Firefox
-                                                        set -a options 'F'
-                                                        break
-                                                    case v V Vivaldi
-                                                        set -a options 'V'
-                                                        break
-                                                    case b B Brave 
-                                                        set -a options 'B'
-                                                        break
-                                                    case o O Other
-                                                        read -l -P "Type browser name" browsername
-                                                        set -a options (string join '' 'b=' $browsername)
-                                                        break
-                                                    case e E exit
-                                                        set flag_browser '7:Browser | '
-                                                        break
-                                                    case '*'
-                                                        echo 'Type valid option character'
-                                                end
-                                            end
-                                        case 8
-                                            set flag_site ''
-                                            while true
-                                                read -P "Site [g/github | y/youtube | s/stackoverflow | e/exit]: " opt_site
-                                                switch "$opt_site"
-                                                    case g
-                                                        set -a options 'g'
-                                                        break
-                                                    case y
-                                                        set -a options 'y'
-                                                        break
-                                                    case s stackoverflow
-                                                        set -a options 's'
-                                                        break
-                                                    case e exit 
-                                                        set flag_site '8:Site | '
-                                                        break
-                                                    case '*'
-                                                        echo 'Type valid option character'
-                                                end
-                                            end 
-                                        case 9
-                                            set -l options ""
-                                            set flag_image          '1:Image   | ' 
-                                            set flag_exact          '2:Exact   | '
-                                            set flag_nonpersonal    '3:Non-personal        | '
-                                            set flag_exclude        '4:Exclude | '
-                                            set flag_lang           '5:Lang    | '
-                                            set flag_time           '6:Time    | '
-                                            set flag_browser        '7:Browser | '
-                                            set flag_site           '8:Site    | '
-                                            
-                                            set opt_image 
-                                            set opt_exact 
-                                            set opt_nonpersonal 
-                                            set opt_exclude 
-                                            set opt_lang 
-                                            set opt_time 
-                                            set opt_browser 
-                                            set opt_site
-                                    end
-                                end
-                            case c C change-mode
-                                set flag_loop_exit "true"
-                                break
-                            case e E exit
-                                return
-                            case a A again
-                                read -P 'Type searching keywords: ' newkeyword
+        set_color $c_accent
+        echo '>> Base Mode' (set_color normal)
+        # read -l -P 'Type searching keywords: ' newkeyword
+        while true
+            set_color $c_accent
+            echo '<< [y/yes | k/keyword | t/test | s/seq-mode | o/option | c/check-option | e/exit] >>' (set_color normal)
+            read -l -P 'ggl? : ' question
+            switch "$question"
+                case Y y yes
+                    [ $options[1] ]; and set option_flag (string join "" " -" (string join " -" $options))
+                    eval ggl $newkeyword $option_flag
+                    # return 0
+                case t T test
+                    [ $options[1] ]; and set option_flag (string join "" " -" (string join " -" $options))
+                    eval ggl --test $newkeyword $option_flag
+                case s S seq-mode
+                    [ $options[1] ]; and set option_flag (string join "" " -" (string join " -" $options))
+                    set mode "seq"
+                    set_color $c_other
+                    echo '>>> Sequential Search Mode' 
+                    echo 'Type "EXIT" (or Ctrl+C) to exit, '
+                    echo 'Type "BACK" to change mode, or "CHECK" to see the current options'
+                    set_color normal
+                    while true
+                        read -l -P 'Keywords: ' newkeyword
+                        if test "$newkeyword" = "EXIT"
+                            return
+                        else if test "$newkeyword" = "BACK"
+                            set mode "base"
+                            set flag_loop_exit "true"
+                            break
+                        else if test "$newkeyword" = "CHECK"
+                            # option check mod
+                            test -n "$opt_image"; and \
+                            echo (set_color $c) "Image?     :" (set_color normal) "True"
+                            test -n "$opt_exact"; and \
+                            echo (set_color $c) "Exact?     :" (set_color normal) "True"
+                            test -n "$opt_nonpersonal"; and \
+                            echo (set_color $c) "Non Personalized? :" (set_color normal) "True"
+                            test -n "$opt_exclude"; and \
+                            echo (set_color $c) "Excluded   :" (set_color normal) "$opt_exclude"
+                            test -n "$opt_lang"; and \
+                            echo (set_color $c) "Language   :" (set_color normal) "$opt_lang"
+                            test -n "$opt_time"; and \
+                            echo (set_color $c) "Time Range :" (set_color normal) "$opt_time"
+                            if test -n "$opt_site"
+                                echo (set_color $c) "Site       :" (set_color normal) "$site"
+                            else
+                                echo (set_color $c) "Site       :" (set_color normal) "Google"
+                            end 
+                            if test -n "$opt_browser"
+                                echo (set_color $c) "Browser    :" (set_color normal) "$opt_browser"
+                            else 
+                                echo (set_color $c) "Browser    :" (set_color normal) "Default browser"
+                            end
+                        else 
+                            eval ggl --quiet $newkeyword $option_flag
                         end
                     end
                     test "$flag_loop_exit" = "true"; and set flag_loop_exit "false"; and break
-                end
-            case e E exit
-                return
+                case c C check
+                    # option check mod
+                    test -n "$opt_image"; and \
+                    echo (set_color $c) "Image?     :" (set_color normal) "True"
+                    test -n "$opt_exact"; and \
+                    echo (set_color $c) "Exact?     :" (set_color normal) "True"
+                    test -n "$opt_nonpersonal"; and \
+                    echo (set_color $c) "Non Personalized? :" (set_color normal) "True"
+                    test -n "$opt_exclude"; and \
+                    echo (set_color $c) "Excluded   :" (set_color normal) "$opt_exclude"
+                    test -n "$opt_lang"; and \
+                    echo (set_color $c) "Language   :" (set_color normal) "$opt_lang"
+                    test -n "$opt_time"; and \
+                    echo (set_color $c) "Time Range :" (set_color normal) "$opt_time"
+                    if test -n "$opt_site"
+                        echo (set_color $c) "Site       :" (set_color normal) "$site"
+                    else
+                        echo (set_color $c) "Site       :" (set_color normal) "Google"
+                    end 
+                    if test -n "$opt_browser"
+                        echo (set_color $c) "Browser    :" (set_color normal) "$opt_browser"
+                    else 
+                        echo (set_color $c) "Browser    :" (set_color normal) "Default browser"
+                    end
+                case o O option
+                    echo 'Choose Options (type number)'
+                    while true
+                        set_color $c_accent
+                        echo '  |' '0:Go Next | 9:Reset   |'
+                        set_color $c
+                        echo '  |' $flag_image$flag_exact$flag_nonpersonal
+                        echo '  |' $flag_exclude$flag_lang$flag_time
+                        echo '  |' $flag_browser$flag_site
+                        set_color normal
+                        read -l -P "Choose Option Number: " opt
+                        switch "$opt"
+                            case 0
+                                ## comment-out for debug
+                                # echo $opt_image $opt_exact $opt_nonpersonal $opt_exclude $opt_lang $opt_time $opt_browser $opt_site
+                                # echo 'Options: ' $options
+                                break
+                            case 1
+                                set flag_image ''
+                                set opt_image '[Image: True]'
+                                set -a options 'i'
+                            case 2
+                                set flag_exact ''
+                                set opt_exact '[Exact: True]'
+                                set -a options 'p'
+                            case 3
+                                set flag_nonpersonal ''
+                                set opt_nonpersonal '[Non-personal: True]'
+                                set -a options 'n'
+                            case 4
+                                set flag_exclude ''
+                                read -P "Excluded words: " opt_exclude
+                                set -a options (string join '' "x=" $opt_exclude)
+                            case 5
+                                set flag_lang ''
+                                read -P "Language: " opt_lang
+                                set -a options (string join '' 'l=' $opt_lang)
+                            case 6
+                                set flag_time ''
+                                read -P "Time Range: " opt_time
+                                set -a options (string join '' 'r=' $opt_time)
+                            case 7
+                                set flag_browser ''
+                                echo "Browser list: "
+                                echo '[C/Chrome | S/Safari | F/Firefox | V/Vivaldi | B/Brave | O/Other]'
+                                while true
+                                    read -P "which browser? To exit type e or exit: " opt_browser
+                                    switch "$opt_browser"
+                                        case c C Chrome
+                                            set -a options 'C'
+                                            break
+                                        case s S Safari
+                                            set -a options 'S'
+                                            break
+                                        case f F Firefox
+                                            set -a options 'F'
+                                            break
+                                        case v V Vivaldi
+                                            set -a options 'V'
+                                            break
+                                        case b B Brave 
+                                            set -a options 'B'
+                                            break
+                                        case o O Other
+                                            read -l -P "Type browser name" browsername
+                                            set -a options (string join '' 'b=' $browsername)
+                                            break
+                                        case e E exit
+                                            set flag_browser '7:Browser | '
+                                            break
+                                        case '*'
+                                            echo 'Type valid option character'
+                                    end
+                                end
+                            case 8
+                                set flag_site ''
+                                while true
+                                    read -P "Site [l/localhost | g/github | y/youtube | s/stackoverflow | e/exit]: " opt_site
+                                    switch "$opt_site"
+                                        case l local localhost 
+                                            set site "Local host"
+                                            set -a options 'L'
+                                            break
+                                        case g github
+                                            set site "Github"
+                                            set -a options 'g'
+                                            break
+                                        case y youtube
+                                            set site "Youtube"
+                                            set -a options 'y'
+                                            break
+                                        case s stackoverflow
+                                            set site "Stack overflow"
+                                            set -a options 's'
+                                            break
+                                        case e exit
+                                            set flag_site '8:Site | '
+                                            break
+                                        case '*'
+                                            echo 'Type valid option character'
+                                    end
+                                end 
+                            case 9
+                                set -l options ""
+                                set flag_image          '1:Image   | ' 
+                                set flag_exact          '2:Exact   | '
+                                set flag_nonpersonal    '3:Non-personal        | '
+                                set flag_exclude        '4:Exclude | '
+                                set flag_lang           '5:Lang    | '
+                                set flag_time           '6:Time    | '
+                                set flag_browser        '7:Browser | '
+                                set flag_site           '8:Site    | '
+                                
+                                set opt_image 
+                                set opt_exact 
+                                set opt_nonpersonal 
+                                set opt_exclude 
+                                set opt_lang 
+                                set opt_time 
+                                set opt_browser 
+                                set opt_site
+                        end
+                    end
+                case e E exit
+                    return
+                case k K keyword
+                    read -P 'Type searching keywords: ' newkeyword
+            end
         end
+        test "$flag_loop_exit" = "true"; and set flag_loop_exit "false"; and break
     end
 end
 
@@ -439,39 +482,39 @@ function _ggl_help
     echo 'This is a simple fish plugin for Google searching from the command line.'
     set_color $c
     echo '  Help Options:'
-    echo '      -h or --help          Show Help'
-    echo '      -v or --version       Show Version Info'
+    echo '      -h, --help            Show Help'
+    echo '      -v, --version         Show Version Info'
     echo '  Utility Options (mutually exclusive):' 
-    echo '      -t or --test          Test URL Generation' 
-    echo '      -o or --output        Print generated URL'
-    echo '      -d or --debug         Print some tests'
+    echo '      -t, --test            Test URL Generation' 
+    echo '      -o, --output          Print generated URL'
+    echo '      -d, --debug           Print some tests'
     echo '      --quiet               Do search without complete message'
     echo '  Special Option:'
-    echo '      -m or --mode          Interactive Search Mode'
+    echo '      -m, --mode            Interactive Search Mode'
     echo '  Browser Options (Uppercase letter):'
-    echo '      -C or --Chrome        Use Google Chrome' 
-    echo '      -S or --Safari        Use Safari'
-    echo '      -F or --Firefox       Use Firefox'
-    echo '      -V or --Vivaldi       Use Vivaldi'
-    echo '      -B or --Brave         Use Brave'
-    echo '      -b or --browser       Use other browser'
+    echo '      -C, --Chrome          Use Google Chrome' 
+    echo '      -S, --Safari          Use Safari'
+    echo '      -F, --Firefox         Use Firefox'
+    echo '      -V, --Vivaldi         Use Vivaldi'
+    echo '      -B, --Brave           Use Brave'
+    echo '      -b, --browser         Use other browser'
     echo '      If no options are specified, ggl opens a URL with default browser'
     echo '  Search Options:'
-    echo '      -i or --image         Image serch'
-    echo '      -p or --perfect       Exact match'
+    echo '      -i, --image           Image serch'
+    echo '      -p, --perfect         Exact match'
     echo '          Examples'
     echo '              $ ggl fish shell -p'
     echo '                      or'
     echo '              $ ggl \'"fish shell"\' command'
-    echo '      -n or --nonperson     Non-Personalized search'
-    echo '      -e or --english       English Search'
-    echo '      -x or --exclude       Exclude word from search'
+    echo '      -n, --nonperson       Non-Personalized search'
+    echo '      -e, --english         English Search'
+    echo '      -x, --exclude         Exclude word from search'
     echo '          Use this option with ='
     echo '          Example (exclude the word "bash" from search):'
     echo '              $ ggl fish shell -x=bash'
     echo '          Possible to use -x option more than once'
     echo '              $ ggl exclude mutiple words -x=A -x=B'
-    echo '      -l or --lang          Language Option'
+    echo '      -l, --lang            Language Option'
     echo '          = e or en         English'
     echo '          = j or ja         Japanese'
     echo '          = d or de         German'
@@ -486,7 +529,7 @@ function _ggl_help
     echo '              $ ggl -l=en how to use fish shell'
     echo '                            or               '
     echo '              $ ggl -e how to use fish shell'
-    echo '      -r or --range         Time Range for Searching'
+    echo '      -r, --range           Time Range for Searching'
     echo '          = h               Past Hour'
     echo '          = d               Past Day'
     echo '          = w               Past Week'
@@ -497,18 +540,18 @@ function _ggl_help
     echo '              $ ggl -r=y2 Results within the last 2 years'
     echo '          Without number (like `-r=y`), the time range becomes the same as `-r=y1` '
     echo '              $ ggl -r=m Results within the last month'
-    echo '      -a or --additional         Addtional Query Parameter'
+    echo '      -a, --additional         Addtional Query Parameter'
     echo '  Site Options (mutually exclusive):'
-    echo '      -g or --github        Search with Github'
-    echo '      -y or --youtube       Search with YouTube'
-    echo '      -s or --stackoverflow Search with Stack overflow'
-    echo '      -f or --fishdoc       Search with fish shell docs'
-    echo '      For Japanese Users:'
-    echo '      -z or --zenn          Search with Zenn'
-    echo '      -q or --qiita         Search with Qiita'
-    echo '      Other URL Options:'
-    echo '      -u or --url           Search with specified URL'
-    echo '      --local               Open local host:3000'
+    echo '      -g, --github          Search with Github'
+    echo '      -y, --youtube         Search with YouTube'
+    echo '      -s, --stackoverflow   Search with Stack overflow'
+    echo '      -f, --fishdoc         Search with fish shell docs'
+    echo '  For Japanese Users:'
+    echo '      -z, --zenn            Search with Zenn'
+    echo '      -q, --qiita           Search with Qiita'
+    echo '  Other URL Options:'
+    echo '      -u, --url             Search with specified URL'
+    echo '      -L, --local           Open local host:3000'
     echo '      If port number specified, ggl opens http://localhost:PortNumber'
     echo '          $ ggl --local=8000'
     set_color normal
