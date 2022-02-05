@@ -270,6 +270,7 @@ Usage:
 ```console
 Usage:
       fin [KEYWORDS...] [ggl options]
+      fin g [KEYWORDS...] [ggl options]
       fin ggl [KEYWORDS...] [ggl options]
       fin SUBCOMMAND [KEYWORDS...] [ggl options]
 Options:
@@ -277,16 +278,20 @@ Options:
       -h, --help     : Show help
       -d, --debug    : Show debug tests
 Available subcommands:
-      ggl, help
-      youtube github stackoverflow
-      zenn qiita
-      mdn, codepen
-      npm, node, deno
-      vue, react, angular
-      typescript, storybook, bem
+      [base]         g(ggl), help
+      [basic]        youtube, github, stackoverflow,
+      [japanese]     zenn, qiita,
+      [emoji]        emojipedia,
+      [MDN]          mdn,
+      [server-side]  npm, node, deno,
+      [frameworkd]   vue, react, angular, nextjs, storybook
+      [language]     rust, typescript
+      [css]          bem
+      [other]        codepen
 ```
 
 To see help, use `-h` or `--help` option flags (`fin help` is also available).
+If you want to add some options familiar to frontend dev, you can create a pull request.
 
 Test Examples:
 
