@@ -1,4 +1,4 @@
-function fin --description "Web search interface for frontend dev"
+function fin --description "ggl wrapper for frontend developers"
     argparse --stop-nonopt 'v/version' 'h/help' -- $argv
 
     set --local version_fin "v0.0.1"
@@ -8,6 +8,13 @@ function fin --description "Web search interface for frontend dev"
     
     set --local param_url
     set --local param_site
+
+    ## also available from ggl command
+    set --local url_youtube "https://www.youtube.com/results?search_query="
+    set --local url_github "https://github.com/search?q="
+    set --local url_stackoverflow "https://stackoverflow.com/search?q="
+    set --local url_zenn "https://zenn.dev/search?q="
+    set --local url_qiita "https://qiita.com/search?q="
 
     set --local url_mdn "https://developer.mozilla.org/search?q="
     set --local url_angular "https://angular.io/docs/ts/latest/api/#!?url="
@@ -33,7 +40,7 @@ function fin --description "Web search interface for frontend dev"
     end 
 
     if functions --query ggl
-        set --local ts (string join "" $argv)
+        set --local ts (string join "" "$argv")
         if set -q url_$argv[1] && test -n "$ts"
             set param_url url_$argv[1]
             # indirect varibale reference
@@ -69,6 +76,8 @@ function _fin_help
     echo '      -h, --help     : Show help'
     echo 'Available subcommands:'
     echo '      ggl, mdn, codepen'
+    echo '      youtube github stackoverflow'
+    echo '      zenn qiita'
     echo '      npm, node, deno'
     echo '      vue, react, angular'
     echo '      typescript, storybook, bem'
