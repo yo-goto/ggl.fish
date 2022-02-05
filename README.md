@@ -221,6 +221,7 @@ Other URL options
 - `-u`, `--url`            : Specified URL with `=` 
 - `-L`, `--local`                  : Open local host with specified port number (by default, ggl opens `localhost:3000`)
 - `--site`                 : Search within specific site
+- `--noq`                  : Open a site without any keywords
 
 ```console
 $ ggl -t javascript -u=https://developer.mozilla.org/en-US/search?q=

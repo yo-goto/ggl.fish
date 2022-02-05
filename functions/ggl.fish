@@ -9,6 +9,7 @@ function ggl --description "A simple search plugin for keywords on Google"
         'l/lang=' 'r/range=' 'x/exclude=+' \
         'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' \
         'b/browser=' \
+        'noq' \
         'u/url=' 'L/local=?' 'site=' \
         'g/github' 'y/youtube' 's/stackoverflow' 'f/fishdoc' \
         'z/zenn' 'q/qiita' \
@@ -16,7 +17,7 @@ function ggl --description "A simple search plugin for keywords on Google"
     or return
     
     set --local version_plugin "v1.7.1"
-    set --local version_ggl "v1.6.4"
+    set --local version_ggl "v1.6.5"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -47,7 +48,7 @@ function ggl --description "A simple search plugin for keywords on Google"
     end
 
     # main
-    if test -n "$keyword" || set -q _flag_local
+    if test -n "$keyword" || set -q _flag_local || set -q _flag_noq
 
         set --local encoding (string escape --style=url $keyword)
         set --local searchURL
@@ -187,6 +188,7 @@ function ggl --description "A simple search plugin for keywords on Google"
         # os detection: macOS or other
         set -l comment (echo "Search for" "\"$argv\"" ( [ $site ] && echo "on $site" ) "completed.")
         set -q _flag_local; and set comment (echo "Opened" $searchURL)
+        set -q _flag_noq; and set comment "opend $site without keyword"
         switch (uname)
             case Darwin
                 if test -n "$browser"
@@ -563,6 +565,7 @@ function _ggl_help
     echo '      If port number specified, ggl opens http://localhost:PortNumber'
     echo '          $ ggl --local=8000'
     echo '      --site                Search within specific site on Google'
+    echo '      --noq                 Open a site without any keywords'
     set_color normal
 end
 
