@@ -247,7 +247,7 @@ $ ggl typescript --site=deno.land --test
  Search URL :  https://www.google.com/search?q=typescript&as_sitesearch=deno.land 
 ```
 
-## Interactive Mode
+## Interactive Mode 👾
 
 To enter the interactive search mode, use `-m` or `--mode` option flag.
 In this mode, you can interactively set search options, and you can search for the things with the same option you set once.
