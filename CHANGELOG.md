@@ -1,4 +1,6 @@
-- v1.6.4(pre)
+- v1.7.0    
+    - added new function `fin` - wrapper of ggl for frontend developers
+- v1.6.4
     - changed plugin description
     - added `--site` option (now, youc can search with specific site)
 - v1.6.3

@@ -37,6 +37,8 @@ You can do the things below with this plugin.
 - **Interactive Search Mode** (Shiny new thing from v1.6.0)
     - Option Selective Search Mode (Base mode)
     - Sequential Search Mode
+- Search Interface for front-end developers (from v1.7.0)
+    - easily search with sepcific docs using `fin` command (warpper of `ggl`)
 
 This plugin is developed mainly for macOS.   
 For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's `open` command.  
@@ -258,6 +260,55 @@ $ ggl --mode
 ggl? :
 ```
 
+## new wrapper command `fin` is available 🧞
+
+From v1.7.0, you can use `fin` command which is the `ggl` wrapper for frontend developers and learners. "fin" is the abbreviation of "**F**rontend search **IN**terface"
+
+`fin` has many subcommands to search for the things familiar to frontend dev. `fin` is a just wrapper, so you can also use `ggl` command option flags like `-t` or `--test`.
+
+Usage: 
+
+```console
+Usage:
+      fin [KEYWORDS...] [ggl options]
+      fin ggl [KEYWORDS...] [ggl options]
+      fin SUBCOMMAND [KEYWORDS...] [ggl options]
+Options:
+      -v, --version  : Show version info
+      -h, --help     : Show help
+      -d, --debug    : Show debug tests
+Available subcommands:
+      ggl, help
+      youtube github stackoverflow
+      zenn qiita
+      mdn, codepen
+      npm, node, deno
+      vue, react, angular
+      typescript, storybook, bem
+```
+
+To see help, use `-h` or `--help` option flags (`fin help` is also available).
+
+Test Examples:
+
+```console
+$ fin deno fetch -t
+ Keyword    :  fetch
+ Encoded    :  fetch
+ Site       :  Within "deno.land" on Google
+ Search URL :  https://www.google.com/search?q=fetch&as_sitesearch=deno.land
+$ fin npm gray-matter --test
+ Keyword    :  gray-matter
+ Encoded    :  gray-matter
+ Search URL :  https://www.npmjs.com/search?q=gray-matter
+$ fin mdn JavaScript --test
+ Keyword    :  JavaScript
+ Encoded    :  JavaScript
+ Search URL :  https://developer.mozilla.org/search?q=JavaScript
+```
+
+These test results can be seen with `-d` or `--debug` option without opening a browser. 
+
 ## Motivation
 
 For any developers and learners like me, searching and then gaining knowledge about the technology we are learning as soon as possible is such an important skill. Whenever we get something ambiguous, unknown things or usage of any commands in our mind while touching the terminal and shell, we should be able to search for keywords seamlessly and quickly from the command line. (Of course, `help` and `man` commands are also important.)
@@ -279,6 +330,7 @@ I wanted a minimal and easy-to-use searching tool with useful search options for
 
 - I got my base idea and inspired by this article - [WhiteNote](https://s10i.me/whitenote/post/40)
 - The article about Google URL parameters is this - [fragment.database.](http://www13.plala.or.jp/bigdata/google.html)
+- `fin` command is inspired by [ohmyzsh/plugins/frontend-search](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/frontend-search)
 
 ## Contributing
 
