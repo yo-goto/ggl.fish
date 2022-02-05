@@ -2,7 +2,7 @@
     <img 
         alt="ggl fish logo" 
         width="100%"
-        src="https://user-images.githubusercontent.com/50942816/152551047-464d7181-7c50-4a72-abc4-aea7e1aaff9d.png" 
+        src="https://user-images.githubusercontent.com/50942816/152645876-52eba8ba-ea69-438c-be17-3301c095eebc.png" 
     />
 </div>
 
@@ -147,7 +147,7 @@ www.google.com
 search?q=how+to+use+fish+shell
 ```
 
-## Options
+## Options ⚙️
 
 Help Options
 - `-h`, `--help`           : Show Help
@@ -309,7 +309,7 @@ $ fin mdn JavaScript --test
 
 These test results can be seen with `-d` or `--debug` option without opening a browser. 
 
-## Motivation
+## Motivation 💪
 
 For any developers and learners like me, searching and then gaining knowledge about the technology we are learning as soon as possible is such an important skill. Whenever we get something ambiguous, unknown things or usage of any commands in our mind while touching the terminal and shell, we should be able to search for keywords seamlessly and quickly from the command line. (Of course, `help` and `man` commands are also important.)
 
