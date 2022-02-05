@@ -38,7 +38,7 @@ You can do the things below with this plugin.
     - Option Selective Search Mode (Base mode)
     - Sequential Search Mode
 - Search Interface for front-end developers (from v1.7.0)
-    - easily search with sepcific docs using `fin` command (warpper of `ggl`)
+    - easy & quick search with sepcific docs using `fin` command (warpper of `ggl`)
 
 This plugin is developed mainly for macOS.   
 For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's `open` command.  
@@ -330,7 +330,7 @@ I wanted a minimal and easy-to-use searching tool with useful search options for
 
 - I got my base idea and inspired by this article - [WhiteNote](https://s10i.me/whitenote/post/40)
 - The article about Google URL parameters is this - [fragment.database.](http://www13.plala.or.jp/bigdata/google.html)
-- `fin` command is inspired by [ohmyzsh/plugins/frontend-search](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/frontend-search)
+- `fin` command was inspired by [ohmyzsh/plugins/frontend-search](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/frontend-search)
 
 ## Contributing
 
