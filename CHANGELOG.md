@@ -1,4 +1,6 @@
-- v1.7.0    
+- v1.7.1
+    - added subcommand `emojipedia` to `fin` 
+- v1.7.0
     - added new function `fin` - wrapper of `ggl` for frontend developers
 - v1.6.4
     - changed plugin description

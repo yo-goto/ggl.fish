@@ -20,6 +20,7 @@ function fin --description "ggl wrapper for frontend developers"
     set --local url_angular "https://angular.io/docs/ts/latest/api/#!?url="
     set --local url_codepen "http://codepen.io/search?q="
     set --local url_npm "https://www.npmjs.com/search?q="
+    set --local url_emojipedia "https://emojipedia.org/search/?q="
 
     set --local site_node "nodejs.org"
     set --local site_deno "deno.land"
@@ -94,6 +95,7 @@ function _fin_help
     echo '      ggl, help'
     echo '      youtube github stackoverflow'
     echo '      zenn qiita'
+    echo '      emojipedia'
     echo '      mdn, codepen'
     echo '      npm, node, deno'
     echo '      vue, react, angular'

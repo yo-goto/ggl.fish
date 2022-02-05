@@ -5,7 +5,7 @@ complete -c fin -s d -l debug -f -d "Show debug tests"
 complete fin -x -n __fish_use_subcommand -a help -d "Show help"
 complete fin -x -n __fish_use_subcommand -a ggl -d "Use ggl"
 complete fin -x -n __fish_use_subcommand -a 'youtube github stackoverflow zenn qiita'
-complete fin -x -n __fish_use_subcommand -a 'mdn codepen angular npm'
+complete fin -x -n __fish_use_subcommand -a 'mdn codepen angular npm emojipedia'
 complete fin -x -n __fish_use_subcommand -a 'node deno vue react typescript storybook bem'
 
 ## from ggl options
