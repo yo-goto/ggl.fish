@@ -1,7 +1,7 @@
 function fin --description "ggl wrapper for frontend developers"
     argparse --stop-nonopt 'v/version' 'h/help' 'd/debug' -- $argv
 
-    set --local version_fin "v0.0.1"
+    set --local version_fin "v0.0.2"
     # color shortcut
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
