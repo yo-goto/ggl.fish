@@ -1,5 +1,5 @@
 function fin --description "ggl wrapper for frontend developers"
-    argparse --stop-nonopt 'v/version' 'h/help' -- $argv
+    argparse --stop-nonopt 'v/version' 'h/help' 'd/debug' -- $argv
 
     set --local version_fin "v0.0.1"
     # color shortcut
@@ -29,13 +29,16 @@ function fin --description "ggl wrapper for frontend developers"
     set --local site_storybook "storybook.js.org"
     set --local site_bem "bem.info"
 
-    if set -lq _flag_version
+    if set -q _flag_version
         functions --query ggl; and \
         eval ggl -v
         echo 'fin.fish:' $version_fin
         return
-    else if set -lq _flag_help
+    else if set -q _flag_help || test "$argv[1]" = "help"
         _fin_help
+        return
+    else if set -q _flag_debug
+        _fin_debug
         return
     end 
 
@@ -64,20 +67,34 @@ function fin --description "ggl wrapper for frontend developers"
     end
 end
 
-## helper function
+
+## helper functions
+function _fin_debug
+    set --local ts
+    set -a ts "fin deno fetch -t"
+    set -a ts "fin npm gray-matter --test"
+    set -a ts "fin mdn JavaScript --test"
+    for i in (seq 1 (count $ts))
+        echo '$' $ts[$i]; and eval "$ts[$i]"
+    end
+end
+
+
 function _fin_help
     set_color $_ggl_color
     echo 'Usage: '
     echo '      fin [KEYWORDS...] [ggl options]'
     echo '      fin ggl [KEYWORDS...] [ggl options]'
     echo '      fin SUBCOMMAND [KEYWORDS...] [ggl options]'
+    echo '      fin help'
     echo 'Options: '
     echo '      -v, --version  : Show version info'
     echo '      -h, --help     : Show help'
     echo 'Available subcommands:'
-    echo '      ggl, mdn, codepen'
+    echo '      ggl, help'
     echo '      youtube github stackoverflow'
     echo '      zenn qiita'
+    echo '      mdn, codepen'
     echo '      npm, node, deno'
     echo '      vue, react, angular'
     echo '      typescript, storybook, bem'

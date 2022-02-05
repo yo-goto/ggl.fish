@@ -1,6 +1,7 @@
 complete -c fin -s v -l version -f -d 'Show version info'
 complete -c fin -s h -l help -f -d "Show help"
 
+complete fin -x -n __fish_use_subcommand -a help -d "Show help"
 complete fin -x -n __fish_use_subcommand -a ggl -d "Use ggl"
 complete fin -x -n __fish_use_subcommand -a 'youtube github stackoverflow zenn qiita'
 complete fin -x -n __fish_use_subcommand -a 'mdn codepen angular npm'
