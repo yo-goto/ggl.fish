@@ -1,7 +1,8 @@
-
+- v1.6.4(pre)
+    - changed plugin description
 - v1.6.3
     - Improvement
-        - modefied `--local` option (now, you can also use `-L` flag)
+        - modified `--local` option (now, you can also use `-L` flag)
         - changed the design of Interactive mode (more useful)
         - updated help option
     - Other

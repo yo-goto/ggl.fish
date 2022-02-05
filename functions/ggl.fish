@@ -1,4 +1,4 @@
-function ggl -d "Search for keywords on Google"
+function ggl --description "A simple search plugin for keywords on Google"
     argparse \
         -x 'v,h,t,o,d,m,quiet' \
         -x 'e,l' \
