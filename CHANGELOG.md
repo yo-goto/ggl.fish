@@ -1,5 +1,6 @@
 - v1.6.4(pre)
     - changed plugin description
+    - added `--site` option (now, youc can search with specific site)
 - v1.6.3
     - Improvement
         - modified `--local` option (now, you can also use `-L` flag)

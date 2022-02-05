@@ -3,13 +3,13 @@ function ggl --description "A simple search plugin for keywords on Google"
         -x 'v,h,t,o,d,m,quiet' \
         -x 'e,l' \
         -x 'C,S,F,V,B,b' \
-        -x 'u,L,g,y,s,f,z,q' \
+        -x 'u,L,site,g,y,s,f,z,q' \
         'v/version' 'h/help' 't/test' 'o/output' 'd/debug' 'm/mode' 'quiet' \
         'i/image' 'p/perfect' 'n/nonperson' 'e/english' 'a/additional=+' \
         'l/lang=' 'r/range=' 'x/exclude=+' \
         'C/Chrome' 'S/Safari' 'F/Firefox' 'V/Vivaldi' 'B/Brave' \
         'b/browser=' \
-        'u/url=' 'L/local=?' \
+        'u/url=' 'L/local=?' 'site=' \
         'g/github' 'y/youtube' 's/stackoverflow' 'f/fishdoc' \
         'z/zenn' 'q/qiita' \
         -- $argv
@@ -51,6 +51,7 @@ function ggl --description "A simple search plugin for keywords on Google"
         set --local exclude
         set --local exlist
         set --local browser
+        set --local within
 
         # site options
         set -q _flag_github; and set baseURL "https://github.com/search?q="; and set site "Github"
@@ -70,6 +71,10 @@ function ggl --description "A simple search plugin for keywords on Google"
         else 
             set baseURL "http://localhost:3000/"
             set site 'localhost:3000'
+        end
+        if set -q _flag_site
+            set within (string trim -lc '=' $_flag_site)
+            set _flag_site (string join "" "as_sitesearch=" $within)
         end
         
         ## google search options: parameter handling
@@ -127,7 +132,7 @@ function ggl --description "A simple search plugin for keywords on Google"
         set -q _flag_exclude; and set encoding (string join '+-' $encoding $exclude)
 
         ## final output URL
-        set searchURL (string join "&" (string join "" $baseURL $encoding) $_flag_lang $_flag_image $_flag_nonperson $_flag_range) 
+        set searchURL (string join "&" (string join "" $baseURL $encoding) $_flag_lang $_flag_image $_flag_nonperson $_flag_range $_flag_site) 
         if set -q _flag_additional
             for i in (seq 1 (count $_flag_additional))
                 set searchURL (string join "&" $searchURL (string trim -lc '=' $_flag_additional[$i]))
@@ -166,6 +171,8 @@ function ggl --description "A simple search plugin for keywords on Google"
             echo (set_color $c) "Time Range :" (set_color normal) "$range"
             not test "$site" = "Google"; and \
             echo (set_color $c) "Site       :" (set_color normal) "$site"
+            set -q _flag_site; and \
+            echo (set_color $c) "Site       :" (set_color normal) 'Within "'$within'" on Google'
             test -n "$browser"; and \
             echo (set_color $c) "Browser    :" (set_color normal) "$browser"
             echo (set_color $c) "Search URL :" (set_color normal) "$searchURL"
@@ -554,6 +561,7 @@ function _ggl_help
     echo '      -L, --local           Open local host:3000'
     echo '      If port number specified, ggl opens http://localhost:PortNumber'
     echo '          $ ggl --local=8000'
+    echo '      --site                Search within specific site on Google'
     set_color normal
 end
 

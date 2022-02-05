@@ -220,6 +220,7 @@ Sites For Japaense Users
 Other URL options
 - `-u`, `--url`            : Specified URL with `=` 
 - `-L`, `--local`                  : Open local host with specified port number (by default, ggl opens `localhost:3000`)
+- `--site`                 : Search within specific site
 
 ```console
 $ ggl -t javascript -u=https://developer.mozilla.org/en-US/search?q=
@@ -237,6 +238,11 @@ $ ggl test/page --local=6000 --test
  Encoded    :  test/page
  Site       :  localhost:6000
  Search URL :  http://localhost:6000/test/page
+$ ggl typescript --site=deno.land --test
+ Keyword    :  typescript
+ Encoded    :  typescript
+ Site       :  Within "deno.land" on Google
+ Search URL :  https://www.google.com/search?q=typescript&as_sitesearch=deno.land 
 ```
 
 ## Interactive Mode
