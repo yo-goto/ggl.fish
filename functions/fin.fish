@@ -122,7 +122,7 @@ function _fin_help
     echo '      [emoji]        emojipedia,'
     echo '      [MDN]          mdn,' 
     echo '      [server-side]  npm, node, deno,'
-    echo '      [frameworkd]   vue, react, angular, nextjs, storybook'
+    echo '      [framework]   vue, react, angular, nextjs, storybook'
     echo '      [language]     rust, typescript'
     echo '      [css]          bem'
     echo '      [other]        codepen'

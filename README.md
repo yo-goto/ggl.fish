@@ -284,14 +284,14 @@ Available subcommands:
       [emoji]        emojipedia,
       [MDN]          mdn,
       [server-side]  npm, node, deno,
-      [frameworkd]   vue, react, angular, nextjs, storybook
+      [framework]   vue, react, angular, nextjs, storybook
       [language]     rust, typescript
       [css]          bem
       [other]        codepen
 ```
 
 To see help, use `-h` or `--help` option flags (`fin help` is also available).
-If you want to add some options familiar to frontend dev, you can create a pull request.
+If you want to add some options familiar to frontend dev, you can create a pull request. I'm planning to add more options.
 
 Test Examples:
 
