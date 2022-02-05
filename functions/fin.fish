@@ -1,7 +1,7 @@
-function fin --description "A web search interface"
+function fin --description "Web search interface for frontend dev"
     argparse --stop-nonopt 'v/version' 'h/help' -- $argv
 
-    set --local fin_version "v0.0.1"
+    set --local version_fin "v0.0.1"
     # color shortcut
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -23,9 +23,9 @@ function fin --description "A web search interface"
     set --local site_bem "bem.info"
 
     if set -lq _flag_version
-        echo 'fin.fish:' $fin_version
         functions --query ggl; and \
         eval ggl -v
+        echo 'fin.fish:' $version_fin
         return
     else if set -lq _flag_help
         _fin_help

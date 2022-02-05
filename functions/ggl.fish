@@ -15,7 +15,8 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return
     
-    set --local gglversion "v1.6.3"
+    set --local version_plugin "v1.6.4"
+    set --local version_ggl "v1.6.4"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -25,7 +26,8 @@ function ggl --description "A simple search plugin for keywords on Google"
     set --local site "Google"
 
     if set -q _flag_version
-        echo 'ggl.fish:' $gglversion
+        echo 'Plugin  :' $version_plugin
+        echo 'ggl.fish:' $version_ggl
         return
     end
 
