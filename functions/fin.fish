@@ -1,7 +1,7 @@
 function fin --description "ggl wrapper for frontend developers"
     argparse --stop-nonopt 'v/version' 'h/help' 'd/debug' -- $argv
 
-    set --local version_fin "v0.0.3"
+    set --local version_fin "v0.0.4"
     # color shortcut
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -12,22 +12,28 @@ function fin --description "ggl wrapper for frontend developers"
 
     ## also available from ggl command
     set --local url_youtube "https://www.youtube.com/results?search_query="
-    set --local base_youtube "https://www.youtube.com/"
     set --local url_github "https://github.com/search?q="
-    set --local base_github "https://github.com/"
     set --local url_stackoverflow "https://stackoverflow.com/search?q="
-    set --local base_stackoverflow "https://stackoverflow.com/"
     set --local url_zenn "https://zenn.dev/search?q="
-    set --local base_zenn --local "https://zenn.dev/"
     set --local url_qiita "https://qiita.com/search?q="
+    set --local base_youtube "https://www.youtube.com/"
+    set --local base_github "https://github.com/"
+    set --local base_stackoverflow "https://stackoverflow.com/"
+    set --local base_zenn --local "https://zenn.dev/"
     set --local base_qiita --local "https://qiita.com/"
 
-    set --local url_mdn "https://developer.mozilla.org/search?q="; and set base_mdn "https://developer.mozilla.org/"
-    set --local url_angular "https://angular.io/docs/ts/latest/api/#!?url="; and set base_angular "https://angular.io/docs/ts/latest/api/"
-    set --local url_codepen "http://codepen.io/search?q="; and set base_codepen "http://codepen.io/"
-    set --local url_npm "https://www.npmjs.com/search?q="; and set base_npm "https://www.npmjs.com/"
-    set --local url_emojipedia "https://emojipedia.org/search/?q="; and set base_emojipedia "https://emojipedia.org/"
-    set --local url_rust "https://doc.rust-lang.org/reference/index.html?search="; and set base_rust "https://doc.rust-lang.org/reference/"
+    set --local url_mdn "https://developer.mozilla.org/search?q="
+    set --local url_angular "https://angular.io/docs/ts/latest/api/#!?url="
+    set --local url_codepen "http://codepen.io/search?q="
+    set --local url_npm "https://www.npmjs.com/search?q="
+    set --local url_emojipedia "https://emojipedia.org/search/?q="
+    set --local url_rust "https://doc.rust-lang.org/reference/index.html?search="
+    set --local base_mdn "https://developer.mozilla.org/"
+    set --local base_angular "https://angular.io/docs/ts/latest/api/"
+    set --local base_codepen "http://codepen.io/"
+    set --local base_npm "https://www.npmjs.com/"
+    set --local base_emojipedia "https://emojipedia.org/"
+    set --local base_rust "https://doc.rust-lang.org/reference/"
 
     set --local site_node "nodejs.org"
     set --local site_deno "deno.land"

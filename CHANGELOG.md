@@ -1,7 +1,10 @@
+- v1.7.2
+    - minor bug fix
 - v1.7.1
-    - added subcommand `emojipedia`, `nextjs` to `fin` 
-    - added `--noq` option to `ggl` (open a site without keyword)
-    - `fin` can open a site withtout keywords
+    - New feature
+        - added subcommand `emojipedia`, `nextjs` to `fin` 
+        - added `--noq` option to `ggl` (open a site without keyword)
+        - `fin` can open a site without keywords
 - v1.7.0
     - added new function `fin` - wrapper of `ggl` for frontend developers
 - v1.6.4
