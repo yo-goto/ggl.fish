@@ -15,14 +15,19 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return
     
-    set --local gglversion "v1.6.3"
-    set --local c yellow # text coloring
+    set --local version_plugin "v1.7.0"
+    set --local version_ggl "v1.6.4"
+    ## color
+    set --local cc (set_color $_ggl_color)
+    set --local cn (set_color normal)
+    ## process
     set --local keyword (string join " " $argv)
     set --local baseURL "https://www.google.com/search?q="
     set --local site "Google"
 
     if set -q _flag_version
-        echo 'ggl.fish:' $gglversion
+        echo 'Plugin  :' $version_plugin
+        echo 'ggl.fish:' $version_ggl
         return
     end
 
@@ -156,26 +161,26 @@ function ggl --description "A simple search plugin for keywords on Google"
 
         ## testing for URL generation
         if set -q _flag_test
-            echo (set_color $c) "Keyword    :" (set_color normal) "$keyword"
+            echo $cc "Keyword    :" $cn "$keyword"
             [ $exclude ]; and \
-            echo (set_color $c) "Excluded   :" (set_color normal) "$exlist"
-            echo (set_color $c) "Encoded    :" (set_color normal) "$encoding"
+            echo $cc "Excluded   :" $cn "$exlist"
+            echo $cc "Encoded    :" $cn "$encoding"
             if set -q _flag_lang
                 if test -n "$_flag_lang"
-                    echo (set_color $c) "Language   :" (set_color normal) "$lang"
+                    echo $cc "Language   :" $cn "$lang"
                 else
-                    echo (set_color $c) "Language   :" (set_color normal) "Invalid"
+                    echo $cc "Language   :" $cn "Invalid"
                 end
             end
             set -q _flag_range; and \
-            echo (set_color $c) "Time Range :" (set_color normal) "$range"
+            echo $cc "Time Range :" $cn "$range"
             not test "$site" = "Google"; and \
-            echo (set_color $c) "Site       :" (set_color normal) "$site"
+            echo $cc "Site       :" $cn "$site"
             set -q _flag_site; and \
-            echo (set_color $c) "Site       :" (set_color normal) 'Within "'$within'" on Google'
+            echo $cc "Site       :" $cn 'Within "'$within'" on Google'
             test -n "$browser"; and \
-            echo (set_color $c) "Browser    :" (set_color normal) "$browser"
-            echo (set_color $c) "Search URL :" (set_color normal) "$searchURL"
+            echo $cc "Browser    :" $cn "$browser"
+            echo $cc "Search URL :" $cn "$searchURL"
             return
         end
 
@@ -213,11 +218,9 @@ end
 ## for interactive mode
 function _ggl_interactive
 
-    set --local c yellow
-    set --local c_accent cyan
-    set --local c_other magenta
-    set --local cc (set_color $c)
-    set --local ca (set_color $c_accent)
+    set --local cc (set_color $_ggl_color)
+    set --local ca (set_color $_ggl_color_accent)
+    set --local co (set_color $_ggl_color_other)
     set --local cn (set_color normal)
 
     set --local options
@@ -245,15 +248,15 @@ function _ggl_interactive
 
     set --local site
 
-    set_color $c
-    echo '> Interactive Mode' (set_color normal)
+    set_color $_ggl_color
+    echo '> Interactive Mode' $cn
     while true
-        set_color $c_accent
-        echo '>> Base Mode' (set_color normal)
+        set_color $_ggl_color_accent
+        echo '>> Base Mode' $cn
         # read -l -P 'Type searching keywords: ' newkeyword
         while true
-            set_color $c_accent
-            echo '<< [y/yes | k/keyword | t/test | s/seq-mode | o/option | c/check-option | e/exit] >>' (set_color normal)
+            set_color $_ggl_color_accent
+            echo '<< [y/yes | k/keyword | t/test | s/seq-mode | o/option | c/check-option | e/exit] >>' $cn
             read -l -P 'ggl? : ' question
             switch "$question"
                 case Y y yes
@@ -266,7 +269,7 @@ function _ggl_interactive
                 case s S seq-mode
                     [ $options[1] ]; and set option_flag (string join "" " -" (string join " -" $options))
                     set mode "seq"
-                    set_color $c_other
+                    set_color $_ggl_color_other
                     echo '>>> Sequential Search Mode' 
                     echo 'Type "EXIT" (or Ctrl+C) to exit, '
                     echo 'Type "BACK" to change mode, or "CHECK" to see the current options'
@@ -282,26 +285,26 @@ function _ggl_interactive
                         else if test "$newkeyword" = "CHECK"
                             # option check mod
                             test -n "$opt_image"; and \
-                            echo (set_color $c) "Image?     :" (set_color normal) "True"
+                            echo $cc "Image?     :" $cn "True"
                             test -n "$opt_exact"; and \
-                            echo (set_color $c) "Exact?     :" (set_color normal) "True"
+                            echo $cc "Exact?     :" $cn "True"
                             test -n "$opt_nonpersonal"; and \
-                            echo (set_color $c) "Non Personalized? :" (set_color normal) "True"
+                            echo $cc "Non Personalized? :" $cn "True"
                             test -n "$opt_exclude"; and \
-                            echo (set_color $c) "Excluded   :" (set_color normal) "$opt_exclude"
+                            echo $cc "Excluded   :" $cn "$opt_exclude"
                             test -n "$opt_lang"; and \
-                            echo (set_color $c) "Language   :" (set_color normal) "$opt_lang"
+                            echo $cc "Language   :" $cn "$opt_lang"
                             test -n "$opt_time"; and \
-                            echo (set_color $c) "Time Range :" (set_color normal) "$opt_time"
+                            echo $cc "Time Range :" $cn "$opt_time"
                             if test -n "$opt_site"
-                                echo (set_color $c) "Site       :" (set_color normal) "$site"
+                                echo $cc "Site       :" $cn "$site"
                             else
-                                echo (set_color $c) "Site       :" (set_color normal) "Google"
+                                echo $cc "Site       :" $cn "Google"
                             end 
                             if test -n "$opt_browser"
-                                echo (set_color $c) "Browser    :" (set_color normal) "$opt_browser"
+                                echo $cc "Browser    :" $cn "$opt_browser"
                             else 
-                                echo (set_color $c) "Browser    :" (set_color normal) "Default browser"
+                                echo $cc "Browser    :" $cn "Default browser"
                             end
                         else 
                             eval ggl --quiet $newkeyword $option_flag
@@ -311,33 +314,33 @@ function _ggl_interactive
                 case c C check
                     # option check mod
                     test -n "$opt_image"; and \
-                    echo (set_color $c) "Image?     :" (set_color normal) "True"
+                    echo $cc "Image?     :" $cn "True"
                     test -n "$opt_exact"; and \
-                    echo (set_color $c) "Exact?     :" (set_color normal) "True"
+                    echo $cc "Exact?     :" $cn "True"
                     test -n "$opt_nonpersonal"; and \
-                    echo (set_color $c) "Non Personalized? :" (set_color normal) "True"
+                    echo $cc "Non Personalized? :" $cn "True"
                     test -n "$opt_exclude"; and \
-                    echo (set_color $c) "Excluded   :" (set_color normal) "$opt_exclude"
+                    echo $cc "Excluded   :" $cn "$opt_exclude"
                     test -n "$opt_lang"; and \
-                    echo (set_color $c) "Language   :" (set_color normal) "$opt_lang"
+                    echo $cc "Language   :" $cn "$opt_lang"
                     test -n "$opt_time"; and \
-                    echo (set_color $c) "Time Range :" (set_color normal) "$opt_time"
+                    echo $cc "Time Range :" $cn "$opt_time"
                     if test -n "$opt_site"
-                        echo (set_color $c) "Site       :" (set_color normal) "$site"
+                        echo $cc "Site       :" $cn "$site"
                     else
-                        echo (set_color $c) "Site       :" (set_color normal) "Google"
+                        echo $cc "Site       :" $cn "Google"
                     end 
                     if test -n "$opt_browser"
-                        echo (set_color $c) "Browser    :" (set_color normal) "$opt_browser"
+                        echo $cc "Browser    :" $cn "$opt_browser"
                     else 
-                        echo (set_color $c) "Browser    :" (set_color normal) "Default browser"
+                        echo $cc "Browser    :" $cn "Default browser"
                     end
                 case o O option
                     echo 'Choose Options (type number)'
                     while true
-                        set_color $c_accent
+                        set_color $_ggl_color_accent
                         echo '  |' '0:Go Next | 9:Reset   |'
-                        set_color $c
+                        set_color $_ggl_color
                         echo '  |' $flag_image$flag_exact$flag_nonpersonal
                         echo '  |' $flag_exclude$flag_lang$flag_time
                         echo '  |' $flag_browser$flag_site
@@ -483,11 +486,9 @@ end
 
 
 function _ggl_help
-    set --local c yellow
-
     echo 'Welcom to ggl.fish help.'
     echo 'This is a simple fish plugin for Google searching from the command line.'
-    set_color $c
+    set_color $_ggl_color
     echo '  Help Options:'
     echo '      -h, --help            Show Help'
     echo '      -v, --version         Show Version Info'
