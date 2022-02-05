@@ -246,10 +246,10 @@ $ ggl typescript --site=deno.land --test
  Search URL :  https://www.google.com/search?q=typescript&as_sitesearch=deno.land 
 ```
 
-## Interactive Mode 👾
+## Interactive Search Mode 👾
 
 To enter the interactive search mode, use `-m` or `--mode` option flag.
-In this mode, you can interactively set search options, and you can search for the things with the same option you set once.
+In this mode, you can interactively set search options, and you can search for the things with the same options you set once.
 
 ```console
 $ ggl --mode
@@ -259,7 +259,7 @@ $ ggl --mode
 ggl? :
 ```
 
-## new wrapper command `fin` is available 🧜
+## New wrapper command `fin` is available 🧜
 
 From v1.7.0, you can use `fin` command which is the `ggl` wrapper for frontend developers and learners. "fin" is the abbreviation of "**F**rontend search **IN**terface"
 
