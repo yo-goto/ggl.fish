@@ -1,3 +1,6 @@
+- v1.7.5
+    - New feature
+        - fin: new option `--list` can be used to see the list of all URLs & site names
 - v1.7.4
     - New feature
         - new subcommand to `fin` : fish

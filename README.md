@@ -278,6 +278,7 @@ Options:
       -v, --version   Show version info
       -h, --help      Show help
       -d, --debug     Show debug tests
+          --list      Show the list of all urls & sites
 Subcommands:
       [base]          g(ggl) help
       [basic]         youtube github stackoverflow
@@ -293,7 +294,7 @@ Subcommands:
       [other]         codepen
 ```
 
-`fin` offers the completions of all of these subcommands. After typing `fin` & a space character, use `tab` key, then you can see the list of all subcommands.
+`fin` offers the completions of all of these subcommands. After typing `fin` & a space character, use `tab` key, then you can see the list of all subcommands (or use `-l` or `--list` option flags).
 
 To see help, use `-h` or `--help` option flags (`fin help` is also available). To see the `ggl` command options, execute `fin g -h`.
 If you want to add some options familiar to frontend dev, you can create a pull request. I'm planning to add more options.
