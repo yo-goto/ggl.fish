@@ -1,3 +1,11 @@
+- v1.7.4
+    - New feature
+        - new subcommand to `fin` : fish
+    - Bug fix
+        - fin: fixed help option
+        - fin: fixed no argument handling
+        - fin: fixed urls format
+        - ggl: fixed `--noq` option
 - v1.7.3
     - New feature
         - new subcommand to `fin`: yarn

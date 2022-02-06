@@ -1,7 +1,7 @@
 function fin --description "ggl wrapper for frontend developers"
     argparse --stop-nonopt 'v/version' 'h/help' 'd/debug' -- $argv
 
-    set --local version_fin "v0.0.5"
+    set --local version_fin "v0.0.6"
     # color shortcut
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -12,28 +12,30 @@ function fin --description "ggl wrapper for frontend developers"
 
     ## also available from ggl command
     set --local url_youtube "https://www.youtube.com/results?search_query="
-        set --local base_youtube "https://www.youtube.com/"
+        set --local base_youtube "https://www.youtube.com"
     set --local url_github "https://github.com/search?q="
-        set --local base_github "https://github.com/"
+        set --local base_github "https://github.com"
     set --local url_stackoverflow "https://stackoverflow.com/search?q="
-        set --local base_stackoverflow "https://stackoverflow.com/"
+        set --local base_stackoverflow "https://stackoverflow.com"
     set --local url_zenn "https://zenn.dev/search?q="
-        set --local base_zenn "https://zenn.dev/"
+        set --local base_zenn "https://zenn.dev"
     set --local url_qiita "https://qiita.com/search?q="
-        set --local base_qiita "https://qiita.com/"
+        set --local base_qiita "https://qiita.com"
+    set --local url_fish "https://fishshell.com/docs/current/search.html?q="
+        set --local base_fish "https://fishshell.com/docs/current/index.html"
 
     set --local url_mdn "https://developer.mozilla.org/search?q="
-        set --local base_mdn "https://developer.mozilla.org/"
+        set --local base_mdn "https://developer.mozilla.org"
     set --local url_angular "https://angular.io/docs/ts/latest/api/#!?url="
-        set --local base_angular "https://angular.io/docs/ts/latest/api/"
+        set --local base_angular "https://angular.io/docs/ts/latest/api"
     set --local url_codepen "http://codepen.io/search?q="
-        set --local base_codepen "http://codepen.io/"
+        set --local base_codepen "http://codepen.io"
     set --local url_npm "https://www.npmjs.com/search?q="
-        set --local base_npm "https://www.npmjs.com/"
+        set --local base_npm "https://www.npmjs.com"
     set --local url_emojipedia "https://emojipedia.org/search/?q="
-        set --local base_emojipedia "https://emojipedia.org/"
+        set --local base_emojipedia "https://emojipedia.org"
     set --local url_rust "https://doc.rust-lang.org/reference/index.html?search="
-        set --local base_rust "https://doc.rust-lang.org/reference/"
+        set --local base_rust "https://doc.rust-lang.org/reference"
 
     set --local site_node "nodejs.org"
     set --local site_deno "deno.land"
@@ -62,8 +64,7 @@ function fin --description "ggl wrapper for frontend developers"
         set --local ts (string join "" "$argv")
         if set -q url_$argv[1] && test -n "$ts"
             # indirect varibale reference
-            # echo $cc "query URL  :" $cn $$param_url
-            if test (count $argv) -gt 2
+            if test (count $argv) -gt 1
                 set param_url url_$argv[1]
                 eval ggl $argv[2..-1] --url=$$param_url
             else 
@@ -71,8 +72,7 @@ function fin --description "ggl wrapper for frontend developers"
                 eval ggl --noq --url=$$base_url
             end 
         else if set -q site_$argv[1] && test -n "$ts"
-            # echo $c "Site name  :" $cn $$param_site
-            if test (count $argv) -gt 2
+            if test (count $argv) -gt 1
                 set param_site site_$argv[1]
                 eval ggl $argv[2..-1] --site=$$param_site
             else
@@ -110,26 +110,28 @@ end
 function _fin_help
     set_color $_ggl_color
     echo 'Usage: '
-    echo '      fin [KEYWORDS...] [ggl options]'
-    echo '      fin g [KEYWORDS...] [ggl options]'
-    echo '      fin ggl [KEYWORDS...] [ggl options]'
-    echo '      fin SUBCOMMAND [KEYWORDS...] [ggl options]'
+    echo '      fin [fin OPTION]'
+    echo '      fin [KEYWORDS...] [ggl OPTIONS...]'
+    echo '      fin g [KEYWORDS...] [ggl OPTIONS...]'
+    echo '      fin ggl [KEYWORDS...] [ggl OPTIONS...]'
+    echo '      fin SUBCOMMAND [KEYWORDS...] [ggl OPTIONS...]'
     echo 'Options: '
-    echo '      -v, --version  : Show version info'
-    echo '      -h, --help     : Show help'
-    echo '      -d, --debug    : Show debug tests'
-    echo 'Available subcommands:'
-    echo '      [base]         g(ggl) help'
-    echo '      [basic]        youtube github stackoverflow,'
-    echo '      [japanese]     zenn qiita'
-    echo '      [emoji]        emojipedia'
-    echo '      [MDN]          mdn' 
-    echo '      [js runtime]   node deno'
-    echo '      [pkg manger]   npm yarn'
-    echo '      [framework]    vue react angular nextjs storybook'
-    echo '      [language]     rust typescript'
-    echo '      [css]          bem'
-    echo '      [other]        codepen'
+    echo '      -v, --version   Show version info'
+    echo '      -h, --help      Show help'
+    echo '      -d, --debug     Show debug tests'
+    echo 'Subcommands:'
+    echo '      [base]          g(ggl) help'
+    echo '      [basic]         youtube github stackoverflow'
+    echo '      [MDN]           mdn' 
+    echo '      [shell]         fish'
+    echo '      [japanese]      zenn qiita'
+    echo '      [emoji]         emojipedia'
+    echo '      [js runtime]    node deno'
+    echo '      [pkg manger]    npm yarn'
+    echo '      [framework]     vue react angular nextjs storybook'
+    echo '      [language]      rust typescript'
+    echo '      [css]           bem'
+    echo '      [other]         codepen'
     set_color normal
 end
 

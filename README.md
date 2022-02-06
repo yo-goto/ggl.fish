@@ -32,10 +32,10 @@ You can do the things below with this plugin.
     - fish shell docs
     - Specified URL (if query is possible)
     - For Japanese Users: Zenn, Qiita
-- **Interactive Search Mode** (Shiny new thing from v1.6.0)
+- **Interactive Search Mode** (from v1.6.0)
     - Option Selective Search Mode (Base mode)
     - Sequential Search Mode
-- **Search Interface for front-end developers** (from v1.7.0)
+- **Search Interface for frontend developers** (from v1.7.0)
     - easy & quick search with sepcific docs using `fin` command (warpper of `ggl`)
 
 This plugin is developed mainly for macOS.   
@@ -269,29 +269,33 @@ Usage:
 
 ```console
 Usage:
-      fin [KEYWORDS...] [ggl options]
-      fin g [KEYWORDS...] [ggl options]
-      fin ggl [KEYWORDS...] [ggl options]
-      fin SUBCOMMAND [KEYWORDS...] [ggl options]
+      fin [fin OPTION]
+      fin [KEYWORDS...] [ggl OPTIONS...]
+      fin g [KEYWORDS...] [ggl OPTIONS...]
+      fin ggl [KEYWORDS...] [ggl OPTIONS...]
+      fin SUBCOMMAND [KEYWORDS...] [ggl OPTIONS...]
 Options:
-      -v, --version  : Show version info
-      -h, --help     : Show help
-      -d, --debug    : Show debug tests
-Available subcommands:
-      [base]         g(ggl) help
-      [basic]        youtube github stackoverflow,
-      [japanese]     zenn qiita
-      [emoji]        emojipedia
-      [MDN]          mdn
-      [js runtime]   node deno
-      [pkg manger]   npm yarn
-      [framework]    vue react angular nextjs storybook
-      [language]     rust typescript
-      [css]          bem
-      [other]        codepen
+      -v, --version   Show version info
+      -h, --help      Show help
+      -d, --debug     Show debug tests
+Subcommands:
+      [base]          g(ggl) help
+      [basic]         youtube github stackoverflow
+      [MDN]           mdn
+      [shell]         fish
+      [japanese]      zenn qiita
+      [emoji]         emojipedia
+      [js runtime]    node deno
+      [pkg manger]    npm yarn
+      [framework]     vue react angular nextjs storybook
+      [language]      rust typescript
+      [css]           bem
+      [other]         codepen
 ```
 
-To see help, use `-h` or `--help` option flags (`fin help` is also available).
+`fin` offers the completions of all of these subcommands. After typing `fin` & a space character, use `tab` key, then you can see the list of all subcommands.
+
+To see help, use `-h` or `--help` option flags (`fin help` is also available). To see the `ggl` command options, execute `fin g -h`.
 If you want to add some options familiar to frontend dev, you can create a pull request. I'm planning to add more options.
 
 Test Examples:
@@ -316,7 +320,7 @@ These test results can be seen with `-d` or `--debug` option without opening a b
 
 ## Motivation 💪
 
-For any developers and learners like me, searching and then gaining knowledge about the technology we are learning as soon as possible is such an important skill. Whenever we get something ambiguous, unknown things or usage of any commands in our mind while touching the terminal and shell, we should be able to search for keywords seamlessly and quickly from the command line. (Of course, `help` and `man` commands are also important.)
+For developers and learners like me, searching and then gaining knowledge about the technology we are learning as soon as possible is a so important skill. Whenever we get something ambiguous, unknown things or usage of any commands in our mind while touching the terminal and shell, we should be able to search for keywords seamlessly and quickly from the command line. (Of course, `help` and `man` commands are also important.)
 
 I found other tools to search from the command line, but there is no ideal tool fit for my use case.
 For instance, those who are not native to English need a feature to search by both their mother tongue and English (with `-e` flag). Also, I prefer to use a modern browser such as Chrome and Vivaldi for reading articles. No need to use my terminal as a browser.
@@ -329,10 +333,10 @@ I wanted a minimal and easy-to-use searching tool with useful search options for
 
 - This code is originally based on my [gist](https://gist.github.com/yo-goto/7acfa712006488466d73ff42b9d952cc).
 - Code explanation is [here](https://zenn.dev/estra/articles/google-search-from-fish-shell) (in Japanese).
-- Logo font: [Fish font](https://booth.pm/ja/items/2302848)
 
 ## Credit & Reference
 
+- Logo font: [Fish font](https://booth.pm/ja/items/2302848)
 - I got my base idea and inspired by this article - [WhiteNote](https://s10i.me/whitenote/post/40)
 - The article about Google URL parameters is this - [fragment.database.](http://www13.plala.or.jp/bigdata/google.html)
 - `fin` command was inspired by [ohmyzsh/plugins/frontend-search](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/frontend-search)
