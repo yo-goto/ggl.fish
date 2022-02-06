@@ -7,8 +7,10 @@
 </div>
 
 # ggl.fish 🏄🏻‍♂️
+![badge_license](https://img.shields.io/github/license/yo-goto/ggl.fish) ![badge_version](https://img.shields.io/github/v/release/yo-goto/ggl.fish)
 
 > *Simple Google Search from the command line for [fish shell](https://fishshell.com)*
+
 
 This is a simple fish plugin for Google searching from the command line.  
 **Easy to manipulate Google query parameters with command options**.   
