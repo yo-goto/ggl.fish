@@ -287,7 +287,7 @@ Subcommands:
       [japanese]      zenn qiita
       [emoji]         emojipedia
       [js runtime]    node deno
-      [pkg manger]    npm yarn
+      [pkg manager]   npm yarn
       [framework]     vue react angular nextjs storybook
       [language]      rust typescript
       [css]           bem

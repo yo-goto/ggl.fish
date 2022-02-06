@@ -194,7 +194,7 @@ function _fin_help
     echo '      [japanese]      zenn qiita'
     echo '      [emoji]         emojipedia'
     echo '      [js runtime]    node deno'
-    echo '      [pkg manger]    npm yarn'
+    echo '      [pkg manager]   npm yarn'
     echo '      [framework]     vue react angular nextjs storybook'
     echo '      [language]      rust typescript'
     echo '      [css]           bem'
