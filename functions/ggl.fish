@@ -16,8 +16,8 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return
     
-    set --local version_plugin "v1.7.2"
-    set --local version_ggl "v1.6.5"
+    set --local version_plugin "v1.7.3"
+    set --local version_ggl "v1.6.6"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -188,7 +188,7 @@ function ggl --description "A simple search plugin for keywords on Google"
         # os detection: macOS or other
         set -l comment (echo "Search for" "\"$argv\"" ( [ $site ] && echo "on $site" ) "completed.")
         set -q _flag_local; and set comment (echo "Opened" $searchURL)
-        set -q _flag_noq; and set comment "opend $site without keyword"
+        set -q _flag_noq; and set comment "opend" (test "$site" = "Google" || echo "$site") "without keyword"
         switch (uname)
             case Darwin
                 if test -n "$browser"

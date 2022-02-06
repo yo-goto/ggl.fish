@@ -35,7 +35,7 @@ You can do the things below with this plugin.
 - **Interactive Search Mode** (Shiny new thing from v1.6.0)
     - Option Selective Search Mode (Base mode)
     - Sequential Search Mode
-- Search Interface for front-end developers (from v1.7.0)
+- **Search Interface for front-end developers** (from v1.7.0)
     - easy & quick search with sepcific docs using `fin` command (warpper of `ggl`)
 
 This plugin is developed mainly for macOS.   
@@ -278,14 +278,15 @@ Options:
       -h, --help     : Show help
       -d, --debug    : Show debug tests
 Available subcommands:
-      [base]         g(ggl), help
-      [basic]        youtube, github, stackoverflow,
-      [japanese]     zenn, qiita,
-      [emoji]        emojipedia,
-      [MDN]          mdn,
-      [server-side]  npm, node, deno,
-      [framework]   vue, react, angular, nextjs, storybook
-      [language]     rust, typescript
+      [base]         g(ggl) help
+      [basic]        youtube github stackoverflow,
+      [japanese]     zenn qiita
+      [emoji]        emojipedia
+      [MDN]          mdn
+      [js runtime]   node deno
+      [pkg manger]   npm yarn
+      [framework]    vue react angular nextjs storybook
+      [language]     rust typescript
       [css]          bem
       [other]        codepen
 ```

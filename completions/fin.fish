@@ -6,7 +6,7 @@ complete fin -x -n __fish_use_subcommand -a help -d "Show help"
 complete fin -x -n __fish_use_subcommand -a ggl -d "Use ggl"
 complete fin -x -n __fish_use_subcommand -a 'youtube github stackoverflow zenn qiita'
 complete fin -x -n __fish_use_subcommand -a 'mdn codepen angular npm emojipedia rust'
-complete fin -x -n __fish_use_subcommand -a 'node deno vue react typescript storybook bem nextjs'
+complete fin -x -n __fish_use_subcommand -a 'node deno vue react typescript storybook bem nextjs yarn'
 
 ## from ggl options
 complete -c fin -s i -l image -f -d 'Image Search'

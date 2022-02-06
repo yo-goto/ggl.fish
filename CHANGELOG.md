@@ -1,3 +1,8 @@
+- v1.7.3
+    - New fature
+        - new subcommand to `fin`: yarn
+        - fixed the feature opening docs with no argument
+        - fixd ggl `--noq` option
 - v1.7.2
     - minor bug fix
 - v1.7.1
