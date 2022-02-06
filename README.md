@@ -2,7 +2,7 @@
     <img 
         alt="ggl fish logo" 
         width="100%"
-        src="https://user-images.githubusercontent.com/50942816/152645876-52eba8ba-ea69-438c-be17-3301c095eebc.png" 
+        src="https://user-images.githubusercontent.com/50942816/152679772-0d006329-7511-446d-a3b7-91115a8770ca.png" 
     />
 </div>
 
@@ -41,11 +41,11 @@ You can do the things below with this plugin.
 This plugin is developed mainly for macOS.   
 For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's `open` command.  
 
-## Requirements
+## Requirements 🛠
 - fish shell 3.2.0+
 - For Linux distributions: [xdg-utils](https://www.freedesktop.org/wiki/Software/xdg-utils/)
 
-## Installation
+## Installation 🚰
 
 Using [fisher](https://github.com/jorgebucaran/fisher):
 
@@ -59,7 +59,7 @@ Update
 fisher update yo-goto/ggl.fish
 ```
 
-## Usage
+## Usage 🔦
 
 ```console
 ggl [OPTIONS] SEARCHWORDS
