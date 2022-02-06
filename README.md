@@ -35,7 +35,7 @@ You can do the things below with this plugin.
 - **Interactive Search Mode** (from v1.6.0)
     - Option Selective Search Mode (Base mode)
     - Sequential Search Mode
-- **Search Interface for frontend developers** (from v1.7.0)
+- **Web Search Interface for frontend developers** (from v1.7.0)
     - easy & quick search with sepcific docs using `fin` command (warpper of `ggl`)
 
 This plugin is developed mainly for macOS.   
@@ -294,7 +294,7 @@ Subcommands:
       [other]         codepen
 ```
 
-`fin` offers the completions of all of these subcommands. After typing `fin` & a space character, use `tab` key, then you can see the list of all subcommands (or use `-l` or `--list` option flags).
+`fin` offers the completions of all of these subcommands. After typing `fin` & a space character, use `tab` key, then you can see the list of all subcommands (you can also use `-l` or `--list` option flags to the list).
 
 To see help, use `-h` or `--help` option flags (`fin help` is also available). To see the `ggl` command options, execute `fin g -h`.
 If you want to add some options familiar to frontend dev, you can create a pull request. I'm planning to add more options.
