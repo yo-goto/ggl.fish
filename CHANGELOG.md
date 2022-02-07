@@ -1,4 +1,4 @@
-- v1.7.6(pre)
+- v1.7.6
     - New feature
         - fin: new subcommand `tmux`, `iterm2`
         - fin: new subcomamnd `ls` to show the list of all URLs & site names
