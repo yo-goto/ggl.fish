@@ -1,9 +1,9 @@
 - v1.7.6
     - New feature
         - fin: new subcommand `tmux`, `iterm2`
-        - fin: new subcomamnd `ls` to show the list of all URLs & site names
+        - fin: new subcommand `ls` to show the list of all URLs & site names
     - Improvement
-        - fin: fixed subcomamnd system
+        - fin: fixed subcommand system
         - ggl: fixed `--url` option & messages
         - ggl: fixed `xdg-open` command message
 - v1.7.5
