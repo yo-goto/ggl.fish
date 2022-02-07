@@ -16,8 +16,8 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return
     
-    set --local version_plugin "v1.7.5"
-    set --local version_ggl "v1.6.7"
+    set --local version_plugin "v1.7.6"
+    set --local version_ggl "v1.6.8"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -68,7 +68,10 @@ function ggl --description "A simple search plugin for keywords on Google"
         set -q _flag_zenn; and set baseURL "https://zenn.dev/search?q="; and set site "Zenn"
         set -q _flag_qiita; and set baseURL "https://qiita.com/search?q="; and set site "Qiita"
         ## other URL options 
-        set -q _flag_url; and set baseURL (string trim -lc '=' $_flag_url); and set site "specified URL"
+        if set -q _flag_url
+            set baseURL (string trim -lc '=' $_flag_url)
+            set site $baseURL
+        end
         set -q _flag_local; and \
         if test -n "$_flag_local"
             set --local port (string trim -lc '=' $_flag_local)
@@ -175,8 +178,9 @@ function ggl --description "A simple search plugin for keywords on Google"
             end
             set -q _flag_range; and \
             echo $cc "Time Range :" $cn "$range"
-            not test "$site" = "Google"; and \
-            echo $cc "Site       :" $cn "$site"
+            if not test "$site" = "Google"
+                echo $cc "Site       :" $cn "$site"
+            end
             set -q _flag_site; and \
             echo $cc "Site       :" $cn 'Within "'$within'" on Google'
             test -n "$browser"; and \
@@ -186,7 +190,7 @@ function ggl --description "A simple search plugin for keywords on Google"
         end
 
         # os detection: macOS or other
-        set -l comment (echo "Search for" "\"$argv\"" ( [ $site ] && echo "on $site" ) "completed.")
+        set -l comment (echo "Search for" "\"$argv\"" (echo "on $site" ) "completed.")
         set -q _flag_local; and set comment (echo "Opened" $searchURL)
         set -q _flag_noq; and set comment "opening" (test "$site" = "Google" && echo 'a site' || echo "$site") "without keywords"
         switch (uname)
@@ -202,7 +206,7 @@ function ggl --description "A simple search plugin for keywords on Google"
                 ## use xdg-open for linux distributions
                 xdg-open "$searchURL"
                 and not set -q _flag_quiet; and echo $comment
-                or echo "Please Install xdg-utils."
+                or echo $cc"Please Install xdg-utils."$cn
         end
 
     else 
@@ -490,6 +494,7 @@ end
 function _ggl_help
     echo 'Welcom to ggl.fish help.'
     echo 'This is a simple fish plugin for Google searching from the command line.'
+    echo 'From v1.7.0, you can also use fin command as the search interface for frontend dev'
     set_color $_ggl_color
     echo '  Help Options:'
     echo '      -h, --help            Show Help'

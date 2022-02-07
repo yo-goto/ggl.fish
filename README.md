@@ -271,21 +271,22 @@ Usage:
 
 ```console
 Usage:
-      fin [fin OPTION]
-      fin [KEYWORDS...] [ggl OPTIONS...]
-      fin g [KEYWORDS...] [ggl OPTIONS...]
-      fin ggl [KEYWORDS...] [ggl OPTIONS...]
-      fin SUBCOMMAND [KEYWORDS...] [ggl OPTIONS...]
+      fin [fin-OPTION]
+      fin [KEYWORDS...] [ggl-OPTIONS...]
+      fin g [KEYWORDS...] [ggl-OPTIONS...]
+      fin ggl [KEYWORDS...] [ggl-OPTIONS...]
+      fin SUBCOMMAND [KEYWORDS...] [ggl-OPTIONS...]
 Options:
       -v, --version   Show version info
       -h, --help      Show help
       -d, --debug     Show debug tests
           --list      Show the list of all urls & sites
 Subcommands:
-      [base]          g(ggl) help
+      [base]          g(ggl) help ls
       [basic]         youtube github stackoverflow
       [MDN]           mdn
       [shell]         fish
+      [terminal]      tmux iterm2
       [japanese]      zenn qiita
       [emoji]         emojipedia
       [js runtime]    node deno
@@ -312,10 +313,12 @@ $ fin deno fetch -t
 $ fin npm gray-matter --test
  Keyword    :  gray-matter
  Encoded    :  gray-matter
+ Site       :  https://www.npmjs.com/search?q=
  Search URL :  https://www.npmjs.com/search?q=gray-matter
 $ fin mdn JavaScript --test
  Keyword    :  JavaScript
  Encoded    :  JavaScript
+ Site       :  https://developer.mozilla.org/search?q=
  Search URL :  https://developer.mozilla.org/search?q=JavaScript
 ```
 

@@ -1,7 +1,7 @@
 function fin --description "ggl wrapper for frontend developers"
     argparse --stop-nonopt 'v/version' 'h/help' 'd/debug' 'list' -- $argv
 
-    set --local version_fin "v0.0.7"
+    set --local version_fin "v0.0.8"
 
     # color shortcut
     set --local cc (set_color $_ggl_color)
@@ -100,6 +100,14 @@ function fin --description "ggl wrapper for frontend developers"
     set --local site_yarn "yarnpkg.com"
         set -a list_site $site_yarn
         set -a list_site_cmd "yarn"
+    set --local site_tmux "github.com/tmux/tmux/wiki"
+        set --local no_query_flag_tmux 'true'
+        set -a list_site $site_tmux
+        set -a list_site_cmd "tmux"
+    set --local site_iterm2 "iterm2.com"
+        set -a list_site $site_iterm2
+        set -a list_site_cmd "iterm2"
+
 
     # option handling
     if set -q _flag_version
@@ -113,7 +121,7 @@ function fin --description "ggl wrapper for frontend developers"
     else if set -q _flag_debug
         _fin_debug
         return
-    else if set -q _flag_list
+    else if set -q _flag_list || test "$argv[1]" = "ls"
         echo $cc"[Query exists]" $cn
         for i in (seq (count $list_url))
             echo ""$ca $list_url_cmd[$i]':'$co $list_url[$i] $cn
@@ -129,22 +137,30 @@ function fin --description "ggl wrapper for frontend developers"
     if functions --query ggl
         set --local ts (string join "" "$argv")
         if set -q url_$argv[1] && test -n "$ts"
-            # indirect varibale reference
             if test (count $argv) -gt 1
+                # with keyword
                 set param_url url_$argv[1]
+                # indirect varibale reference
                 eval ggl $argv[2..-1] --url=$$param_url
-            else 
+            else
+                # without keyword
                 set base_url base_$argv[1]
                 eval ggl --noq --url=$$base_url
             end 
         else if set -q site_$argv[1] && test -n "$ts"
-            if test (count $argv) -gt 1
+            if test (count $argv) -gt 1 && not set -q no_query_flag_$argv[1]
+                ## with keyword
                 set param_site site_$argv[1]
                 eval ggl $argv[2..-1] --site=$$param_site
             else
+                ## without keyword
                 set -l prep site_$argv[1]
                 set base_url (string join '' 'https://' $$prep)
                 eval ggl --noq --url=$base_url
+                if set -q no_query_flag_$argv[1]
+                    echo "Query doesn't exsit and this site can't be googled"
+                    echo "So just opened a base site"
+                end
             end
         else if test "$argv[1]" = "ggl" || test "$argv[1]" = "g"
             eval ggl $argv[2..-1] --site=$$param_site
@@ -176,21 +192,22 @@ end
 function _fin_help
     set_color $_ggl_color
     echo 'Usage: '
-    echo '      fin [fin OPTION]'
-    echo '      fin [KEYWORDS...] [ggl OPTIONS...]'
-    echo '      fin g [KEYWORDS...] [ggl OPTIONS...]'
-    echo '      fin ggl [KEYWORDS...] [ggl OPTIONS...]'
-    echo '      fin SUBCOMMAND [KEYWORDS...] [ggl OPTIONS...]'
+    echo '      fin [fin-OPTION]'
+    echo '      fin [KEYWORDS...] [ggl-OPTIONS...]'
+    echo '      fin g [KEYWORDS...] [ggl-OPTIONS...]'
+    echo '      fin ggl [KEYWORDS...] [ggl-OPTIONS...]'
+    echo '      fin SUBCOMMAND [KEYWORDS...] [ggl-OPTIONS...]'
     echo 'Options: '
     echo '      -v, --version   Show version info'
     echo '      -h, --help      Show help'
     echo '      -d, --debug     Show debug tests'
     echo '          --list      Show the list of all urls & sites'
     echo 'Subcommands:'
-    echo '      [base]          g(ggl) help'
+    echo '      [base]          g(ggl) help ls'
     echo '      [basic]         youtube github stackoverflow'
     echo '      [MDN]           mdn' 
     echo '      [shell]         fish'
+    echo '      [terminal]      tmux iterm2'
     echo '      [japanese]      zenn qiita'
     echo '      [emoji]         emojipedia'
     echo '      [js runtime]    node deno'
