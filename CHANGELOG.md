@@ -4,6 +4,7 @@
         - fin: added new option `--long` and fixed `--list` option
     - Improvement
         - fin: unified url management ways
+        - ggl: modified `--test` option (hide keyword sections)
 - v1.7.6
     - New feature
         - fin: new subcommand `tmux`, `iterm2`
