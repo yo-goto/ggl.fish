@@ -16,8 +16,8 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return
     
-    set --local version_plugin "v1.7.6"
-    set --local version_ggl "v1.6.8"
+    set --local version_plugin "v1.7.7"
+    set --local version_ggl "v1.6.9"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -165,10 +165,12 @@ function ggl --description "A simple search plugin for keywords on Google"
 
         ## testing for URL generation
         if set -q _flag_test
-            echo $cc "Keyword    :" $cn "$keyword"
-            [ $exclude ]; and \
-            echo $cc "Excluded   :" $cn "$exlist"
-            echo $cc "Encoded    :" $cn "$encoding"
+            if test -n "$keyword"
+                echo $cc "Keyword    :" $cn "$keyword"
+                [ $exclude ]; and \
+                echo $cc "Excluded   :" $cn "$exlist"
+                echo $cc "Encoded    :" $cn "$encoding"
+            end
             if set -q _flag_lang
                 if test -n "$_flag_lang"
                     echo $cc "Language   :" $cn "$lang"

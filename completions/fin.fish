@@ -1,15 +1,16 @@
 complete -c fin -s v -l version -f -d 'Show version info'
 complete -c fin -s h -l help -f -d "Show help"
 complete -c fin -s d -l debug -f -d "Show debug tests"
-complete -c fin -l list -f -d "Show the list of all urls & sites"
+complete -c fin -l list -f -d "Show the list of all site names"
+complete -c fin -l long -f -d "Show the long list of all urls & sites"
 
 complete fin -x -n __fish_use_subcommand -a ggl -d "Use ggl"
 complete fin -x -n __fish_use_subcommand -a help -d "Show help"
 complete fin -x -n __fish_use_subcommand -a ls -d "Show list"
 ## query exits
-complete fin -x -n __fish_use_subcommand -a 'mdn codepen angular npm emojipedia rust'
+complete fin -x -n __fish_use_subcommand -a 'mdn codepen angular npm emojipedia rust tokio'
 ## query doesn't exist
-complete fin -x -n __fish_use_subcommand -a 'node deno vue react typescript storybook bem nextjs yarn tmux iterm2'
+complete fin -x -n __fish_use_subcommand -a 'node deno vue react typescript storybook bem nextjs yarn tmux iterm2 svelte tailwindcss gh'
 ## from ggl options
 complete fin -x -n __fish_use_subcommand -a 'youtube github stackoverflow zenn qiita fish'
 

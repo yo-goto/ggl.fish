@@ -1,3 +1,9 @@
+- v1.7.7
+    - New feature
+        - fin: new subcommand `tokio`, `gh`, `tailwindcss`, `svelte`
+        - fin: added new option `--long` and fixed `--list` option
+    - Improvement
+        - fin: unified url management ways
 - v1.7.6
     - New feature
         - fin: new subcommand `tmux`, `iterm2`

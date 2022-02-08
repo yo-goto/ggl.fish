@@ -232,8 +232,6 @@ $ ggl -t javascript -u=https://developer.mozilla.org/en-US/search?q=
  Site       :  specified URL
  Search URL :  https://developer.mozilla.org/en-US/search?q=javascript
 $ ggl -t --local
- Keyword    :
- Encoded    :
  Site       :  localhost:3000
  Search URL :  http://localhost:3000
 $ ggl test/page --local=6000 --test
@@ -280,20 +278,23 @@ Options:
       -v, --version   Show version info
       -h, --help      Show help
       -d, --debug     Show debug tests
-          --list      Show the list of all urls & sites
+          --list      Show the list of all site names
+          --long      Show the long list of all urls & sites
 Subcommands:
       [base]          g(ggl) help ls
-      [basic]         youtube github stackoverflow
+      [basic]         youtube stackoverflow
       [MDN]           mdn
       [shell]         fish
       [terminal]      tmux iterm2
+      [github]        github gh
       [japanese]      zenn qiita
-      [emoji]         emojipedia
-      [js runtime]    node deno
-      [pkg manager]   npm yarn
-      [framework]     vue react angular nextjs storybook
       [language]      rust typescript
-      [css]           bem
+      [pkg manager]   npm yarn
+      [js runtime]    node deno
+      [rust runtime]  tokio
+      [framework]     vue react angular svelte nextjs storybook
+      [css]           bem tailwindcss
+      [emoji]         emojipedia
       [other]         codepen
 ```
 
@@ -335,23 +336,23 @@ Just a helpful wrapper of the `open` command is enough for me.
 
 I wanted a minimal and easy-to-use searching tool with useful search options for my use case and fish shell, so I've developed this plugin for my study and practical use. This is my motivation.
 
-## Development
+## Development 💡
 
 - This code is originally based on my [gist](https://gist.github.com/yo-goto/7acfa712006488466d73ff42b9d952cc).
 - Code explanation is [here](https://zenn.dev/estra/articles/google-search-from-fish-shell) (in Japanese).
 
-## Credit & Reference
+## Credit & Reference 😻
 
 - Logo font: [Fish font](https://booth.pm/ja/items/2302848)
 - I got my base idea and inspired by this article - [WhiteNote](https://s10i.me/whitenote/post/40)
 - The article about Google URL parameters is this - [fragment.database.](http://www13.plala.or.jp/bigdata/google.html)
 - `fin` command was inspired by [ohmyzsh/plugins/frontend-search](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/frontend-search)
 
-## Contributing
+## Contributing 🐟
 
 Pull requests are welcom. 
 
-## Change Log
+## Change Log 🔖
 
 - [CHANGELOG.md](/CHANGELOG.md)
 
