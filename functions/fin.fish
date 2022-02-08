@@ -12,11 +12,9 @@ function fin --description "ggl wrapper for frontend developers"
     set --local co (set_color $_ggl_color_other)
     set --local cn (set_color normal)    
     
-    # query exists
-    set --local list_cmd
-
     # url list
-    ## also available from ggl command
+    set --local list_cmd
+    ## sorted by category
     set --local site_name_youtube "www.youtube.com"
         set --local query_youtube "www.youtube.com/results?search_query="
         set -a list_cmd "youtube"
@@ -189,7 +187,7 @@ function fin --description "ggl wrapper for frontend developers"
     end
 
 
-    # new implementation
+    # main: new implementation
     if functions --query ggl
         set --local ts (string join "" "$argv")
         if set -q site_name_$argv[1] && test -n "$ts"
