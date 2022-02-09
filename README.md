@@ -47,7 +47,7 @@ For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's 
 - fish shell 3.2.0+
 - For Linux distributions: [xdg-utils](https://www.freedesktop.org/wiki/Software/xdg-utils/)
 
-## Installation 🚰
+## Installation 🎣
 
 Using [fisher](https://github.com/jorgebucaran/fisher):
 
