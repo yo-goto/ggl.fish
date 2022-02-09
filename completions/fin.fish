@@ -8,7 +8,7 @@ complete fin -x -n __fish_use_subcommand -a ggl -d "Use ggl"
 complete fin -x -n __fish_use_subcommand -a help -d "Show help"
 complete fin -x -n __fish_use_subcommand -a ls -d "Show list"
 ## query exits
-complete fin -x -n __fish_use_subcommand -a 'mdn codepen angular npm emojipedia rust tokio'
+complete fin -x -n __fish_use_subcommand -a 'mdn codepen angular npm emojipedia rust tokio vscode neovim'
 ## query doesn't exist
 complete fin -x -n __fish_use_subcommand -a 'node deno vue react typescript storybook bem nextjs yarn tmux iterm2 svelte tailwindcss gh'
 ## from ggl options

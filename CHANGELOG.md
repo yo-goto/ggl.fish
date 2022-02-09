@@ -1,3 +1,6 @@
+- v1.7.8(pre)
+    - New feature
+        - fin: new subcommand `vscode` and `neovim`
 - v1.7.7
     - New feature
         - fin: new subcommand `tokio`, `gh`, `tailwindcss`, `svelte`

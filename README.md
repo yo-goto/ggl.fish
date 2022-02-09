@@ -286,6 +286,7 @@ Subcommands:
       [MDN]           mdn
       [shell]         fish
       [terminal]      tmux iterm2
+      [editor]        vscode neovim
       [github]        github gh
       [japanese]      zenn qiita
       [language]      rust typescript

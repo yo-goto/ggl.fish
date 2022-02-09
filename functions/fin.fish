@@ -4,7 +4,7 @@ function fin --description "ggl wrapper for frontend developers"
         --stop-nonopt 'v/version' 'h/help' 'd/debug' 'list' 'long' -- $argv
     or return 1
 
-    set --local version_fin "v0.1.0"
+    set --local version_fin "v0.1.1(pre)"
 
     # color shortcut
     set --local cc (set_color $_ggl_color)
@@ -107,6 +107,14 @@ function fin --description "ggl wrapper for frontend developers"
     set --local site_name_codepen "codepen.io"
         set --local query_codepen "codepen.io/search?q="
         set -a list_cmd "codepen"
+
+    set --local site_name_vscode "code.visualstudio.com"
+        set --local docs_query_vscode "code.visualstudio.com/Search?q="
+        set --local docs_vscode "code.visualstudio.com/docs"
+        set -a list_cmd "vscode"
+    set --local site_name_neovim "neovim.io"
+        set --local docs_neovim "neovim.io/doc/general/"
+        set -a list_cmd "neovim"
 
     # option handling
     if set -q _flag_version
@@ -275,6 +283,7 @@ function _fin_help
     echo '      [MDN]           mdn' 
     echo '      [shell]         fish'
     echo '      [terminal]      tmux iterm2'
+    echo '      [editor]        vscode neovim'
     echo '      [github]        github gh'
     echo '      [japanese]      zenn qiita'
     echo '      [language]      rust typescript'
