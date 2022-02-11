@@ -38,7 +38,7 @@ You can do the things below with this plugin.
     - Option Selective Search Mode (Base mode)
     - Sequential Search Mode
 - **Web Search Interface for frontend developers** (from v1.7.0)
-    - easy & quick search with sepcific docs using `fin` command (warpper of `ggl`)
+    - easy & quick search with sepcific docs using `fin` command (wrapper of `ggl`)
 
 This plugin is developed mainly for macOS.   
 For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's `open` command.  
@@ -162,7 +162,7 @@ Utility Options
 Special Option
 - `-m`, `--mode`           : Interactive Search Mode
   
-Browser Options (uppercase letter)  
+Browser Options (Uppercase letter)  
 If not specified, ggl opens URL with default browser.  
 - `-C`, `--Chrome`         : Google Chrome
 - `-S`, `--Safari`         : Safari
