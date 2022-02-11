@@ -16,8 +16,8 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return
     
-    set --local version_plugin "v1.7.8(pre)"
-    set --local version_ggl "v1.6.9"
+    set --local version_plugin "v1.7.8"
+    set --local version_ggl "v1.7.0"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -195,22 +195,24 @@ function ggl --description "A simple search plugin for keywords on Google"
         set -l comment (echo "Search for" "\"$argv\"" (echo "on $site" ) "completed.")
         set -q _flag_local; and set comment (echo "Opened" $searchURL)
         set -q _flag_noq; and set comment "opening" (test "$site" = "Google" && echo 'a site' || echo "$site") "without keywords"
-        switch (uname)
-            case Darwin
-                if test -n "$browser"
-                    command open -a "$browser" "$searchURL"
-                    and not set -q _flag_quiet; and echo $comment
-                else 
-                    command open "$searchURL"
-                    and not set -q _flag_quiet; and echo $comment
-                end 
-            case '*'
-                ## use xdg-open for linux distributions
+
+        if command -q open
+            if test -n "$browser"
+                command open -a "$browser" "$searchURL"
+                and not set -q _flag_quiet; and echo $comment
+            else 
+                command open "$searchURL"
+                and not set -q _flag_quiet; and echo $comment
+            end 
+        else
+            ## for linux distributions
+            if command -q xdg-open
                 xdg-open "$searchURL"
                 and not set -q _flag_quiet; and echo $comment
-                or echo $cc"Please Install xdg-utils."$cn
-        end
-
+            else
+                echo $cc"Please Install xdg-utils."$cn
+            end
+        end        
     else 
         set -q _flag_lang || set -q _flag_range
         and echo "Language and Time Range options require = and a valid flag."

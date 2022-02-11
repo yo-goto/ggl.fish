@@ -4,7 +4,7 @@ function fin --description "ggl wrapper for frontend developers"
         --stop-nonopt 'v/version' 'h/help' 'd/debug' 'list' 'long' -- $argv
     or return 1
 
-    set --local version_fin "v0.1.1(pre)"
+    set --local version_fin "v0.1.1"
 
     # color shortcut
     set --local cc (set_color $_ggl_color)
