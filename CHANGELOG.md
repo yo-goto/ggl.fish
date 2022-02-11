@@ -2,7 +2,7 @@
     - New feature
         - fin: new subcommand `vscode` and `neovim`
     - Improvement
-        - ggl: impelmented command testing for `open` instead of os detection
+        - ggl: implemented command testing for `open` instead of os detection
 - v1.7.7
     - New feature
         - fin: new subcommand `tokio`, `gh`, `tailwindcss`, `svelte`
