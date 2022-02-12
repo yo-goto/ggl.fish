@@ -16,8 +16,8 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return
     
-    set --local version_plugin "v1.7.8"
-    set --local version_ggl "v1.7.0"
+    set --local version_plugin "v1.7.9"
+    set --local version_ggl "v1.7.1"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -30,19 +30,13 @@ function ggl --description "A simple search plugin for keywords on Google"
         echo 'Plugin  :' $version_plugin
         echo 'ggl.fish:' $version_ggl
         return
-    end
-
-    if set -q _flag_help
+    else if set -q _flag_help
         _ggl_help
         return
-    end
-
-    if set -q _flag_debug
+    else if set -q _flag_debug
         _ggl_debug
         return
-    end
-
-    if set -q _flag_mode
+    else if set -q _flag_mode
         _ggl_interactive
         return
     end
@@ -199,20 +193,24 @@ function ggl --description "A simple search plugin for keywords on Google"
         if command -q open
             if test -n "$browser"
                 command open -a "$browser" "$searchURL"
-                and not set -q _flag_quiet; and echo $comment
             else 
                 command open "$searchURL"
-                and not set -q _flag_quiet; and echo $comment
             end 
+            not set -q _flag_quiet; and echo $comment
         else
-            ## for linux distributions
-            if command -q xdg-open
+            if type -q xdg-open
+                ## for linux distributions
                 xdg-open "$searchURL"
-                and not set -q _flag_quiet; and echo $comment
+                not set -q _flag_quiet; and echo $comment
+            else if type -q cygstart
+                ## for windows Cygwin
+                cygstart "$searchURL"
+                not set -q _flag_quiet; and echo $comment
             else
-                echo $cc"Please Install xdg-utils."$cn
+                echo $cc"Please Install xdg-utils for Linux distributions."$cn
+                echo $cc"Please Install cygutils for Windows Cygwin."$cn
             end
-        end        
+        end
     else 
         set -q _flag_lang || set -q _flag_range
         and echo "Language and Time Range options require = and a valid flag."
