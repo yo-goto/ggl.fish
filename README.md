@@ -41,7 +41,7 @@ You can do the things below with this plugin.
     - easy & quick search with sepcific docs using `fin` command (wrapper of `ggl`)
 
 This plugin is developed mainly for macOS.   
-For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's `open` command.  
+For Linux distributions, `ggl` internally excutes `xdg-open` instead of macOS's `open` command. For Windows Cygwin, `ggl` internally executes `cygstart`.
 
 ## Requirements 🛠
 - fish shell 3.2.0+

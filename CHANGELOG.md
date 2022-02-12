@@ -1,3 +1,9 @@
+- v1.7.9
+    - Improvement
+        - fin: added fish docs entry
+        - fin: modified fish shell doc entry url
+        - ggl: added `cygstart` for windows Cygwin
+        - cleaned code
 - v1.7.8
     - New feature
         - fin: new subcommand `vscode` and `neovim`
