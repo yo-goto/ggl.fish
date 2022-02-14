@@ -14,7 +14,7 @@ function ggl --description "A simple search plugin for keywords on Google"
         'g/github' 'y/youtube' 's/stackoverflow' 'f/fishdoc' \
         'z/zenn' 'q/qiita' \
         -- $argv
-    or return
+    or return 1
     
     set --local version_plugin "v1.7.10(pre)"
     set --local version_ggl "v1.7.2(pre)"
