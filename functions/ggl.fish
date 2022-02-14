@@ -16,8 +16,8 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return
     
-    set --local version_plugin "v1.7.9"
-    set --local version_ggl "v1.7.1"
+    set --local version_plugin "v1.7.10(pre)"
+    set --local version_ggl "v1.7.2(pre)"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -264,7 +264,7 @@ function _ggl_interactive
         # read -l -P 'Type searching keywords: ' newkeyword
         while true
             set_color $_ggl_color_accent
-            echo '<< [y/yes | k/keyword | t/test | s/seq-mode | o/option | c/check-option | e/exit] >>' $cn
+            echo '<< [y:yes | k:keyword | t:test | s:seq-mode | o:option | c:check-option | e:exit] >>' $cn
             read -l -P 'ggl? : ' question
             switch "$question"
                 case Y y yes
@@ -387,7 +387,7 @@ function _ggl_interactive
                             case 7
                                 set flag_browser ''
                                 echo "Browser list: "
-                                echo '[C/Chrome | S/Safari | F/Firefox | V/Vivaldi | B/Brave | O/Other]'
+                                echo '[C:Chrome | S:Safari | F:Firefox | V:Vivaldi | B:Brave | O:Other]'
                                 while true
                                     read -P "which browser? To exit type e or exit: " opt_browser
                                     switch "$opt_browser"
@@ -420,7 +420,7 @@ function _ggl_interactive
                             case 8
                                 set flag_site ''
                                 while true
-                                    read -P "Site [l/localhost | g/github | y/youtube | s/stackoverflow | e/exit]: " opt_site
+                                    read -P "Site [l:localhost | g:github | y:youtube | s:stackoverflow | e:exit]: " opt_site
                                     switch "$opt_site"
                                         case l local localhost 
                                             set site "Local host"
