@@ -22,7 +22,7 @@ function ggl --description "A simple search plugin for keywords on Google"
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
     ## process
-    set --local keyword (string join " " $argv)
+    set --local keyword (string join -- " " $argv)
     set --local baseURL "https://www.google.com/search?q="
     set --local site "Google"
 
