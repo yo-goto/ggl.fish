@@ -1,3 +1,7 @@
+- v1.7.10
+    - Improvement
+        - ggl: changed prompt message format
+        - ggl: modified exit status in argparse
 - v1.7.9
     - Improvement
         - fin: added fish docs entry
