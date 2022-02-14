@@ -85,6 +85,10 @@ ggl -l=ja 日本語検索
 
 ggl -e English search
 # search in English, you can alse use -e or --english option
+
+ggl open command -- -GNU -Linux
+# you can exclude multiple words "GNU" & "Linux" from the searching result
+# from v1.7.10, ggl accepts -- for avoiding conflict against option flags
 ```
 
 `ggl.fish` internally generates searchable URLs.  
