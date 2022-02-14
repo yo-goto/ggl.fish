@@ -81,38 +81,39 @@ function ggl --description "A simple search plugin for keywords on Google"
         end
         
         ## google search options: parameter handling
-        set -q _flag_lang; and switch "$_flag_lang"
-            case =e =en =english =English
-                set _flag_lang "lr=lang_en"
-                set lang "English"
-            case =j =ja =japanese =Japanese
-                set _flag_lang "lr=lang_ja"
-                set lang "Japanese"
-            case =d =de =german =German
-                set _flag_lang "lr=lang_de"
-                set lang "German"
-            case =f =fr =french =French
-                set _flag_lang "lr=lang_fr"
-                set lang "French"
-            case =i =it =italian =Italian
-                set _flag_lang "lr=lang_it"
-                set lang "Italian"
-            case =s =es =spanish =Spanish
-                set _flag_lang "lr=lang_es"
-                set lang "Spanish"
-            case =r =ru =russian =Russian
-                set _flag_lang "lr=lang_ru"
-                set lang "Russian"
-            case =k =ko =korean =Korean
-                set _flag_lang "lr=lang_ko"
-                set lang "Korean"
-            case =z =zh =chinese =Chinese
-                set _flag_lang "lr=lang_zh-CH"
-                set lang "Chinese"
-            case '*'
-                set _flag_lang ''
-                echo 'Flag: ' $_flag_lang
-                echo "Invalid language flag. See help with -h option."
+        if set -q _flag_lang
+            switch "$_flag_lang"
+                case =e =en =english =English
+                    set _flag_lang "lr=lang_en"
+                    set lang "English"
+                case =j =ja =japanese =Japanese
+                    set _flag_lang "lr=lang_ja"
+                    set lang "Japanese"
+                case =d =de =german =German
+                    set _flag_lang "lr=lang_de"
+                    set lang "German"
+                case =f =fr =french =French
+                    set _flag_lang "lr=lang_fr"
+                    set lang "French"
+                case =i =it =italian =Italian
+                    set _flag_lang "lr=lang_it"
+                    set lang "Italian"
+                case =s =es =spanish =Spanish
+                    set _flag_lang "lr=lang_es"
+                    set lang "Spanish"
+                case =r =ru =russian =Russian
+                    set _flag_lang "lr=lang_ru"
+                    set lang "Russian"
+                case =k =ko =korean =Korean
+                    set _flag_lang "lr=lang_ko"
+                    set lang "Korean"
+                case =z =zh =chinese =Chinese
+                    set _flag_lang "lr=lang_zh-CH"
+                    set lang "Chinese"
+                case '*'
+                    echo "\"$_flag_lang\"" "is invalid language flag. See help with -h option."
+                    set _flag_lang
+            end
         end
 
         set -q _flag_english; and set _flag_lang "lr=lang_en"; and set lang "English"
@@ -212,10 +213,7 @@ function ggl --description "A simple search plugin for keywords on Google"
             end
         end
     else 
-        set -q _flag_lang || set -q _flag_range
-        and echo "Language and Time Range options require = and a valid flag."
-        and echo "See help using -h or --help option."
-        echo "Execute this command with keywords."
+        not test -n "$keyword"; and echo "Execute this command with keywords."
         return 1
     end
 
