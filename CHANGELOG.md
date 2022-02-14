@@ -1,7 +1,10 @@
 - v1.7.10
     - Improvement
+        - ggl: made string join process more stable (now ggl can accept `-` character after typing `--`)
         - ggl: changed prompt message format
+    - Bug fix
         - ggl: modified exit status in argparse
+        - ggl: fixed language option error message
 - v1.7.9
     - Improvement
         - fin: added fish docs entry
