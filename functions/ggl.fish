@@ -16,8 +16,8 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return 1
     
-    set --local version_plugin "v1.7.10(pre)"
-    set --local version_ggl "v1.7.2(pre)"
+    set --local version_plugin "v1.7.10"
+    set --local version_ggl "v1.7.2"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)

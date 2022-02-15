@@ -2,6 +2,9 @@
     - Improvement
         - ggl: made string join process more stable (now ggl can accept `-` character after typing `--`)
         - ggl: changed prompt message format
+        - ggl: made help message simpler & more readable
+        - fin: modified list message color
+        - fin: added new subcommand `fin ls long` to show the long list
     - Bug fix
         - ggl: modified exit status in argparse
         - ggl: fixed language option error message
