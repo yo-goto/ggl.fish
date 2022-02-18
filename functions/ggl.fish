@@ -16,13 +16,13 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return 1
     
-    set --local version_plugin "v1.7.10(pre)"
-    set --local version_ggl "v1.7.2(pre)"
+    set --local version_plugin "v1.7.10"
+    set --local version_ggl "v1.7.2"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
     ## process
-    set --local keyword (string join " " $argv)
+    set --local keyword (string join -- " " $argv)
     set --local baseURL "https://www.google.com/search?q="
     set --local site "Google"
 
@@ -81,38 +81,39 @@ function ggl --description "A simple search plugin for keywords on Google"
         end
         
         ## google search options: parameter handling
-        set -q _flag_lang; and switch "$_flag_lang"
-            case =e =en =english =English
-                set _flag_lang "lr=lang_en"
-                set lang "English"
-            case =j =ja =japanese =Japanese
-                set _flag_lang "lr=lang_ja"
-                set lang "Japanese"
-            case =d =de =german =German
-                set _flag_lang "lr=lang_de"
-                set lang "German"
-            case =f =fr =french =French
-                set _flag_lang "lr=lang_fr"
-                set lang "French"
-            case =i =it =italian =Italian
-                set _flag_lang "lr=lang_it"
-                set lang "Italian"
-            case =s =es =spanish =Spanish
-                set _flag_lang "lr=lang_es"
-                set lang "Spanish"
-            case =r =ru =russian =Russian
-                set _flag_lang "lr=lang_ru"
-                set lang "Russian"
-            case =k =ko =korean =Korean
-                set _flag_lang "lr=lang_ko"
-                set lang "Korean"
-            case =z =zh =chinese =Chinese
-                set _flag_lang "lr=lang_zh-CH"
-                set lang "Chinese"
-            case '*'
-                set _flag_lang ''
-                echo 'Flag: ' $_flag_lang
-                echo "Invalid language flag. See help with -h option."
+        if set -q _flag_lang
+            switch "$_flag_lang"
+                case =e =en =english =English
+                    set _flag_lang "lr=lang_en"
+                    set lang "English"
+                case =j =ja =japanese =Japanese
+                    set _flag_lang "lr=lang_ja"
+                    set lang "Japanese"
+                case =d =de =german =German
+                    set _flag_lang "lr=lang_de"
+                    set lang "German"
+                case =f =fr =french =French
+                    set _flag_lang "lr=lang_fr"
+                    set lang "French"
+                case =i =it =italian =Italian
+                    set _flag_lang "lr=lang_it"
+                    set lang "Italian"
+                case =s =es =spanish =Spanish
+                    set _flag_lang "lr=lang_es"
+                    set lang "Spanish"
+                case =r =ru =russian =Russian
+                    set _flag_lang "lr=lang_ru"
+                    set lang "Russian"
+                case =k =ko =korean =Korean
+                    set _flag_lang "lr=lang_ko"
+                    set lang "Korean"
+                case =z =zh =chinese =Chinese
+                    set _flag_lang "lr=lang_zh-CH"
+                    set lang "Chinese"
+                case '*'
+                    echo "\"$_flag_lang\"" "is invalid language flag. See help with -h option."
+                    set _flag_lang
+            end
         end
 
         set -q _flag_english; and set _flag_lang "lr=lang_en"; and set lang "English"
@@ -212,10 +213,7 @@ function ggl --description "A simple search plugin for keywords on Google"
             end
         end
     else 
-        set -q _flag_lang || set -q _flag_range
-        and echo "Language and Time Range options require = and a valid flag."
-        and echo "See help using -h or --help option."
-        echo "Execute this command with keywords."
+        not test -n "$keyword"; and echo "Execute this command with keywords."
         return 1
     end
 
@@ -496,83 +494,73 @@ end
 function _ggl_help
     echo 'Welcom to ggl.fish help.'
     echo 'This is a simple fish plugin for Google searching from the command line.'
-    echo 'From v1.7.0, you can also use fin command as the search interface for frontend dev'
+    echo 'From v1.7.0, you can also use fin command as the search interface for frontend dev.'
+    echo 'To see the usage of fin command, use "fin -h".'
     set_color $_ggl_color
-    echo '  Help Options:'
-    echo '      -h, --help            Show Help'
-    echo '      -v, --version         Show Version Info'
-    echo '  Utility Options (mutually exclusive):' 
-    echo '      -t, --test            Test URL Generation' 
-    echo '      -o, --output          Print generated URL'
-    echo '      -d, --debug           Print some tests'
-    echo '      --quiet               Do search without complete message'
-    echo '  Special Option:'
-    echo '      -m, --mode            Interactive Search Mode'
-    echo '  Browser Options (Uppercase letter):'
-    echo '      -C, --Chrome          Use Google Chrome' 
-    echo '      -S, --Safari          Use Safari'
-    echo '      -F, --Firefox         Use Firefox'
-    echo '      -V, --Vivaldi         Use Vivaldi'
-    echo '      -B, --Brave           Use Brave'
-    echo '      -b, --browser         Use other browser'
-    echo '      If no options are specified, ggl opens a URL with default browser'
-    echo '  Search Options:'
-    echo '      -i, --image           Image serch'
-    echo '      -p, --perfect         Exact match'
-    echo '          Examples'
-    echo '              $ ggl fish shell -p'
-    echo '                      or'
-    echo '              $ ggl \'"fish shell"\' command'
-    echo '      -n, --nonperson       Non-Personalized search'
-    echo '      -e, --english         English Search'
-    echo '      -x, --exclude         Exclude word from search'
-    echo '          Use this option with ='
-    echo '          Example (exclude the word "bash" from search):'
-    echo '              $ ggl fish shell -x=bash'
-    echo '          Possible to use -x option more than once'
-    echo '              $ ggl exclude mutiple words -x=A -x=B'
-    echo '      -l, --lang            Language Option'
-    echo '          = e or en         English'
-    echo '          = j or ja         Japanese'
-    echo '          = d or de         German'
-    echo '          = f or fr         French'
-    echo '          = i or it         Italian'
-    echo '          = s or es         Spanish'
-    echo '          = r or ru         Russian'
-    echo '          = k or ko         Korean'
-    echo '          = z or zh         Chinese'
-    echo '          Use language option with ='
-    echo '          Example (English Search):'
-    echo '              $ ggl -l=en how to use fish shell'
-    echo '                            or               '
-    echo '              $ ggl -e how to use fish shell'
-    echo '      -r, --range           Time Range for Searching'
-    echo '          = h               Past Hour'
-    echo '          = d               Past Day'
-    echo '          = w               Past Week'
-    echo '          = m               Past Month'
-    echo '          = y               Past Year'
-    echo '          Use range option with =, and speficy time range (ex `-r=h3`)'
-    echo '          Examples (to restrict search result within the last 2 yeare):'
-    echo '              $ ggl -r=y2 Results within the last 2 years'
-    echo '          Without number (like `-r=y`), the time range becomes the same as `-r=y1` '
-    echo '              $ ggl -r=m Results within the last month'
-    echo '      -a, --additional         Addtional Query Parameter'
-    echo '  Site Options (mutually exclusive):'
-    echo '      -g, --github          Search with Github'
-    echo '      -y, --youtube         Search with YouTube'
-    echo '      -s, --stackoverflow   Search with Stack overflow'
-    echo '      -f, --fishdoc         Search with fish shell docs'
-    echo '  For Japanese Users:'
-    echo '      -z, --zenn            Search with Zenn'
-    echo '      -q, --qiita           Search with Qiita'
-    echo '  Other URL Options:'
-    echo '      -u, --url             Search with specified URL'
-    echo '      -L, --local           Open local host:3000'
-    echo '      If port number specified, ggl opens http://localhost:PortNumber'
-    echo '          $ ggl --local=8000'
-    echo '      --site                Search within specific site on Google'
-    echo '      --noq                 Open a site without any keywords'
+    printf '%s\n' \
+        '' \
+        '  HELP OPTIONS:' \
+        '      -h, --help            Show Help' \
+        '      -v, --version         Show Version Info' \
+        '' \
+        '  UTILITY OPTIONS (mutually exclusive):'  \
+        '      -t, --test            Test URL Generation'  \
+        '      -o, --output          Print generated URL' \
+        '      -d, --debug           Print some tests' \
+        '          --quiet           Do search without complete message' \
+        '' \
+        '  SPECIAL OPTION:' \
+        '      -m, --mode            Interactive Search Mode' \
+        '' \
+        '  BROWSER OPTIONS (Uppercase letter):' \
+        '      -C, --Chrome          Use Google Chrome'  \
+        '      -S, --Safari          Use Safari' \
+        '      -F, --Firefox         Use Firefox' \
+        '      -V, --Vivaldi         Use Vivaldi' \
+        '      -B, --Brave           Use Brave' \
+        '      -b, --browser         Use other browser' \
+        '' \
+        '  SEARCH OPTIONS:' \
+        '      -i, --image           Image serch' \
+        '      -p, --perfect         Exact match' \
+        '      -n, --nonperson       Non-Personalized search' \
+        '      -e, --english         English Search' \
+        '      -x, --exclude         Exclude word from search' \
+        '      -l, --lang            Language Option' \
+        '          = e or en         English' \
+        '          = j or ja         Japanese' \
+        '          = d or de         German' \
+        '          = f or fr         French' \
+        '          = i or it         Italian' \
+        '          = s or es         Spanish' \
+        '          = r or ru         Russian' \
+        '          = k or ko         Korean' \
+        '          = z or zh         Chinese' \
+        '      -r, --range           Time Range for Searching' \
+        '          = h               Past Hour' \
+        '          = d               Past Day' \
+        '          = w               Past Week' \
+        '          = m               Past Month' \
+        '          = y               Past Year' \
+        '      -a, --additional      Addtional Query Parameter' \
+        '' \
+        '  SITE OPTIONS (mutually exclusive):' \
+        '      -g, --github          Search with Github' \
+        '      -y, --youtube         Search with YouTube' \
+        '      -s, --stackoverflow   Search with Stack overflow' \
+        '      -f, --fishdoc         Search with fish shell docs' \
+        '' \
+        '  FOR JAPANESE USERS:' \
+        '      -z, --zenn            Search with Zenn' \
+        '      -q, --qiita           Search with Qiita' \
+        '' \
+        '  OTHER URL OPTIONS:' \
+        '      -u, --url             Search with specified URL' \
+        '      -L, --local           Open localhost (by default host:3000)' \
+        '          --site            Search within specific site on Google' \
+        '          --noq             Open a site without any keywords' \
+        ''
     set_color normal
+    echo 'For more infomation, see "https://github.com/yo-goto/ggl.fish"'
 end
 

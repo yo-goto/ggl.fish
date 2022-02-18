@@ -4,13 +4,14 @@ function fin --description "ggl wrapper for frontend developers"
         --stop-nonopt 'v/version' 'h/help' 'd/debug' 'list' 'long' -- $argv
     or return 1
 
-    set --local version_fin "v0.1.2"
+    set --local version_fin "v0.1.3"
 
     # color shortcut
     set --local cc (set_color $_ggl_color)
     set --local ca (set_color $_ggl_color_accent)
     set --local co (set_color $_ggl_color_other)
-    set --local cn (set_color normal)    
+    set --local cn (set_color normal)
+    set --local tb (set_color -o)
     
     # url list
     set --local list_cmd
@@ -130,10 +131,10 @@ function fin --description "ggl wrapper for frontend developers"
         _fin_debug
         return
     else if set -q _flag_list || test "$argv[1]" = "ls" || set -q _flag_long
-        if set -q _flag_long
-            echo $cc"[Long list]" $cn
+        if set -q _flag_long || test "$argv[2]" = "long"
+            echo "[Long list]"
         else
-            echo $cc"[Site list]" $cn
+            echo "[Site list]"
         end
 
         for i in (seq (count $list_cmd))
@@ -142,9 +143,9 @@ function fin --description "ggl wrapper for frontend developers"
 
             set cmd_name $list_cmd[$i]
             set indirect_site_name site_name_$cmd_name
-            echo ""$ca $cmd_name':'$co $$indirect_site_name $cn
+            echo ""$ca $cmd_name':'$cc $$indirect_site_name $cn
 
-            if set -q _flag_long
+            if set -q _flag_long || test "$argv[2]" = "long"
                 set --local num_flag
                 set --local item_query
                 set --local item_docs
@@ -185,11 +186,11 @@ function fin --description "ggl wrapper for frontend developers"
                         set stamp_docs_query "└──"
                 end
                 test "$flag_query" = "true"; and \
-                    echo " "$ca $stamp_query "query: "$co (string join "" "https://" $$item_query) $cn
+                    echo " " $stamp_query $ca"query: "$co$tb (string join "" "https://" $$item_query) $cn
                 test "$flag_docs" = "true"; and \
-                    echo " "$ca $stamp_docs "docs: "$co (string join "" "https://" $$item_docs) $cn
+                    echo " " $stamp_docs $ca"docs: "$co$tb (string join "" "https://" $$item_docs) $cn
                 test "$flag_docs_query" = "true"; and \
-                    echo " "$ca $stamp_docs_query "docs query: "$co (string join "" "https://" $$item_docs_query) $cn
+                    echo " " $stamp_docs_query $ca"docs query: "$co$tb (string join "" "https://" $$item_docs_query) $cn
             end
         end
         return
