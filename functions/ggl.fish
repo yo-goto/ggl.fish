@@ -16,8 +16,8 @@ function ggl --description "A simple search plugin for keywords on Google"
         -- $argv
     or return 1
     
-    set --local version_plugin "v1.7.10"
-    set --local version_ggl "v1.7.2"
+    set --local version_plugin "v1.7.11"
+    set --local version_ggl "v1.8.0"
     ## color
     set --local cc (set_color $_ggl_color)
     set --local cn (set_color normal)
@@ -31,13 +31,13 @@ function ggl --description "A simple search plugin for keywords on Google"
         echo 'ggl.fish:' $version_ggl
         return
     else if set -q _flag_help
-        _ggl_help
+        __ggl_help
         return
     else if set -q _flag_debug
-        _ggl_debug
+        __ggl_debug
         return
     else if set -q _flag_mode
-        _ggl_interactive
+        __ggl_interactive
         return
     end
 
@@ -222,7 +222,7 @@ end
 
 # helper functions
 ## for interactive mode
-function _ggl_interactive
+function __ggl_interactive
 
     set --local cc (set_color $_ggl_color)
     set --local ca (set_color $_ggl_color_accent)
@@ -475,7 +475,7 @@ function _ggl_interactive
 end
 
 
-function _ggl_debug
+function __ggl_debug
     set --local ts
     ## test cases 
     set -a ts "ggl -t how to use fish shell"
@@ -491,7 +491,7 @@ function _ggl_debug
 end
 
 
-function _ggl_help
+function __ggl_help
     echo 'Welcom to ggl.fish help.'
     echo 'This is a simple fish plugin for Google searching from the command line.'
     echo 'From v1.7.0, you can also use fin command as the search interface for frontend dev.'

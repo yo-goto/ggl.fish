@@ -1,3 +1,10 @@
+- v1.7.11
+    - New feature
+        - fin: added new subcommand: `git`, `daisyui`
+    - Refactor
+        - fin: modified local scope flags
+        - fin: sorted a url list
+        - changed helper function names
 - v1.7.10
     - Improvement
         - ggl: made string join process more stable (now ggl can accept `-` character after typing `--`)

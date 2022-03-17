@@ -4,119 +4,142 @@ function fin --description "ggl wrapper for frontend developers"
         --stop-nonopt 'v/version' 'h/help' 'd/debug' 'list' 'long' -- $argv
     or return 1
 
-    set --local version_fin "v0.1.3"
+    set -l version_fin "v0.1.4"
 
     # color shortcut
-    set --local cc (set_color $_ggl_color)
-    set --local ca (set_color $_ggl_color_accent)
-    set --local co (set_color $_ggl_color_other)
-    set --local cn (set_color normal)
-    set --local tb (set_color -o)
+    set -l cc (set_color $_ggl_color)
+    set -l ca (set_color $_ggl_color_accent)
+    set -l co (set_color $_ggl_color_other)
+    set -l cn (set_color normal)
+    set -l tb (set_color -o)
     
     # url list
-    set --local list_cmd
-    ## sorted by category
-    set --local site_name_youtube "www.youtube.com"
-        set --local query_youtube "www.youtube.com/results?search_query="
-        set -a list_cmd "youtube"
-    set --local site_name_stackoverflow "stackoverflow.com"
-        set --local query_stackoverflow "stackoverflow.com/search?q="
-        set -a list_cmd "stackoverflow"
-    set --local site_name_github "github.com"
-        set --local query_github "github.com/search?q="
-        set -a list_cmd "github"
-    set --local site_name_gh "cli.github.com"
-        set --local docs_gh "cli.github.com/manual/"
-        set -a list_cmd "gh"        
+    set -l list_cmd
 
-    set --local site_name_mdn "developer.mozilla.org"
-        set --local query_mdn "developer.mozilla.org/search?q="
+    ## sorted by category
+    ### basic
+    set -l site_name_youtube "www.youtube.com"
+        set -l query_youtube "www.youtube.com/results?search_query="
+        set -a list_cmd "youtube"
+    set -l site_name_stackoverflow "stackoverflow.com"
+        set -l query_stackoverflow "stackoverflow.com/search?q="
+        set -a list_cmd "stackoverflow"
+    
+    ### git, github
+    set -l site_name_git "git-scm.com"
+        set -l docs_query_git "git-scm.com/search/results?search="
+        set -l docs_git "git-scm.com/doc"
+        set -a list_cmd "git"
+    set -l site_name_github "github.com"
+        set -l query_github "github.com/search?q="
+        set -a list_cmd "github"
+    set -l site_name_gh "cli.github.com"
+        set -l docs_gh "cli.github.com/manual/"
+        set -a list_cmd "gh"        
+    
+    ## mdn
+    set -l site_name_mdn "developer.mozilla.org"
+        set -l query_mdn "developer.mozilla.org/search?q="
         set -a list_cmd "mdn"
-    set --local site_name_fish "fishshell.com"
-        set --local docs_query_fish "fishshell.com/docs/current/search.html?q="
-        set --local docs_fish "fishshell.com/docs/current/index.html"
+    set -l site_name_fish "fishshell.com"
+        set -l docs_query_fish "fishshell.com/docs/current/search.html?q="
+        set -l docs_fish "fishshell.com/docs/current/index.html"
         set -a list_cmd "fish"
 
-    set --local site_name_tmux "github.com/tmux/tmux"
+    ### terminal
+    set -l site_name_tmux "github.com/tmux/tmux"
         set -a list_cmd "tmux"
-        set --local docs_tmux "github.com/tmux/tmux/wiki"
-    set --local site_name_iterm2 "iterm2.com"
-        set --local docs_iterm2 "iterm2.com/documentation.html"
+        set -l docs_tmux "github.com/tmux/tmux/wiki"
+    set -l site_name_iterm2 "iterm2.com"
+        set -l docs_iterm2 "iterm2.com/documentation.html"
         set -a list_cmd "iterm2"
 
-    set --local site_name_zenn "zenn.dev"
-        set --local query_zenn "zenn.dev/search?q="
+    ### editor
+    set -l site_name_vscode "code.visualstudio.com"
+        set -l docs_query_vscode "code.visualstudio.com/Search?q="
+        set -l docs_vscode "code.visualstudio.com/docs"
+        set -a list_cmd "vscode"
+    set -l site_name_neovim "neovim.io"
+        set -l docs_neovim "neovim.io/doc/general/"
+        set -a list_cmd "neovim"    
+
+    ### Japanese knowledgebase
+    set -l site_name_zenn "zenn.dev"
+        set -l query_zenn "zenn.dev/search?q="
         set -a list_cmd "zenn"
-    set --local site_name_qiita "qiita.com"
-        set --local query_qiita "qiita.com/search?q="
+    set -l site_name_qiita "qiita.com"
+        set -l query_qiita "qiita.com/search?q="
         set -a list_cmd "qiita"
 
-    set --local site_name_typescript "typescriptlang.org"
-        set --local docs_typesccript "www.typescriptlang.org/docs/"
+    ### languages
+    set -l site_name_typescript "typescriptlang.org"
+        set -l docs_typesccript "www.typescriptlang.org/docs/"
         set -a list_cmd "typescript"
-    set --local site_name_rust "www.rust-lang.org"
-        set --local docs_rust "doc.rust-lang.org/reference"
-        set --local docs_query_rust "doc.rust-lang.org/reference/index.html?search="
+    set -l site_name_rust "www.rust-lang.org"
+        set -l docs_rust "doc.rust-lang.org/reference"
+        set -l docs_query_rust "doc.rust-lang.org/reference/index.html?search="
         set -a list_cmd "rust"
 
-    set --local site_name_npm "www.npmjs.com"
-        set --local query_npm "www.npmjs.com/search?q="
+    ## pkg manager
+    set -l site_name_npm "www.npmjs.com"
+        set -l query_npm "www.npmjs.com/search?q="
         set -a list_cmd "npm"
-    set --local site_name_yarn "yarnpkg.com"
+    set -l site_name_yarn "yarnpkg.com"
         set -a list_cmd "yarn"
 
-    set --local site_name_deno "deno.land"
-        set --local docs_deno "deno.land/manual"
+    ## js runtims
+    set -l site_name_deno "deno.land"
+        set -l docs_deno "deno.land/manual"
         set -a list_cmd "deno"
-    set --local site_name_node "nodejs.org"
-        set --local docs_node "nodejs.org/en/docs/"
+    set -l site_name_node "nodejs.org"
+        set -l docs_node "nodejs.org/en/docs/"
         set -a list_cmd "node"
 
-    set --local site_name_tokio "tokio.rs"
-        set --local docs_query_tokio "docs.rs/tokio/latest/tokio/?search="
+    ## rust runtime
+    set -l site_name_tokio "tokio.rs"
+        set -l docs_query_tokio "docs.rs/tokio/latest/tokio/?search="
         set -a list_cmd "tokio"
 
-    set --local site_name_angular "angular.io"
-        set --local docs_angular "angular.io/docs/ts/latest/api"
-        set --local docs_query_angular "angular.io/docs/ts/latest/api/#!?url="
+    ## framework
+    set -l site_name_angular "angular.io"
+        set -l docs_angular "angular.io/docs/ts/latest/api"
+        set -l docs_query_angular "angular.io/docs/ts/latest/api/#!?url="
         set -a list_cmd "angular"
-    set --local site_name_react "reactjs.org"
-        set --local docs_react "reactjs.org/docs/getting-started.html"
+    set -l site_name_react "reactjs.org"
+        set -l docs_react "reactjs.org/docs/getting-started.html"
         set -a list_cmd "react"
-    set --local site_name_vue "vuejs.org"
-        set --local docs_vue "vuejs.org/guide/introduction.html"
+    set -l site_name_vue "vuejs.org"
+        set -l docs_vue "vuejs.org/guide/introduction.html"
         set -a list_cmd "vue"
-    set --local site_name_nextjs "nextjs.org"
-        set --local docs_nextjs "nextjs.org/docs/getting-started"
+    set -l site_name_nextjs "nextjs.org"
+        set -l docs_nextjs "nextjs.org/docs/getting-started"
         set -a list_cmd "nextjs"
-    set --local site_name_svelte "svelte.dev"
-        set --local docs_svelte "svelte.dev/docs"
+    set -l site_name_svelte "svelte.dev"
+        set -l docs_svelte "svelte.dev/docs"
         set -a list_cmd "svelte"
-    set --local site_name_storybook "storybook.js.org"
-        set --local docs_storybook "storybook.js.org/docs/react/get-started/introduction"
+    set -l site_name_storybook "storybook.js.org"
+        set -l docs_storybook "storybook.js.org/docs/react/get-started/introduction"
         set -a list_cmd "storybook"
 
-    set --local site_name_bem "en.bem.info"
-        set --local docs_bem "en.bem.info/methodology/quick-start/"
+    ### css
+    set -l site_name_bem "en.bem.info"
+        set -l docs_bem "en.bem.info/methodology/quick-start/"
         set -a list_cmd "bem"
-    set --local site_name_tailwindcss "tailwindcss.com"
-        set --local docs_tailwindcss "tailwindcss.com/docs"
+    set -l site_name_tailwindcss "tailwindcss.com"
+        set -l docs_tailwindcss "tailwindcss.com/docs"
         set -a list_cmd "tailwindcss"
+    set -l site_name_daisyui "daisyui.com"
+        set -a list_cmd "daisyui"
 
-    set --local site_name_emojipedia "emojipedia.org"
-        set --local query_emojipedia "emojipedia.org/search/?q="
+    ### emoji
+    set -l site_name_emojipedia "emojipedia.org"
+        set -l query_emojipedia "emojipedia.org/search/?q="
         set -a list_cmd "emojipedia"
-    set --local site_name_codepen "codepen.io"
-        set --local query_codepen "codepen.io/search?q="
-        set -a list_cmd "codepen"
 
-    set --local site_name_vscode "code.visualstudio.com"
-        set --local docs_query_vscode "code.visualstudio.com/Search?q="
-        set --local docs_vscode "code.visualstudio.com/docs"
-        set -a list_cmd "vscode"
-    set --local site_name_neovim "neovim.io"
-        set --local docs_neovim "neovim.io/doc/general/"
-        set -a list_cmd "neovim"
+    ### other
+    set -l site_name_codepen "codepen.io"
+        set -l query_codepen "codepen.io/search?q="
+        set -a list_cmd "codepen"
 
     # option handling
     if set -q _flag_version
@@ -125,10 +148,10 @@ function fin --description "ggl wrapper for frontend developers"
         echo 'fin.fish:' $version_fin
         return
     else if set -q _flag_help || test "$argv[1]" = "help"
-        _fin_help
+        __fin_help
         return
     else if set -q _flag_debug
-        _fin_debug
+        __fin_debug
         return
     else if set -q _flag_list || test "$argv[1]" = "ls" || set -q _flag_long
         if set -q _flag_long || test "$argv[2]" = "long"
@@ -243,7 +266,7 @@ function fin --description "ggl wrapper for frontend developers"
         else if test -n "$ts"
             ggl $argv
         else 
-            _fin_help
+            __fin_help
             return 1
         end
     else
@@ -254,7 +277,7 @@ end
 
 
 ## helper functions
-function _fin_debug
+function __fin_debug
     set --local ts
     set -a ts "fin deno fetch -t"
     set -a ts "fin npm gray-matter --test"
@@ -265,7 +288,7 @@ function _fin_debug
 end
 
 
-function _fin_help
+function __fin_help
     set_color $_ggl_color
     echo 'Usage: '
     echo '      fin [fin-OPTION]'
@@ -286,14 +309,14 @@ function _fin_help
     echo '      [shell]         fish'
     echo '      [terminal]      tmux iterm2'
     echo '      [editor]        vscode neovim'
-    echo '      [github]        github gh'
+    echo '      [git,github]    git github gh'
     echo '      [japanese]      zenn qiita'
     echo '      [language]      rust typescript'
     echo '      [pkg manager]   npm yarn'
     echo '      [js runtime]    node deno'
     echo '      [rust runtime]  tokio'
     echo '      [framework]     vue react angular svelte nextjs storybook'
-    echo '      [css]           bem tailwindcss'
+    echo '      [css]           bem tailwindcss daisyui'
     echo '      [emoji]         emojipedia'
     echo '      [other]         codepen'
     set_color normal
