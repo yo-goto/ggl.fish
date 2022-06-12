@@ -1,6 +1,8 @@
+- v1.7.12
+    - fin: added new subcommands: `chakraui`, `mui`
 - v1.7.11
     - New feature
-        - fin: added new subcommand: `git`, `daisyui`
+        - fin: added new subcommands: `git`, `daisyui`
     - Refactor
         - fin: modified local scope flags
         - fin: sorted a url list

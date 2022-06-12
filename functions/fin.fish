@@ -121,15 +121,23 @@ function fin --description "ggl wrapper for frontend developers"
         set -l docs_storybook "storybook.js.org/docs/react/get-started/introduction"
         set -a list_cmd "storybook"
 
-    ### css
+    ### css methodology
     set -l site_name_bem "en.bem.info"
         set -l docs_bem "en.bem.info/methodology/quick-start/"
         set -a list_cmd "bem"
+    
+    ### css framework
     set -l site_name_tailwindcss "tailwindcss.com"
         set -l docs_tailwindcss "tailwindcss.com/docs"
         set -a list_cmd "tailwindcss"
     set -l site_name_daisyui "daisyui.com"
         set -a list_cmd "daisyui"
+    set -l site_name_chakraui "chakra-ui.com"
+        set -l docs_chakraui "chakra-ui.com/guides/first-steps"
+        set -a list_cmd "chakraui"
+    set -l site_name_mui "mui.com"
+        set -l docs_mui "mui.com/getting-started/installation/"
+        set -a list_mui "mui"
 
     ### emoji
     set -l site_name_emojipedia "emojipedia.org"
@@ -297,28 +305,29 @@ function __fin_help
     echo '      fin ggl [KEYWORDS...] [ggl-OPTIONS...]'
     echo '      fin SUBCOMMAND [KEYWORDS...] [ggl-OPTIONS...]'
     echo 'Options: '
-    echo '      -v, --version   Show version info'
-    echo '      -h, --help      Show help'
-    echo '      -d, --debug     Show debug tests'
-    echo '          --list      Show the list of all site names'
-    echo '          --long      Show the long list of all urls & sites'
+    echo '      -v, --version      Show version info'
+    echo '      -h, --help         Show help'
+    echo '      -d, --debug        Show debug tests'
+    echo '          --list         Show the list of all site names'
+    echo '          --long         Show the long list of all urls & sites'
     echo 'Subcommands:'
-    echo '      [base]          g(ggl) help ls'
-    echo '      [basic]         youtube stackoverflow'
-    echo '      [MDN]           mdn' 
-    echo '      [shell]         fish'
-    echo '      [terminal]      tmux iterm2'
-    echo '      [editor]        vscode neovim'
-    echo '      [git,github]    git github gh'
-    echo '      [japanese]      zenn qiita'
-    echo '      [language]      rust typescript'
-    echo '      [pkg manager]   npm yarn'
-    echo '      [js runtime]    node deno'
-    echo '      [rust runtime]  tokio'
-    echo '      [framework]     vue react angular svelte nextjs storybook'
-    echo '      [css]           bem tailwindcss daisyui'
-    echo '      [emoji]         emojipedia'
-    echo '      [other]         codepen'
+    echo '      [base]             g(ggl) help ls'
+    echo '      [basic]            youtube stackoverflow'
+    echo '      [MDN]              mdn' 
+    echo '      [shell]            fish'
+    echo '      [terminal]         tmux iterm2'
+    echo '      [editor]           vscode neovim'
+    echo '      [git,github]       git github gh'
+    echo '      [japanese]         zenn qiita'
+    echo '      [language]         rust typescript'
+    echo '      [pkg manager]      npm yarn'
+    echo '      [js runtime]       node deno'
+    echo '      [rust runtime]     tokio'
+    echo '      [framework]        vue react angular svelte nextjs storybook'
+    echo '      [css methodology]  bem'
+    echo '      [css framework]    tailwindcss daisyui chakraui mui'
+    echo '      [emoji]            emojipedia'
+    echo '      [other]            codepen'
     set_color normal
 end
 
