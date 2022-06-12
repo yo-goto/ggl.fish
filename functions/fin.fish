@@ -37,7 +37,7 @@ function fin --description "ggl wrapper for frontend developers"
         set -l docs_gh "cli.github.com/manual/"
         set -a list_cmd "gh"        
     
-    ##E mdn
+    ### mdn
     set -l site_name_mdn "developer.mozilla.org"
         set -l query_mdn "developer.mozilla.org/search?q="
         set -a list_cmd "mdn"
@@ -80,17 +80,19 @@ function fin --description "ggl wrapper for frontend developers"
         set -l docs_query_rust "doc.rust-lang.org/reference/index.html?search="
         set -a list_cmd "rust"
 
-    ## pkg manager
+    ### pkg manager
     set -l site_name_npm "www.npmjs.com"
         set -l query_npm "www.npmjs.com/search?q="
         set -a list_cmd "npm"
     set -l site_name_yarn "yarnpkg.com"
         set -a list_cmd "yarn"
+
+    ### trends
     set -l site_name_npmtrends "www.npmtrends.com"
         set -l query_npmtrends "www.npmtrends.com/"
         set -a list_cmd "npmtrends"
 
-    ## js runtims
+    ### js runtims
     set -l site_name_deno "deno.land"
         set -l docs_deno "deno.land/manual"
         set -a list_cmd "deno"
@@ -98,12 +100,12 @@ function fin --description "ggl wrapper for frontend developers"
         set -l docs_node "nodejs.org/en/docs/"
         set -a list_cmd "node"
 
-    ## rust runtime
+    ### rust runtime
     set -l site_name_tokio "tokio.rs"
         set -l docs_query_tokio "docs.rs/tokio/latest/tokio/?search="
         set -a list_cmd "tokio"
 
-    ## framework
+    ### framework
     set -l site_name_angular "angular.io"
         set -l docs_angular "angular.io/docs/ts/latest/api"
         set -l docs_query_angular "angular.io/docs/ts/latest/api/#!?url="
@@ -324,6 +326,7 @@ function __fin_help
     echo '      [japanese]         zenn qiita'
     echo '      [language]         rust typescript'
     echo '      [pkg manager]      npm yarn'
+    echo '      [trends]           npmtrends'
     echo '      [js runtime]       node deno'
     echo '      [rust runtime]     tokio'
     echo '      [framework]        vue react angular svelte nextjs storybook'

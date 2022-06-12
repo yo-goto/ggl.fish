@@ -272,6 +272,7 @@ From v1.7.0, you can use `fin` command which is the `ggl` wrapper for frontend d
 Usage: 
 
 ```console
+$ fin -h
 Usage:
       fin [fin-OPTION]
       fin [KEYWORDS...] [ggl-OPTIONS...]
@@ -279,28 +280,30 @@ Usage:
       fin ggl [KEYWORDS...] [ggl-OPTIONS...]
       fin SUBCOMMAND [KEYWORDS...] [ggl-OPTIONS...]
 Options:
-      -v, --version   Show version info
-      -h, --help      Show help
-      -d, --debug     Show debug tests
-          --list      Show the list of all site names
-          --long      Show the long list of all urls & sites
+      -v, --version      Show version info
+      -h, --help         Show help
+      -d, --debug        Show debug tests
+          --list         Show the list of all site names
+          --long         Show the long list of all urls & sites
 Subcommands:
-      [base]          g(ggl) help ls
-      [basic]         youtube stackoverflow
-      [MDN]           mdn
-      [shell]         fish
-      [terminal]      tmux iterm2
-      [editor]        vscode neovim
-      [github]        github gh
-      [japanese]      zenn qiita
-      [language]      rust typescript
-      [pkg manager]   npm yarn
-      [js runtime]    node deno
-      [rust runtime]  tokio
-      [framework]     vue react angular svelte nextjs storybook
-      [css]           bem tailwindcss
-      [emoji]         emojipedia
-      [other]         codepen
+      [base]             g(ggl) help ls
+      [basic]            youtube stackoverflow
+      [MDN]              mdn
+      [shell]            fish
+      [terminal]         tmux iterm2
+      [editor]           vscode neovim
+      [git,github]       git github gh
+      [japanese]         zenn qiita
+      [language]         rust typescript
+      [pkg manager]      npm yarn
+      [trends]           npmtrends
+      [js runtime]       node deno
+      [rust runtime]     tokio
+      [framework]        vue react angular svelte nextjs storybook
+      [css methodology]  bem
+      [css framework]    tailwindcss daisyui chakraui mui
+      [emoji]            emojipedia
+      [other]            codepen
 ```
 
 `fin` offers the completions of all of these subcommands. After typing `fin` & a space character, use `tab` key, then you can see the list of all subcommands (you can also use `-l` or `--list` option flags to the list).
