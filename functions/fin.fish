@@ -4,7 +4,7 @@ function fin --description "ggl wrapper for frontend developers"
         --stop-nonopt 'v/version' 'h/help' 'd/debug' 'list' 'long' -- $argv
     or return 1
 
-    set -l version_fin "v0.1.4"
+    set -l version_fin "v0.1.5"
 
     # color shortcut
     set -l cc (set_color $_ggl_color)
@@ -37,7 +37,7 @@ function fin --description "ggl wrapper for frontend developers"
         set -l docs_gh "cli.github.com/manual/"
         set -a list_cmd "gh"        
     
-    ## mdn
+    ##E mdn
     set -l site_name_mdn "developer.mozilla.org"
         set -l query_mdn "developer.mozilla.org/search?q="
         set -a list_cmd "mdn"
@@ -61,7 +61,7 @@ function fin --description "ggl wrapper for frontend developers"
         set -a list_cmd "vscode"
     set -l site_name_neovim "neovim.io"
         set -l docs_neovim "neovim.io/doc/general/"
-        set -a list_cmd "neovim"    
+        set -a list_cmd "neovim"
 
     ### Japanese knowledgebase
     set -l site_name_zenn "zenn.dev"
@@ -86,6 +86,9 @@ function fin --description "ggl wrapper for frontend developers"
         set -a list_cmd "npm"
     set -l site_name_yarn "yarnpkg.com"
         set -a list_cmd "yarn"
+    set -l site_name_npmtrends "www.npmtrends.com"
+        set -l query_npmtrends "www.npmtrends.com/"
+        set -a list_cmd "npmtrends"
 
     ## js runtims
     set -l site_name_deno "deno.land"

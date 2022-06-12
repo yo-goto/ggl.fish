@@ -1,5 +1,5 @@
 - v1.7.12
-    - fin: added new subcommands: `chakraui`, `mui`
+    - fin v0.1.5: added new subcommands: `chakraui`, `mui`, `npmtrends`
 - v1.7.11
     - New feature
         - fin: added new subcommands: `git`, `daisyui`
